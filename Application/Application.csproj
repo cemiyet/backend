@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Company>Cemiyet</Company>
+    <AssemblyName>Cemiyet.Application</AssemblyName>
+    <RootNamespace>Cemiyet.Application</RootNamespace>
+    <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
+    <PackageId>Cemiyet.Application</PackageId>
+    <PackageVersion>0.0.0</PackageVersion>
+    <Authors>Nuri Uzunoğlu</Authors>
+    <RepositoryType>https://github.com/nuriu/cemiyet-backend</RepositoryType>
+  </PropertyGroup>
+
+</Project>

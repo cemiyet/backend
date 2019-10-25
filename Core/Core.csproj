@@ -9,7 +9,7 @@
     <RootNamespace>Cemiyet.Core</RootNamespace>
     <AssemblyName>Cemiyet.Core</AssemblyName>
     <LangVersion>8</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <RepositoryUrl>https://github.com/nuriu/cemiyet-backend</RepositoryUrl>
   </PropertyGroup>
 

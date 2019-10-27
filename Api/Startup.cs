@@ -33,6 +33,7 @@ namespace Cemiyet.Api
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<MainDataContext>();
                 context.Database.Migrate();
+                MainDataContextSeed.Seed(context);
             }
 
             if (env.IsDevelopment())

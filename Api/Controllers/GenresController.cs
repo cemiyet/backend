@@ -1,11 +1,22 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Cemiyet.Application.Genres.Queries.List;
+using Cemiyet.Core;
+using Cemiyet.Core.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cemiyet.Api.Controllers
 {
     public class GenresController : CemiyetBaseController
     {
-        public GenresController() { }
+        private readonly IMediator _mediator;
+
+        public GenresController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
 
         // POST {{url}}/genres
         [HttpPost]
@@ -14,11 +25,11 @@ namespace Cemiyet.Api.Controllers
             throw new NotImplementedException("TODO");
         }
 
-        // GET {{url}}/genres?page=<page>
+        // GET {{url}}/genres?page=<page>&pageSize=<pageSize>
         [HttpGet]
-        public IActionResult List([FromQuery] int page = 1)
+        public async Task<ActionResult<List<Genre>>> List([FromQuery] ListQuery paging)
         {
-            throw new NotImplementedException("TODO");
+            return await _mediator.Send(paging);
         }
 
         // GET {{url}}/genres/<id>
@@ -28,9 +39,10 @@ namespace Cemiyet.Api.Controllers
             throw new NotImplementedException("TODO");
         }
 
-        // {{url}}/genres/<id>/books?page=<page>
+        // {{url}}/genres/<id>/books?page=<page>&pageSize=<pageSize>
         [HttpGet("{id}/books")]
-        public IActionResult ListBooks(Guid id, [FromQuery] int page = 1)
+        public IActionResult ListBooks(Guid id, [FromQuery] int page = 1,
+            [FromQuery] int pageSize = Constants.PageSize)
         {
             throw new NotImplementedException("TODO");
         }

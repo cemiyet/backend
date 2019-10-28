@@ -1,4 +1,5 @@
 using Cemiyet.Persistence.Contexts;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -19,12 +20,13 @@ namespace Cemiyet.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
             services.AddDbContext<MainDataContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("MainDataContext"));
             });
+
+            services.AddControllers();
+            services.AddMediatR(typeof(Application.Genres.Queries.List.ListQuery).Assembly);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

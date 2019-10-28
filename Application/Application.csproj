@@ -8,6 +8,15 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Genres\Commands\Add" />
+    <Folder Include="Genres\Commands\DeleteMany" />
+    <Folder Include="Genres\Commands\DeleteOne" />
+    <Folder Include="Genres\Commands\Update" />
+    <Folder Include="Genres\Queries\Details" />
+    <Folder Include="Genres\Queries\ListBooks" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Company>Cemiyet</Company>

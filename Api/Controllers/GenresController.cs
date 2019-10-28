@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cemiyet.Api.Controllers
 {
-    [Route("[controller]")]
-    [ApiController]
-    public class GenresController : ControllerBase
+    public class GenresController : CemiyetBaseController
     {
         public GenresController() { }
 

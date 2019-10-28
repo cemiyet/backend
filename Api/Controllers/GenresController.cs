@@ -25,14 +25,14 @@ namespace Cemiyet.Api.Controllers
 
         // GET {{url}}/genres/<id>
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public IActionResult Details(Guid id)
         {
             throw new NotImplementedException("TODO");
         }
 
         // {{url}}/genres/<id>/books?page=<page>
         [HttpGet("{id}/books")]
-        public IActionResult GetBooks(Guid id, [FromQuery] int page = 1)
+        public IActionResult ListBooks(Guid id, [FromQuery] int page = 1)
         {
             throw new NotImplementedException("TODO");
         }
@@ -46,14 +46,14 @@ namespace Cemiyet.Api.Controllers
 
         // DELETE {{url}}/genres/<id>
         [HttpDelete("{id}")]
-        public IActionResult Delete(Guid id)
+        public IActionResult DeleteOne(Guid id)
         {
             throw new NotImplementedException("TODO");
         }
 
         // DELETE {{url}}/genres?id=<id_1>&id=<id_n>
         [HttpDelete]
-        public IActionResult Delete([FromQuery] Guid[] id)
+        public IActionResult DeleteMany([FromQuery] Guid[] id)
         {
             throw new NotImplementedException("TODO");
         }

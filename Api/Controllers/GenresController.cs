@@ -22,7 +22,7 @@ namespace Cemiyet.Api.Controllers
         [HttpPost]
         public IActionResult Add()
         {
-            throw new NotImplementedException("TODO");
+            throw new NotImplementedException("TODO @ v0.1");
         }
 
         // GET {{url}}/genres?page=<page>&pageSize=<pageSize>
@@ -36,7 +36,7 @@ namespace Cemiyet.Api.Controllers
         [HttpGet("{id}")]
         public IActionResult Details(Guid id)
         {
-            throw new NotImplementedException("TODO");
+            throw new NotImplementedException("TODO @ v0.1");
         }
 
         // {{url}}/genres/<id>/books?page=<page>&pageSize=<pageSize>
@@ -44,28 +44,28 @@ namespace Cemiyet.Api.Controllers
         public IActionResult ListBooks(Guid id, [FromQuery] int page = 1,
             [FromQuery] int pageSize = Constants.PageSize)
         {
-            throw new NotImplementedException("TODO");
+            throw new NotImplementedException("TODO @ v0.3");
         }
 
         // PUT {{url}}/genres/<id>
         [HttpPut("{id}")]
         public IActionResult Update(Guid id)
         {
-            throw new NotImplementedException("TODO");
+            throw new NotImplementedException("TODO @ v0.1");
         }
 
         // DELETE {{url}}/genres/<id>
         [HttpDelete("{id}")]
         public IActionResult DeleteOne(Guid id)
         {
-            throw new NotImplementedException("TODO");
+            throw new NotImplementedException("TODO @ v0.1");
         }
 
         // DELETE {{url}}/genres?id=<id_1>&id=<id_n>
         [HttpDelete]
         public IActionResult DeleteMany([FromQuery] Guid[] id)
         {
-            throw new NotImplementedException("TODO");
+            throw new NotImplementedException("TODO @ v0.1");
         }
     }
 }

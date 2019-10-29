@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Cemiyet.Application.Genres.Queries.List
 {
-    // TODO: create validator.
+    // TODO (v0.1): create validator.
     public class ListQuery : IRequest<List<Genre>>
     {
         public int Page { get; set; }

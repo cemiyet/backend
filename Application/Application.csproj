@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Genres\Commands\Add" />
     <Folder Include="Genres\Commands\DeleteMany" />
     <Folder Include="Genres\Commands\DeleteOne" />
     <Folder Include="Genres\Commands\Update" />

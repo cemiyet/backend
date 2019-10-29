@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cemiyet.Application.Genres.Commands.Add;
 using Cemiyet.Application.Genres.Queries.Details;
 using Cemiyet.Application.Genres.Queries.List;
 using Cemiyet.Core;
@@ -21,9 +22,9 @@ namespace Cemiyet.Api.Controllers
 
         // POST {{url}}/genres
         [HttpPost]
-        public IActionResult Add()
+        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data)
         {
-            throw new NotImplementedException("TODO @ v0.1");
+            return await _mediator.Send(data);
         }
 
         // GET {{url}}/genres?page=<page>&pageSize=<pageSize>

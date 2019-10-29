@@ -13,7 +13,6 @@
     <Folder Include="Genres\Commands\DeleteMany" />
     <Folder Include="Genres\Commands\DeleteOne" />
     <Folder Include="Genres\Commands\Update" />
-    <Folder Include="Genres\Queries\Details" />
     <Folder Include="Genres\Queries\ListBooks" />
   </ItemGroup>
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cemiyet.Application.Genres.Queries.Details;
 using Cemiyet.Application.Genres.Queries.List;
 using Cemiyet.Core;
 using Cemiyet.Core.Entities;
@@ -34,9 +35,9 @@ namespace Cemiyet.Api.Controllers
 
         // GET {{url}}/genres/<id>
         [HttpGet("{id}")]
-        public IActionResult Details(Guid id)
+        public async Task<ActionResult<Genre>> Details(Guid id)
         {
-            throw new NotImplementedException("TODO @ v0.1");
+            return await _mediator.Send(new DetailsQuery {Id = id});
         }
 
         // {{url}}/genres/<id>/books?page=<page>&pageSize=<pageSize>

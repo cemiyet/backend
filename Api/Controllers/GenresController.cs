@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cemiyet.Application.Genres.Commands.Add;
+using Cemiyet.Application.Genres.Commands.DeleteMany;
 using Cemiyet.Application.Genres.Commands.DeleteOne;
 using Cemiyet.Application.Genres.Commands.Update;
 using Cemiyet.Application.Genres.Queries.Details;
@@ -67,11 +68,12 @@ namespace Cemiyet.Api.Controllers
             return await _mediator.Send(new DeleteOneCommand {Id = id});
         }
 
-        // DELETE {{url}}/genres?id=<id_1>&id=<id_n>
+        // DELETE {{url}}/genres
         [HttpDelete]
-        public IActionResult DeleteMany([FromQuery] Guid[] id)
+        public async Task<ActionResult<Unit>> DeleteMany(
+            [FromBody] DeleteManyCommand data)
         {
-            throw new NotImplementedException("TODO @ v0.1");
+            return await _mediator.Send(data);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cemiyet.Application.Genres.Commands.Add;
+using Cemiyet.Application.Genres.Commands.Update;
 using Cemiyet.Application.Genres.Queries.Details;
 using Cemiyet.Application.Genres.Queries.List;
 using Cemiyet.Core;
@@ -51,9 +52,10 @@ namespace Cemiyet.Api.Controllers
 
         // PUT {{url}}/genres/<id>
         [HttpPut("{id}")]
-        public IActionResult Update(Guid id)
+        public async Task<ActionResult<Unit>> Update([FromRoute] Guid id, [FromBody] UpdateCommand data)
         {
-            throw new NotImplementedException("TODO @ v0.1");
+            data.Id = id;
+            return await _mediator.Send(data);
         }
 
         // DELETE {{url}}/genres/<id>

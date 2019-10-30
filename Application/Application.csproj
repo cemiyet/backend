@@ -18,7 +18,7 @@
     <AssemblyName>Cemiyet.Application</AssemblyName>
     <RootNamespace>Cemiyet.Application</RootNamespace>
     <LangVersion>8</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <PackageId>Cemiyet.Application</PackageId>
     <PackageVersion>0.0.0</PackageVersion>
     <Authors>Nuri Uzunoğlu</Authors>

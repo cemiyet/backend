@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cemiyet.Application.Genres.Commands.Add;
+using Cemiyet.Application.Genres.Commands.DeleteOne;
 using Cemiyet.Application.Genres.Commands.Update;
 using Cemiyet.Application.Genres.Queries.Details;
 using Cemiyet.Application.Genres.Queries.List;
@@ -52,7 +53,8 @@ namespace Cemiyet.Api.Controllers
 
         // PUT {{url}}/genres/<id>
         [HttpPut("{id}")]
-        public async Task<ActionResult<Unit>> Update([FromRoute] Guid id, [FromBody] UpdateCommand data)
+        public async Task<ActionResult<Unit>> Update([FromRoute] Guid id,
+            [FromBody] UpdateCommand data)
         {
             data.Id = id;
             return await _mediator.Send(data);
@@ -60,9 +62,9 @@ namespace Cemiyet.Api.Controllers
 
         // DELETE {{url}}/genres/<id>
         [HttpDelete("{id}")]
-        public IActionResult DeleteOne(Guid id)
+        public async Task<ActionResult<Unit>> DeleteOne(Guid id)
         {
-            throw new NotImplementedException("TODO @ v0.1");
+            return await _mediator.Send(new DeleteOneCommand {Id = id});
         }
 
         // DELETE {{url}}/genres?id=<id_1>&id=<id_n>

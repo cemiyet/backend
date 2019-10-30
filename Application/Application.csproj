@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <Folder Include="Genres\Commands\DeleteMany" />
-    <Folder Include="Genres\Commands\DeleteOne" />
     <Folder Include="Genres\Queries\ListBooks" />
   </ItemGroup>
 

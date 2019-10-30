@@ -6,6 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cemiyet.Persistence.Extensions
 {
+    public abstract class PageableModel
+    {
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; } = Constants.PageSize;
+    }
+
     public static class PagingExtensions
     {
         public static async Task<List<T>> PagedToListAsync<T>(this IQueryable<T> query,

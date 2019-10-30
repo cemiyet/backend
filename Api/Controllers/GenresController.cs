@@ -32,9 +32,9 @@ namespace Cemiyet.Api.Controllers
 
         // GET {{url}}/genres?page=<page>&pageSize=<pageSize>
         [HttpGet]
-        public async Task<ActionResult<List<Genre>>> List([FromQuery] ListQuery paging)
+        public async Task<ActionResult<List<Genre>>> List([FromQuery] ListQuery query)
         {
-            return await _mediator.Send(paging);
+            return await _mediator.Send(query);
         }
 
         // GET {{url}}/genres/<id>

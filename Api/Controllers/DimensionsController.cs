@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cemiyet.Application.Dimensions.Commands.Add;
+using Cemiyet.Application.Dimensions.Commands.Update;
 using Cemiyet.Application.Dimensions.Queries.Details;
 using Cemiyet.Application.Dimensions.Queries.List;
 using Cemiyet.Core.Entities;
@@ -38,6 +39,15 @@ namespace Cemiyet.Api.Controllers
         public async Task<ActionResult<Dimension>> Details(Guid id)
         {
             return await _mediator.Send(new DetailsQuery {Id = id});
+        }
+
+        // PUT {{url}}/dimensions/<id>
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Unit>> Update([FromRoute] Guid id,
+            [FromBody] UpdateCommand data)
+        {
+            data.Id = id;
+            return await _mediator.Send(data);
         }
     }
 }

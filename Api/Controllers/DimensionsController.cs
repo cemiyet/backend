@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cemiyet.Application.Dimensions.Commands.Add;
+using Cemiyet.Application.Dimensions.Commands.DeleteOne;
 using Cemiyet.Application.Dimensions.Commands.Update;
 using Cemiyet.Application.Dimensions.Commands.UpdatePartially;
 using Cemiyet.Application.Dimensions.Queries.Details;
@@ -58,6 +59,13 @@ namespace Cemiyet.Api.Controllers
         {
             data.Id = id;
             return await _mediator.Send(data);
+        }
+
+        // DELETE {{url}}/dimensions/<id>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Unit>> DeleteOne(Guid id)
+        {
+            return await _mediator.Send(new DeleteOneCommand {Id = id});
         }
 
     }

@@ -44,7 +44,7 @@ namespace Cemiyet.Api.Controllers
             return await _mediator.Send(new DetailsQuery {Id = id});
         }
 
-        // {{url}}/genres/<id>/books?page=<page>&pageSize=<pageSize>
+        // GET {{url}}/genres/<id>/books?page=<page>&pageSize=<pageSize>
         [HttpGet("{id}/books")]
         public IActionResult ListBooks(Guid id, [FromQuery] int page = 1,
             [FromQuery] int pageSize = Constants.PageSize)

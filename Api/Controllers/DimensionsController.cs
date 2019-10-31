@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cemiyet.Application.Dimensions.Commands.Add;
+using Cemiyet.Application.Dimensions.Commands.DeleteMany;
 using Cemiyet.Application.Dimensions.Commands.DeleteOne;
 using Cemiyet.Application.Dimensions.Commands.Update;
 using Cemiyet.Application.Dimensions.Commands.UpdatePartially;
@@ -68,5 +69,12 @@ namespace Cemiyet.Api.Controllers
             return await _mediator.Send(new DeleteOneCommand {Id = id});
         }
 
+        // DELETE {{url}}/genres
+        [HttpDelete]
+        public async Task<ActionResult<Unit>> DeleteMany(
+            [FromBody] DeleteManyCommand data)
+        {
+            return await _mediator.Send(data);
+        }
     }
 }

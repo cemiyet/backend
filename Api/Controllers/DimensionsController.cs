@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cemiyet.Application.Dimensions.Commands.Add;
 using Cemiyet.Application.Dimensions.Queries.Details;
 using Cemiyet.Application.Dimensions.Queries.List;
 using Cemiyet.Core.Entities;
@@ -16,6 +17,13 @@ namespace Cemiyet.Api.Controllers
         public DimensionsController(IMediator mediator)
         {
             _mediator = mediator;
+        }
+
+        // POST {{url}}/dimensions
+        [HttpPost]
+        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data)
+        {
+            return await _mediator.Send(data);
         }
 
         // GET {{url}}/dimensions?page=<page>&pageSize=<pageSize>

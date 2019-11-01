@@ -3,15 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <AssemblyName>Cemiyet.Tests</AssemblyName>
-    <RootNamespace>Cemiyet.Tests</RootNamespace>
-    <Nullable>enable</Nullable>
-    <PackageId>Cemiyet.Tests</PackageId>
+    <AssemblyName>Cemiyet.Persistence.Tests</AssemblyName>
+    <RootNamespace>Cemiyet.Persistence.Tests</RootNamespace>
+    <PackageId>Cemiyet.Persistence.Tests</PackageId>
     <PackageVersion>0.0.0</PackageVersion>
     <Authors>Nuri Uzunoğlu</Authors>
     <RepositoryUrl>https://github.com/nuriu/cemiyet-backend</RepositoryUrl>
     <Company>Cemiyet</Company>
-    <Product>Cemiyet.Tests</Product>
+    <Product>Cemiyet.Persistence.Tests</Product>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api\Api.csproj" />
+    <ProjectReference Include="..\Persistence\Persistence.csproj" />
   </ItemGroup>
 
 </Project>

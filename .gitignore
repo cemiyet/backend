@@ -1,5 +1,8 @@
-### dot folders ###
+# dot folders
 .*/
+
+## except github folder
+!.github/
 
 # .NET Core build folders
 [bB]in/

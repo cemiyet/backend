@@ -15,7 +15,8 @@ namespace Cemiyet.Application.Genres.Commands.Update
             _context = context;
         }
 
-        public async Task<Unit> Handle(UpdateCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateCommand request,
+            CancellationToken cancellationToken)
         {
             var genre = await _context.Genres.FindAsync(request.Id);
 

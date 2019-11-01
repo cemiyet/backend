@@ -11,6 +11,8 @@ namespace Cemiyet.Core.Entities
         public TId Id { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ModificationDate { get; set; }
+
+        // TODO (v0.4): create relations with user model.
         public TId CreatorId { get; set; }
         public TId ModifierId { get; set; }
     }

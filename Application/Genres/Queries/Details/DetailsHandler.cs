@@ -15,7 +15,8 @@ namespace Cemiyet.Application.Genres.Queries.Details
             _context = context;
         }
 
-        public async Task<Genre> Handle(DetailsQuery request, CancellationToken cancellationToken)
+        public async Task<Genre> Handle(DetailsQuery request,
+            CancellationToken cancellationToken)
         {
             return await _context.Genres.FindAsync(request.Id);
         }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Cemiyet.Core;
 using Cemiyet.Core.Entities;
 using Cemiyet.Persistence.Extensions;
 using MediatR;

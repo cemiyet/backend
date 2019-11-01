@@ -15,7 +15,8 @@ namespace Cemiyet.Application.Genres.Commands.DeleteOne
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteOneCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteOneCommand request,
+            CancellationToken cancellationToken)
         {
             var genre = await _context.Genres.FindAsync(request.Id);
 

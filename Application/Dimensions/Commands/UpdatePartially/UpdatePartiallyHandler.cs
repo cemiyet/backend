@@ -15,7 +15,8 @@ namespace Cemiyet.Application.Dimensions.Commands.UpdatePartially
             _context = context;
         }
 
-        public async Task<Unit> Handle(UpdatePartiallyCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdatePartiallyCommand request,
+            CancellationToken cancellationToken)
         {
             var dimension = await _context.Dimensions.FindAsync(request.Id);
 

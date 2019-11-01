@@ -16,7 +16,8 @@ namespace Cemiyet.Application.Genres.Commands.DeleteMany
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteManyCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteManyCommand request,
+            CancellationToken cancellationToken)
         {
             var genres = _context.Genres.Where(g => request.Ids.Contains(g.Id));
 

@@ -17,7 +17,8 @@ namespace Cemiyet.Application.Genres.Queries.List
             _context = context;
         }
 
-        public async Task<List<Genre>> Handle(ListQuery request, CancellationToken cancellationToken)
+        public async Task<List<Genre>> Handle(ListQuery request,
+            CancellationToken cancellationToken)
         {
             return await _context.Genres.PagedToListAsync(request.Page, request.PageSize);
         }

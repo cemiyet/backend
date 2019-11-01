@@ -5,7 +5,6 @@ using MediatR;
 
 namespace Cemiyet.Application.Genres.Queries.List
 {
-    // TODO (v0.1): create validator.
     public class ListQuery : PageableModel, IRequest<List<Genre>>
     {
     }

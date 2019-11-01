@@ -1,4 +1,6 @@
+using Cemiyet.Application.Genres.Queries.List;
 using Cemiyet.Persistence.Contexts;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,10 +30,12 @@ namespace Cemiyet.Api
                     Configuration.GetConnectionString("MainDataContext"));
             });
 
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(configuration =>
+            {
+                configuration.RegisterValidatorsFromAssembly(typeof(ListQuery).Assembly);
+            });
 
-            services.AddMediatR(
-                typeof(Application.Genres.Queries.List.ListQuery).Assembly);
+            services.AddMediatR(typeof(ListQuery).Assembly);
 
             services.AddOpenApiDocument(options =>
             {

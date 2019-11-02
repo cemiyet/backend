@@ -24,8 +24,14 @@ namespace Cemiyet.Application.Dimensions.Commands.UpdatePartially
             if (dimension == null)
                 throw new Exception("Could not found dimension with specified id.");
 
-            dimension.Width = request.Width > 0 ? request.Width : dimension.Width;
-            dimension.Height = request.Height > 0 ? request.Height : dimension.Height;
+            if (!request.Width.Equals(default) &&
+                Math.Abs(request.Width - dimension.Width) > 0.1)
+                dimension.Width = request.Width;
+
+            if (!request.Height.Equals(default) &&
+                Math.Abs(request.Width - dimension.Width) > 0.1)
+                dimension.Height = request.Height;
+
             dimension.ModificationDate = DateTime.UtcNow;
             // dimension.ModifierId =
             // TODO (v0.4): add modifier id.

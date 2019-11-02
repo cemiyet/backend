@@ -17,11 +17,9 @@ namespace Cemiyet.Application.Dimensions.Queries.List
             _context = context;
         }
 
-        public async Task<List<Dimension>> Handle(ListQuery request,
-            CancellationToken cancellationToken)
+        public async Task<List<Dimension>> Handle(ListQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Dimensions.PagedToListAsync(request.Page,
-                request.PageSize);
+            return await _context.Dimensions.PagedToListAsync(request.Page, request.PageSize);
         }
     }
 }

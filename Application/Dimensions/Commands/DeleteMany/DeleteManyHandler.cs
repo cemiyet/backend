@@ -16,8 +16,7 @@ namespace Cemiyet.Application.Dimensions.Commands.DeleteMany
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteManyCommand request,
-            CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteManyCommand request, CancellationToken cancellationToken)
         {
             var dimensions = _context.Dimensions.Where(d => request.Ids.Contains(d.Id));
 

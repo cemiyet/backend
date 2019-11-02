@@ -15,8 +15,7 @@ namespace Cemiyet.Application.Dimensions.Commands.UpdatePartially
             _context = context;
         }
 
-        public async Task<Unit> Handle(UpdatePartiallyCommand request,
-            CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdatePartiallyCommand request, CancellationToken cancellationToken)
         {
             var dimension = await _context.Dimensions.FindAsync(request.Id);
 
@@ -24,12 +23,10 @@ namespace Cemiyet.Application.Dimensions.Commands.UpdatePartially
             if (dimension == null)
                 throw new Exception("Could not found dimension with specified id.");
 
-            if (!request.Width.Equals(default) &&
-                Math.Abs(request.Width - dimension.Width) > 0.1)
+            if (!request.Width.Equals(default) && Math.Abs(request.Width - dimension.Width) > 0.1)
                 dimension.Width = request.Width;
 
-            if (!request.Height.Equals(default) &&
-                Math.Abs(request.Width - dimension.Width) > 0.1)
+            if (!request.Height.Equals(default) && Math.Abs(request.Width - dimension.Width) > 0.1)
                 dimension.Height = request.Height;
 
             dimension.ModificationDate = DateTime.UtcNow;

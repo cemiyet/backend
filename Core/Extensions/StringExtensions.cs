@@ -10,8 +10,7 @@ namespace Cemiyet.Core.Extensions
                 return input;
 
             return Regex.Match(input, @"^_+") +
-                   Regex.Replace(input, @"([a-z0-9])([A-Z])", "$1_$2")
-                       .ToLowerInvariant();
+                   Regex.Replace(input, @"([a-z0-9])([A-Z])", "$1_$2").ToLowerInvariant();
         }
     }
 }

@@ -15,8 +15,7 @@ namespace Cemiyet.Application.Dimensions.Queries.Details
             _context = context;
         }
 
-        public async Task<Dimension> Handle(DetailsQuery request,
-            CancellationToken cancellationToken)
+        public async Task<Dimension> Handle(DetailsQuery request, CancellationToken cancellationToken)
         {
             return await _context.Dimensions.FindAsync(request.Id);
         }

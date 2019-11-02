@@ -15,8 +15,7 @@ namespace Cemiyet.Application.Dimensions.Commands.DeleteOne
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteOneCommand request,
-            CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteOneCommand request, CancellationToken cancellationToken)
         {
             var dimension = await _context.Dimensions.FindAsync(request.Id);
 

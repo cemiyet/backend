@@ -7,7 +7,9 @@ namespace Cemiyet.Persistence.Contexts
 {
     public class MainDataContext : DbContext
     {
-        public MainDataContext(DbContextOptions options) : base(options) { }
+        public MainDataContext(DbContextOptions options) : base(options)
+        {
+        }
 
         public DbSet<Dimension> Dimensions { get; set; }
         public DbSet<Genre> Genres { get; set; }
@@ -18,17 +20,17 @@ namespace Cemiyet.Persistence.Contexts
             modelBuilder.ApplyConfiguration(new GenreConfiguration());
 
             // use snake case naming convention
-            foreach(var entity in modelBuilder.Model.GetEntityTypes())
+            foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 entity.SetTableName(entity.GetTableName().ToSnakeCase());
 
-                foreach(var property in entity.GetProperties())
+                foreach (var property in entity.GetProperties())
                     property.SetColumnName(property.GetColumnName().ToSnakeCase());
 
-                foreach(var key in entity.GetKeys())
+                foreach (var key in entity.GetKeys())
                     key.SetName(key.GetName().ToSnakeCase());
 
-                foreach(var index in entity.GetIndexes())
+                foreach (var index in entity.GetIndexes())
                     index.SetName(index.GetName().ToSnakeCase());
             }
         }

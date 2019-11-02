@@ -47,7 +47,7 @@ namespace Cemiyet.Api.Controllers
         // PATCH {{url}}/dimensions/<id>
         [HttpPatch("{id}")]
         public async Task<ActionResult<Unit>> UpdatePartially([FromRoute] Guid id,
-            [FromBody] UpdatePartiallyCommand data)
+                                                              [FromBody] UpdatePartiallyCommand data)
         {
             data.Id = id;
             return await _mediator.Send(data);
@@ -55,8 +55,7 @@ namespace Cemiyet.Api.Controllers
 
         // PUT {{url}}/dimensions/<id>
         [HttpPut("{id}")]
-        public async Task<ActionResult<Unit>> Update([FromRoute] Guid id,
-            [FromBody] UpdateCommand data)
+        public async Task<ActionResult<Unit>> Update([FromRoute] Guid id, [FromBody] UpdateCommand data)
         {
             data.Id = id;
             return await _mediator.Send(data);
@@ -71,8 +70,7 @@ namespace Cemiyet.Api.Controllers
 
         // DELETE {{url}}/genres
         [HttpDelete]
-        public async Task<ActionResult<Unit>> DeleteMany(
-            [FromBody] DeleteManyCommand data)
+        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data)
         {
             return await _mediator.Send(data);
         }

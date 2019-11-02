@@ -47,11 +47,9 @@ namespace Cemiyet.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            using (var serviceScope = app.ApplicationServices
-                .GetService<IServiceScopeFactory>().CreateScope())
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider
-                    .GetRequiredService<MainDataContext>();
+                var context = serviceScope.ServiceProvider.GetRequiredService<MainDataContext>();
                 context.Database.Migrate();
                 MainDataContextSeed.Seed(context);
             }

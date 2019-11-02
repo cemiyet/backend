@@ -46,16 +46,14 @@ namespace Cemiyet.Api.Controllers
 
         // GET {{url}}/genres/<id>/books?page=<page>&pageSize=<pageSize>
         [HttpGet("{id}/books")]
-        public IActionResult ListBooks(Guid id, [FromQuery] int page = 1,
-            [FromQuery] int pageSize = Constants.PageSize)
+        public IActionResult ListBooks(Guid id, [FromQuery] int page = 1, [FromQuery] int pageSize = Constants.PageSize)
         {
             throw new NotImplementedException("TODO @ v0.3");
         }
 
         // PUT {{url}}/genres/<id>
         [HttpPut("{id}")]
-        public async Task<ActionResult<Unit>> Update([FromRoute] Guid id,
-            [FromBody] UpdateCommand data)
+        public async Task<ActionResult<Unit>> Update([FromRoute] Guid id, [FromBody] UpdateCommand data)
         {
             data.Id = id;
             return await _mediator.Send(data);
@@ -70,8 +68,7 @@ namespace Cemiyet.Api.Controllers
 
         // DELETE {{url}}/genres
         [HttpDelete]
-        public async Task<ActionResult<Unit>> DeleteMany(
-            [FromBody] DeleteManyCommand data)
+        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data)
         {
             return await _mediator.Send(data);
         }

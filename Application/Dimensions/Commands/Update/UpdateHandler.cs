@@ -24,9 +24,8 @@ namespace Cemiyet.Application.Dimensions.Commands.Update
             if (dimension == null)
                 throw new Exception("Could not found dimension with specified id.");
 
-            // TODO (v0.4): this logic must be changed using correct validator.
-            dimension.Width = request.Width > 0 ? request.Width : dimension.Width;
-            dimension.Height = request.Height > 0 ? request.Height : dimension.Height;
+            dimension.Width = request.Width;
+            dimension.Height = request.Height;
             dimension.ModificationDate = DateTime.UtcNow;
             // dimension.ModifierId =
             // TODO (v0.4): add modifier id.

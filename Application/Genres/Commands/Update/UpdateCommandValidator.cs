@@ -7,11 +7,12 @@ namespace Cemiyet.Application.Genres.Commands.Update
     {
         public UpdateCommandValidator()
         {
-            RuleFor(uc => uc.Id).NotEmpty();
+            RuleFor(uc => uc.Id).NotNull();
             RuleFor(uc => uc.Name)
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty()
                 .Must(ShouldNotContainDigits)
+                .WithMessage("Name alanı sayısal karakter içermemeli.")
                 .MaximumLength(50);
         }
 

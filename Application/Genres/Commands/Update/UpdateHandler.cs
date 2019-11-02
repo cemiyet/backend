@@ -24,7 +24,7 @@ namespace Cemiyet.Application.Genres.Commands.Update
             if (genre == null)
                 throw new Exception("Could not found genre with specified id.");
 
-            genre.Name = request.Name ?? genre.Name;
+            genre.Name = request.Name;
             genre.ModificationDate = DateTime.UtcNow;
             // genre.ModifierId =
             // TODO (v0.4): add modifier id.

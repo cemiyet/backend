@@ -12,7 +12,7 @@ namespace Cemiyet.Application.Genres.Commands.Update
                 .Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty()
                 .Must(ShouldNotContainDigits)
-                .WithMessage("Name alanı sayısal karakter içermemeli.")
+                .WithMessage("'Name' should not contain any digits.")
                 .MaximumLength(50);
         }
 

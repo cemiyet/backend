@@ -14,7 +14,7 @@ namespace Cemiyet.Api.Filters
                 context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
             }
 
-            context.Result = new JsonResult(context.Exception.Message);
+            context.Result = new JsonResult(new {context.Exception.Message});
             base.OnException(context);
         }
     }

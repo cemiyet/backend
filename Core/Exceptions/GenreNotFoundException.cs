@@ -10,7 +10,7 @@ namespace Cemiyet.Core.Exceptions
         {
         }
 
-        public GenreNotFoundException(IEnumerable<Guid> genreId) : base($"Could not found any genre with specified ids.")
+        public GenreNotFoundException(IEnumerable<Guid> genreId) : base("Could not found any genre with specified ids.")
         {
         }
 

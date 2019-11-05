@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Contexts;
 using MediatR;
 
@@ -20,9 +21,8 @@ namespace Cemiyet.Application.Dimensions.Commands.DeleteMany
         {
             var dimensions = _context.Dimensions.Where(d => request.Ids.Contains(d.Id));
 
-            // TODO (v0.1): create and use more friendly exception.
             if (!dimensions.Any())
-                throw new Exception("Could not found any dimension with specified ids.");
+                throw new DimensionNotFoundException(request.Ids);
 
             _context.RemoveRange(dimensions);
 

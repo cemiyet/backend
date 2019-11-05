@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Contexts;
 using MediatR;
 
@@ -19,9 +20,8 @@ namespace Cemiyet.Application.Dimensions.Commands.Update
         {
             var dimension = await _context.Dimensions.FindAsync(request.Id);
 
-            // TODO (v0.1): create and use more friendly exception.
             if (dimension == null)
-                throw new Exception("Could not found dimension with specified id.");
+                throw new DimensionNotFoundException(request.Id);
 
             dimension.Width = request.Width;
             dimension.Height = request.Height;

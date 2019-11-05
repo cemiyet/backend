@@ -10,7 +10,6 @@ using Cemiyet.Application.Genres.Queries.Details;
 using Cemiyet.Application.Genres.Queries.List;
 using Cemiyet.Core;
 using Cemiyet.Core.Entities;
-using Cemiyet.Core.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -51,7 +50,7 @@ namespace Cemiyet.Api.Controllers
         [HttpGet("{id}/books")]
         public IActionResult ListBooks(Guid id, [FromQuery] int page = 1, [FromQuery] int pageSize = Constants.PageSize)
         {
-            throw new NotImplementedException("TODO @ v0.3");
+            throw new NotImplementedException("TODO (v0.3)");
         }
 
         // PUT {{url}}/genres/<id>

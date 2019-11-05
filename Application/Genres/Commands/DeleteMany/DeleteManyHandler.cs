@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Contexts;
 using MediatR;
 
@@ -16,14 +17,12 @@ namespace Cemiyet.Application.Genres.Commands.DeleteMany
             _context = context;
         }
 
-        public async Task<Unit> Handle(DeleteManyCommand request,
-            CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteManyCommand request, CancellationToken cancellationToken)
         {
             var genres = _context.Genres.Where(g => request.Ids.Contains(g.Id));
 
-            // TODO (v0.1): create and use more friendly exception.
             if (!genres.Any())
-                throw new Exception("Could not found any genre with specified ids.");
+                throw new GenreNotFoundException(request.Ids);
 
             _context.RemoveRange(genres);
 

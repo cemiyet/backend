@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Cemiyet.Core.Entities;
+using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Contexts;
 using MediatR;
 
@@ -17,7 +18,12 @@ namespace Cemiyet.Application.Genres.Queries.Details
 
         public async Task<Genre> Handle(DetailsQuery request, CancellationToken cancellationToken)
         {
-            return await _context.Genres.FindAsync(request.Id);
+            var genre = await _context.Genres.FindAsync(request.Id);
+
+            if (genre == null)
+                throw new GenreNotFoundException(request.Id);
+
+            return genre;
         }
     }
 }

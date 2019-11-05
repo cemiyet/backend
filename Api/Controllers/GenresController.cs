@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Cemiyet.Api.Filters;
 using Cemiyet.Application.Genres.Commands.Add;
 using Cemiyet.Application.Genres.Commands.DeleteMany;
 using Cemiyet.Application.Genres.Commands.DeleteOne;
@@ -9,11 +10,13 @@ using Cemiyet.Application.Genres.Queries.Details;
 using Cemiyet.Application.Genres.Queries.List;
 using Cemiyet.Core;
 using Cemiyet.Core.Entities;
+using Cemiyet.Core.Exceptions;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cemiyet.Api.Controllers
 {
+    [GenresExceptionFilter]
     public class GenresController : CemiyetBaseController
     {
         private readonly IMediator _mediator;

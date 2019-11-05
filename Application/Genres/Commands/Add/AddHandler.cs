@@ -16,8 +16,7 @@ namespace Cemiyet.Application.Genres.Commands.Add
             _context = context;
         }
 
-        public async Task<Unit> Handle(AddCommand request,
-            CancellationToken cancellationToken)
+        public async Task<Unit> Handle(AddCommand request, CancellationToken cancellationToken)
         {
             var genre = new Genre
             {

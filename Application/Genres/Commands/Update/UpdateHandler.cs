@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Contexts;
 using MediatR;
 
@@ -15,14 +16,12 @@ namespace Cemiyet.Application.Genres.Commands.Update
             _context = context;
         }
 
-        public async Task<Unit> Handle(UpdateCommand request,
-            CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateCommand request, CancellationToken cancellationToken)
         {
             var genre = await _context.Genres.FindAsync(request.Id);
 
-            // TODO (v0.1): create and use more friendly exception.
             if (genre == null)
-                throw new Exception("Could not found genre with specified id.");
+                throw new GenreNotFoundException(request.Id);
 
             genre.Name = request.Name;
             genre.ModificationDate = DateTime.UtcNow;

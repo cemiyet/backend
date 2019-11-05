@@ -65,7 +65,8 @@ namespace Cemiyet.Api
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
             app.UseOpenApi(options => options.Path = "/docs/{documentName}/openapi.json");
-            app.UseReDoc(options =>
+
+            app.UseSwaggerUi3(options =>
             {
                 options.Path = "/docs";
                 options.DocumentPath = "/docs/{documentName}/openapi.json";

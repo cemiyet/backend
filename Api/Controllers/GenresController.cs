@@ -51,12 +51,12 @@ namespace Cemiyet.Api.Controllers
             return await _mediator.Send(new DetailsQuery {Id = id});
         }
 
-        [HttpGet("{id}/books")]
-        [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public IActionResult ListBooks(Guid id, [FromQuery] ListQuery query)
-        {
-            throw new NotImplementedException("TODO (v0.3)");
-        }
+//        [HttpGet("{id}/books")]
+//        [ProducesResponseType(typeof(GenreNotFoundException), 400)]
+//        public IActionResult ListBooks(Guid id, [FromQuery] ListQuery query)
+//        {
+//            throw new NotImplementedException("TODO (v0.3)");
+//        }
 
         [HttpPut("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]

@@ -26,8 +26,7 @@ namespace Cemiyet.Api
         {
             services.AddDbContext<MainDataContext>(options =>
             {
-                options.UseNpgsql(
-                    Configuration.GetConnectionString("MainDataContext"));
+                options.UseNpgsql(Configuration.GetConnectionString("MainDataContext"));
             });
 
             services.AddControllers().AddFluentValidation(configuration =>

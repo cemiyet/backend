@@ -59,7 +59,7 @@ namespace Cemiyet.Api.Tests
         }
 
         [Fact]
-        public async Task DimensionObject()
+        public async Task Details_WithCorrectId_ShouldReturn_DimensionObject()
         {
             var dimensionsResponse = await _httpClient.GetAsync("dimensions");
             var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<Dimension>>();

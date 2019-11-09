@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Cemiyet.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -8,7 +9,7 @@ namespace Cemiyet.Persistence.Application.Configurations
     {
         public void Configure(EntityTypeBuilder<EntityChange> builder)
         {
-            builder.HasNoKey();
+            builder.HasKey(ec => ec.Id);
             builder.HasIndex(ec => ec.EntityId);
             builder.Property(ec => ec.EntityId).IsRequired();
             builder.Property(ec => ec.PropertyName).IsRequired();

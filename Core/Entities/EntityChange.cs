@@ -8,6 +8,8 @@ namespace Cemiyet.Core.Entities
     /// <typeparam name="T">Type of the identifiers. Should be same with all entities.</typeparam>
     public abstract class BaseEntityChange<T>
     {
+        public T Id { get; set; }
+
         public T EntityId { get; set; }
 
         // TODO (v0.4): create relations with user model.

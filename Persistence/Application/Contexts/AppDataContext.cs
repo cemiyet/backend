@@ -11,11 +11,13 @@ namespace Cemiyet.Persistence.Application.Contexts
         {
         }
 
+        public DbSet<EntityChange> EntityChanges { get; set; }
         public DbSet<Dimension> Dimensions { get; set; }
         public DbSet<Genre> Genres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new EntityChangeConfiguration());
             modelBuilder.ApplyConfiguration(new DimensionConfiguration());
             modelBuilder.ApplyConfiguration(new GenreConfiguration());
 

@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using Cemiyet.Core.Entities;
 
-namespace Cemiyet.Persistence.Contexts
+namespace Cemiyet.Persistence.Application.Contexts
 {
-    public static class MainDataContextSeed
+    public static class AppDataContextSeed
     {
-        public static void Seed(MainDataContext context)
+        public static void Seed(AppDataContext context)
         {
             SeedGenres(context);
             SeedDimensions(context);
         }
 
-        private static void SeedGenres(MainDataContext context)
+        private static void SeedGenres(AppDataContext context)
         {
             if (context.Genres.Any()) return;
             var genres = new List<Genre>
@@ -118,7 +118,7 @@ namespace Cemiyet.Persistence.Contexts
             context.SaveChanges();
         }
 
-        private static void SeedDimensions(MainDataContext context)
+        private static void SeedDimensions(AppDataContext context)
         {
             if (context.Dimensions.Any()) return;
 

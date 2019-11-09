@@ -2,16 +2,16 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Cemiyet.Core.Entities;
-using Cemiyet.Persistence.Contexts;
+using Cemiyet.Persistence.Application.Contexts;
 using MediatR;
 
 namespace Cemiyet.Application.Dimensions.Commands.Add
 {
     public class AddHandler : IRequestHandler<AddCommand>
     {
-        private readonly MainDataContext _context;
+        private readonly AppDataContext _context;
 
-        public AddHandler(MainDataContext context)
+        public AddHandler(AppDataContext context)
         {
             _context = context;
         }

@@ -2,16 +2,16 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Cemiyet.Core.Exceptions;
-using Cemiyet.Persistence.Contexts;
+using Cemiyet.Persistence.Application.Contexts;
 using MediatR;
 
 namespace Cemiyet.Application.Dimensions.Commands.UpdatePartially
 {
     public class UpdatePartiallyHandler : IRequestHandler<UpdatePartiallyCommand>
     {
-        private readonly MainDataContext _context;
+        private readonly AppDataContext _context;
 
-        public UpdatePartiallyHandler(MainDataContext context)
+        public UpdatePartiallyHandler(AppDataContext context)
         {
             _context = context;
         }

@@ -2,16 +2,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using Cemiyet.Core.Entities;
 using Cemiyet.Core.Exceptions;
-using Cemiyet.Persistence.Contexts;
+using Cemiyet.Persistence.Application.Contexts;
 using MediatR;
 
 namespace Cemiyet.Application.Dimensions.Queries.Details
 {
     public class DetailsHandler : IRequestHandler<DetailsQuery, Dimension>
     {
-        private readonly MainDataContext _context;
+        private readonly AppDataContext _context;
 
-        public DetailsHandler(MainDataContext context)
+        public DetailsHandler(AppDataContext context)
         {
             _context = context;
         }

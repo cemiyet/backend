@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Cemiyet.Persistence.Migrations
+namespace Cemiyet.Persistence.Application.Migrations
 {
     public partial class InitialCreate : Migration
     {

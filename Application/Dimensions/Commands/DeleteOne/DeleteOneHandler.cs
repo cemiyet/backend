@@ -2,16 +2,16 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Cemiyet.Core.Exceptions;
-using Cemiyet.Persistence.Contexts;
+using Cemiyet.Persistence.Application.Contexts;
 using MediatR;
 
 namespace Cemiyet.Application.Dimensions.Commands.DeleteOne
 {
     public class DeleteOneHandler : IRequestHandler<DeleteOneCommand>
     {
-        private readonly MainDataContext _context;
+        private readonly AppDataContext _context;
 
-        public DeleteOneHandler(MainDataContext context)
+        public DeleteOneHandler(AppDataContext context)
         {
             _context = context;
         }

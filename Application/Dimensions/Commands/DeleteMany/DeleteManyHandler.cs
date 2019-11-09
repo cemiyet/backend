@@ -3,16 +3,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Cemiyet.Core.Exceptions;
-using Cemiyet.Persistence.Contexts;
+using Cemiyet.Persistence.Application.Contexts;
 using MediatR;
 
 namespace Cemiyet.Application.Dimensions.Commands.DeleteMany
 {
     public class DeleteManyHandler : IRequestHandler<DeleteManyCommand>
     {
-        private readonly MainDataContext _context;
+        private readonly AppDataContext _context;
 
-        public DeleteManyHandler(MainDataContext context)
+        public DeleteManyHandler(AppDataContext context)
         {
             _context = context;
         }

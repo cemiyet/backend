@@ -1,5 +1,5 @@
 using System.Net.Http;
-using Cemiyet.Persistence.Contexts;
+using Cemiyet.Persistence.Application.Contexts;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,8 +17,8 @@ namespace Cemiyet.Api.Tests
             {
                 builder.ConfigureServices(services =>
                 {
-                    services.RemoveAll(typeof(MainDataContext));
-                    services.AddDbContext<MainDataContext>(options =>
+                    services.RemoveAll(typeof(AppDataContext));
+                    services.AddDbContext<AppDataContext>(options =>
                     {
                         options.UseInMemoryDatabase("TestDatabase");
                     });

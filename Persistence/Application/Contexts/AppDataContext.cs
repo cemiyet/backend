@@ -1,13 +1,13 @@
 using Cemiyet.Core.Entities;
 using Cemiyet.Core.Extensions;
-using Cemiyet.Persistence.EntityConfigurations;
+using Cemiyet.Persistence.Application.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Cemiyet.Persistence.Contexts
+namespace Cemiyet.Persistence.Application.Contexts
 {
-    public class MainDataContext : DbContext
+    public class AppDataContext : DbContext
     {
-        public MainDataContext(DbContextOptions options) : base(options)
+        public AppDataContext(DbContextOptions options) : base(options)
         {
         }
 

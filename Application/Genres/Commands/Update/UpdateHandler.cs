@@ -2,16 +2,16 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Cemiyet.Core.Exceptions;
-using Cemiyet.Persistence.Contexts;
+using Cemiyet.Persistence.Application.Contexts;
 using MediatR;
 
 namespace Cemiyet.Application.Genres.Commands.Update
 {
     public class UpdateHandler : IRequestHandler<UpdateCommand>
     {
-        private readonly MainDataContext _context;
+        private readonly AppDataContext _context;
 
-        public UpdateHandler(MainDataContext context)
+        public UpdateHandler(AppDataContext context)
         {
             _context = context;
         }

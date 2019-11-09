@@ -1,5 +1,5 @@
 using Cemiyet.Application.Genres.Queries.List;
-using Cemiyet.Persistence.Contexts;
+using Cemiyet.Persistence.Application.Contexts;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -24,7 +24,7 @@ namespace Cemiyet.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MainDataContext>(options =>
+            services.AddDbContext<AppDataContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("MainDataContext"));
             });
@@ -48,9 +48,9 @@ namespace Cemiyet.Api
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetRequiredService<MainDataContext>();
+                var context = serviceScope.ServiceProvider.GetRequiredService<AppDataContext>();
                 context.Database.Migrate();
-                MainDataContextSeed.Seed(context);
+                AppDataContextSeed.Seed(context);
             }
 
             if (env.IsDevelopment())

@@ -1,0 +1,16 @@
+# Editor configuration, see https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+
+[*.cs]
+max_line_length = 120
+indent_size = 4
+
+[*.{md,json,csproj}]
+trim_trailing_whitespace = false
+indent_size = 2

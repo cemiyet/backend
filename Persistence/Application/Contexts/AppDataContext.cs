@@ -1,6 +1,6 @@
 using Cemiyet.Core.Entities;
 using Cemiyet.Core.Extensions;
-using Cemiyet.Persistence.Application.EntityConfigurations;
+using Cemiyet.Persistence.Application.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Cemiyet.Persistence.Application.Contexts

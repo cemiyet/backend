@@ -5,7 +5,7 @@ namespace Cemiyet.Core.Entities
     /// <summary>
     /// Category of literature.
     /// </summary>
-    public class Genre : BaseEntity<Guid>
+    public class Genre : Entity<Guid>
     {
         public string Name { get; set; }
     }

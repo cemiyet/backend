@@ -20,12 +20,14 @@ namespace Cemiyet.Persistence.Application.Contexts
         public DbSet<EntityChange> EntityChanges { get; set; }
         public DbSet<Dimension> Dimensions { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new EntityChangeConfiguration());
             modelBuilder.ApplyConfiguration(new DimensionConfiguration());
             modelBuilder.ApplyConfiguration(new GenreConfiguration());
+            modelBuilder.ApplyConfiguration(new AuthorConfiguration());
 
             // use snake case naming convention
             foreach (var entity in modelBuilder.Model.GetEntityTypes())

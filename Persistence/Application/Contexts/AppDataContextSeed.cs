@@ -11,6 +11,7 @@ namespace Cemiyet.Persistence.Application.Contexts
         {
             SeedGenres(context);
             SeedDimensions(context);
+            SeedAuthors(context);
         }
 
         private static void SeedGenres(AppDataContext context)
@@ -178,6 +179,46 @@ namespace Cemiyet.Persistence.Application.Contexts
             };
 
             context.Dimensions.AddRange(dimensions);
+            context.SaveChanges();
+        }
+
+        private static void SeedAuthors(AppDataContext context)
+        {
+            if (context.Authors.Any()) return;
+
+            var authors = new List<Author>
+            {
+                new Author
+                {
+                    Name = "Ömer", Surname = "Seyfettin", Bio = "", CreationDate = DateTime.UtcNow
+                },
+                new Author
+                {
+                    Name = "Ziya", Surname = "Gökalp", Bio = "", CreationDate = DateTime.UtcNow
+                },
+                new Author
+                {
+                    Name = "İsmail", Surname = "Gaspıralı", Bio = "", CreationDate = DateTime.UtcNow
+                },
+                new Author
+                {
+                    Name = "Namık", Surname = "Kemal", Bio = "", CreationDate = DateTime.UtcNow
+                },
+                new Author
+                {
+                    Name = "Mustafa Kemal", Surname = "Atatürk", Bio = "", CreationDate = DateTime.UtcNow
+                },
+                new Author
+                {
+                    Name = "Nihal", Surname = "Atsız", Bio = "", CreationDate = DateTime.UtcNow
+                },
+                new Author
+                {
+                    Name = "Yusuf", Surname = "Akçura", Bio = "", CreationDate = DateTime.UtcNow
+                }
+            };
+
+            context.Authors.AddRange(authors);
             context.SaveChanges();
         }
     }

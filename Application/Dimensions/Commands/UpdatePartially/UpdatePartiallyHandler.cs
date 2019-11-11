@@ -29,7 +29,6 @@ namespace Cemiyet.Application.Dimensions.Commands.UpdatePartially
             if (!request.Height.Equals(default) && Math.Abs(request.Width - dimension.Width) > 0.1)
                 dimension.Height = request.Height;
 
-            dimension.ModificationDate = DateTime.UtcNow;
             // dimension.ModifierId =
             // TODO (v0.4): add modifier id.
 

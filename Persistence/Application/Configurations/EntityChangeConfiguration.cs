@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Cemiyet.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

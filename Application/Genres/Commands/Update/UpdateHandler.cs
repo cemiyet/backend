@@ -24,7 +24,6 @@ namespace Cemiyet.Application.Genres.Commands.Update
                 throw new GenreNotFoundException(request.Id);
 
             genre.Name = request.Name;
-            genre.ModificationDate = DateTime.UtcNow;
             // genre.ModifierId =
             // TODO (v0.4): add modifier id.
 

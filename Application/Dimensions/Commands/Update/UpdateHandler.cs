@@ -25,7 +25,6 @@ namespace Cemiyet.Application.Dimensions.Commands.Update
 
             dimension.Width = request.Width;
             dimension.Height = request.Height;
-            dimension.ModificationDate = DateTime.UtcNow;
             // dimension.ModifierId =
             // TODO (v0.4): add modifier id.
 

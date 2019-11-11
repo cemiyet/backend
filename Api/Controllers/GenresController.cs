@@ -19,11 +19,8 @@ namespace Cemiyet.Api.Controllers
     [GenresExceptionFilter]
     public class GenresController : CemiyetBaseController
     {
-        private readonly IMediator _mediator;
-
-        public GenresController(IMediator mediator)
+        public GenresController(IMediator mediator) : base(mediator)
         {
-            _mediator = mediator;
         }
 
         [HttpPost]
@@ -32,7 +29,7 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
         public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data)
         {
-            return await _mediator.Send(data);
+            return await Mediator.Send(data);
         }
 
         [HttpGet]
@@ -40,7 +37,7 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
         public async Task<ActionResult<List<Genre>>> List([FromQuery] ListQuery query)
         {
-            return await _mediator.Send(query);
+            return await Mediator.Send(query);
         }
 
         [HttpGet("{id}")]
@@ -48,7 +45,7 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
         public async Task<ActionResult<Genre>> Details(Guid id)
         {
-            return await _mediator.Send(new DetailsQuery {Id = id});
+            return await Mediator.Send(new DetailsQuery {Id = id});
         }
 
 //        [HttpGet("{id}/books")]
@@ -65,7 +62,7 @@ namespace Cemiyet.Api.Controllers
         public async Task<ActionResult<Unit>> Update([FromRoute] Guid id, [FromBody] UpdateCommand data)
         {
             data.Id = id;
-            return await _mediator.Send(data);
+            return await Mediator.Send(data);
         }
 
         [HttpDelete("{id}")]
@@ -73,7 +70,7 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
         public async Task<ActionResult<Unit>> DeleteOne(Guid id)
         {
-            return await _mediator.Send(new DeleteOneCommand {Id = id});
+            return await Mediator.Send(new DeleteOneCommand {Id = id});
         }
 
         [HttpDelete]
@@ -82,7 +79,7 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
         public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data)
         {
-            return await _mediator.Send(data);
+            return await Mediator.Send(data);
         }
     }
 }

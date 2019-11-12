@@ -1,0 +1,39 @@
+version: 0.1.{build}
+image:
+- Visual Studio 2019
+- Ubuntu
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  version_prefix: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+environment:
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+before_build:
+- cmd: dotnet restore
+- sh: dotnet restore
+build:
+  project: Cemiyet.sln
+  parallel: true
+  verbosity: minimal
+test_script:
+- cmd: >-
+    dotnet test ./Core.Tests
+
+    dotnet test ./Persistence.Tests
+
+    dotnet test ./Infrastructure.Tests
+
+    dotnet test ./Application.Tests
+- sh: >-
+    dotnet test ./Core.Tests
+
+    dotnet test ./Persistence.Tests
+
+    dotnet test ./Infrastructure.Tests
+
+    dotnet test ./Application.Tests

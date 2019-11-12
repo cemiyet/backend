@@ -12,6 +12,32 @@ namespace Cemiyet.Api.Tests
     public class AuthorsControllerTests : IntegrationTest
     {
         [Fact]
+        public async Task Add_WithoutCorrectData_ShouldReturn_BadRequest()
+        {
+            var response = await _httpClient.PostAsJsonAsync("authors/", default(Author));
+            var response2 = await _httpClient.PostAsJsonAsync("authors/", new Author
+            {
+                Name = "",
+                Surname = "V3L1"
+            });
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, response2.StatusCode);
+        }
+
+        [Fact]
+        public async Task Add_WithCorrectData_ShouldReturn_OK()
+        {
+            var response = await _httpClient.PostAsJsonAsync("authors/", new Author
+            {
+                Name = "Yazar",
+                Surname = "Veli"
+            });
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
         public async Task List_WithoutCorrectPaging_ShouldReturn_BadRequest()
         {
             var response = await _httpClient.GetAsync("authors?page=-1&pageSize=-5");

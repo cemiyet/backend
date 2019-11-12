@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Cemiyet.Api.Filters;
+using Cemiyet.Application.Authors.Commands.Add;
 using Cemiyet.Application.Authors.Queries.List;
 using Cemiyet.Application.Authors.Queries.Details;
 using Cemiyet.Core.Entities;
@@ -16,6 +18,15 @@ namespace Cemiyet.Api.Controllers
     {
         public AuthorsController(IMediator mediator) : base(mediator)
         {
+        }
+
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
+        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data)
+        {
+            return await Mediator.Send(data);
         }
 
         [HttpGet]

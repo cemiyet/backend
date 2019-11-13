@@ -22,6 +22,7 @@ namespace Cemiyet.Application.Authors.Commands.Add
             {
                 Name = request.Name,
                 Surname = request.Surname,
+                CreationDate = DateTime.UtcNow
                 // CreatorId =
                 // TODO (v0.4): add creator id.
             };

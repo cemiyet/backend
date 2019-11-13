@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Cemiyet.Api.Filters;
 using Cemiyet.Application.Authors.Commands.Add;
 using Cemiyet.Application.Authors.Commands.UpdatePartially;
+using Cemiyet.Application.Authors.Commands.Update;
 using Cemiyet.Application.Authors.Queries.List;
 using Cemiyet.Application.Authors.Queries.Details;
 using Cemiyet.Core.Entities;
@@ -43,6 +44,16 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
         public async Task<ActionResult<Unit>> UpdatePartially([FromRoute] Guid id,
                                                               [FromBody] UpdatePartiallyCommand data)
+        {
+            data.Id = id;
+            return await Mediator.Send(data);
+        }
+
+        [HttpPut("{id}")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
+        public async Task<ActionResult<Unit>> Update([FromRoute] Guid id, [FromBody] UpdateCommand data)
         {
             data.Id = id;
             return await Mediator.Send(data);

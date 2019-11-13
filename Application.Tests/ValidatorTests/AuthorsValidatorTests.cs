@@ -1,6 +1,7 @@
 using System;
 using Cemiyet.Application.Authors.Commands.Add;
 using Cemiyet.Application.Authors.Commands.UpdatePartially;
+using Cemiyet.Application.Authors.Commands.Update;
 using Cemiyet.Application.Authors.Queries.List;
 using Cemiyet.Application.Authors.Queries.Details;
 using FluentValidation.TestHelper;
@@ -15,6 +16,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
 
         private readonly AddCommandValidator _addCommandValidator;
         private readonly UpdatePartiallyCommandValidator _updatePartiallyCommandValidator;
+        private readonly UpdateCommandValidator _updateCommandValidator;
 
         public AuthorsValidatorTests()
         {
@@ -23,6 +25,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
 
             _addCommandValidator = new AddCommandValidator();
             _updatePartiallyCommandValidator = new UpdatePartiallyCommandValidator();
+            _updateCommandValidator = new UpdateCommandValidator();
         }
 
         [Fact]
@@ -195,6 +198,53 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             upcValidator.ShouldNotHaveValidationErrorFor(x => x.Name);
             upcValidator.ShouldNotHaveValidationErrorFor(x => x.Surname);
             upcValidator.ShouldNotHaveValidationErrorFor(x => x.Bio);
+        }
+
+        [Fact]
+        public void UpdateCommand_ShouldHave_ValidationErrors()
+        {
+            var ucWithNullData = new UpdateCommand();
+            var ucValidator = _updateCommandValidator.TestValidate(ucWithNullData);
+            ucValidator.ShouldHaveValidationErrorFor(x => x.Name);
+            ucValidator.ShouldHaveValidationErrorFor(x => x.Surname);
+            ucValidator.ShouldHaveValidationErrorFor(x => x.Bio);
+
+            var ucWithNullData2 = new UpdateCommand
+            {
+                Name = null,
+                Surname = "Surname",
+                Bio = default
+            };
+            ucValidator = _updateCommandValidator.TestValidate(ucWithNullData2);
+            ucValidator.ShouldHaveValidationErrorFor(x => x.Name);
+            ucValidator.ShouldHaveValidationErrorFor(x => x.Bio);
+
+            var ucWithBadData = new UpdateCommand
+            {
+                Name = "Y4Z4R",
+                Surname = "ucValidator.ShouldHaveValidationErrorFor(x => x.Surname);",
+                Bio = "ABC"
+            };
+            ucValidator = _updateCommandValidator.TestValidate(ucWithBadData);
+            ucValidator.ShouldHaveValidationErrorFor(x => x.Name);
+            ucValidator.ShouldHaveValidationErrorFor(x => x.Surname);
+        }
+
+        [Fact]
+        public void UpdateCommand_ShouldNotHave_ValidationErrors()
+        {
+            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+
+            var ucWithGoodData = new UpdateCommand
+            {
+                Name = "Name",
+                Surname = "Surname",
+                Bio = "Bio"
+            };
+
+            var ucValidator = _updateCommandValidator.TestValidate(ucWithGoodData);
+            ucValidator.ShouldNotHaveValidationErrorFor(x => x.Name);
+            ucValidator.ShouldNotHaveValidationErrorFor(x => x.Bio);
         }
     }
 }

@@ -80,8 +80,8 @@ namespace Cemiyet.Persistence.Application.Contexts
 
                 foreach (var property in properties)
                 {
-                    var originalValue = entity.OriginalValues[property].ToString();
-                    var currentValue = entity.CurrentValues[property].ToString();
+                    var originalValue = entity.OriginalValues[property]?.ToString();
+                    var currentValue = entity.CurrentValues[property]?.ToString();
 
                     if (originalValue == currentValue) continue;
 

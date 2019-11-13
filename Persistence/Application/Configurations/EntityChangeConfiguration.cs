@@ -12,8 +12,8 @@ namespace Cemiyet.Persistence.Application.Configurations
             builder.HasIndex(ec => ec.EntityId);
             builder.Property(ec => ec.EntityId).IsRequired();
             builder.Property(ec => ec.PropertyName).IsRequired();
-            builder.Property(ec => ec.OldValue).IsRequired();
-            builder.Property(ec => ec.NewValue).IsRequired();
+            builder.Property(ec => ec.OldValue);
+            builder.Property(ec => ec.NewValue);
             builder.Property(ec => ec.ModificationDate).IsRequired();
             builder.Property(ec => ec.ModifierId).IsRequired();
         }

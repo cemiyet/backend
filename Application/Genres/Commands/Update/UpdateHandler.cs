@@ -24,8 +24,6 @@ namespace Cemiyet.Application.Genres.Commands.Update
                 throw new GenreNotFoundException(request.Id);
 
             genre.Name = request.Name;
-            // genre.ModifierId =
-            // TODO (v0.4): add modifier id.
 
             var success = await _context.SaveChangesAsync() > 0;
 

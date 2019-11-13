@@ -25,8 +25,6 @@ namespace Cemiyet.Application.Dimensions.Commands.Update
 
             dimension.Width = request.Width;
             dimension.Height = request.Height;
-            // dimension.ModifierId =
-            // TODO (v0.4): add modifier id.
 
             var success = await _context.SaveChangesAsync() > 0;
 

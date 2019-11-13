@@ -2,15 +2,6 @@ version: 0.1.{build}
 image:
 - Visual Studio 2019
 - Ubuntu
-dotnet_csproj:
-  patch: true
-  file: 'src/**/*.csproj'
-  version: '{version}'
-  version_prefix: '{version}'
-  package_version: '{version}'
-  assembly_version: '{version}'
-  file_version: '{version}'
-  informational_version: '{version}'
 environment:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
 before_build:

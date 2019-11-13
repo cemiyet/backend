@@ -24,25 +24,16 @@ namespace Cemiyet.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data)
-        {
-            return await Mediator.Send(data);
-        }
+        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data) => await Mediator.Send(data);
 
         [HttpGet]
         [ProducesResponseType(typeof(List<Author>), 200)]
         [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
-        public async Task<ActionResult<List<Author>>> List([FromQuery] ListQuery query)
-        {
-            return await Mediator.Send(query);
-        }
+        public async Task<ActionResult<List<Author>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Author), 200)]
         [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
-        public async Task<ActionResult<Author>> Details(Guid id)
-        {
-            return await Mediator.Send(new DetailsQuery {Id = id});
-        }
+        public async Task<ActionResult<Author>> Details(Guid id) => await Mediator.Send(new DetailsQuery {Id = id});
     }
 }

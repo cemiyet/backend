@@ -18,8 +18,8 @@ jobs:
       run: dotnet build --configuration Release
     - name: Test with dotnet
       run: |
-        dotnet test ./Core.Tests --configuration Release
-        dotnet test ./Persistence.Tests --configuration Release
-        dotnet test ./Infrastructure.Tests --configuration Release
-        dotnet test ./Application.Tests --configuration Release
-        
+        dotnet test ./tests/Core.Tests --configuration Release
+        dotnet test ./tests/Persistence.Tests --configuration Release
+        dotnet test ./tests/Infrastructure.Tests --configuration Release
+        dotnet test ./tests/Application.Tests --configuration Release
+

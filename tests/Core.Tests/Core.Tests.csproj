@@ -3,20 +3,17 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <AssemblyName>Cemiyet.Api.Tests</AssemblyName>
-    <RootNamespace>Cemiyet.Api.Tests</RootNamespace>
-    <PackageId>Cemiyet.Api.Tests</PackageId>
+    <AssemblyName>Cemiyet.Core.Tests</AssemblyName>
+    <RootNamespace>Cemiyet.Core.Tests</RootNamespace>
+    <PackageId>Cemiyet.Core.Tests</PackageId>
     <PackageVersion>0.1.0</PackageVersion>
     <Authors>Nuri Uzunoğlu</Authors>
     <RepositoryUrl>https://github.com/nuriu/cemiyet-backend</RepositoryUrl>
     <Company>Cemiyet</Company>
-    <Product>Cemiyet.Api.Tests</Product>
+    <Product>Cemiyet.Core.Tests</Product>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -24,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Api\Api.csproj" />
+    <ProjectReference Include="..\..\src\Core\Core.csproj" />
   </ItemGroup>
 
 </Project>

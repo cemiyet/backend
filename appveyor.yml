@@ -4,7 +4,7 @@ image:
 - Ubuntu
 dotnet_csproj:
   patch: true
-  file: '**\*.csproj'
+  file: 'src/**/*.csproj'
   version: '{version}'
   version_prefix: '{version}'
   package_version: '{version}'
@@ -22,18 +22,18 @@ build:
   verbosity: minimal
 test_script:
 - cmd: >-
-    dotnet test ./Core.Tests
+    dotnet test ./tests/Core.Tests
 
-    dotnet test ./Persistence.Tests
+    dotnet test ./tests/Persistence.Tests
 
-    dotnet test ./Infrastructure.Tests
+    dotnet test ./tests/Infrastructure.Tests
 
-    dotnet test ./Application.Tests
+    dotnet test ./tests/Application.Tests
 - sh: >-
-    dotnet test ./Core.Tests
+    dotnet test ./tests/Core.Tests
 
-    dotnet test ./Persistence.Tests
+    dotnet test ./tests/Persistence.Tests
 
-    dotnet test ./Infrastructure.Tests
+    dotnet test ./tests/Infrastructure.Tests
 
-    dotnet test ./Application.Tests
+    dotnet test ./tests/Application.Tests

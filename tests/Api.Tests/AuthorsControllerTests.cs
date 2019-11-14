@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Cemiyet.Application.Authors.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
 using Newtonsoft.Json;
 using Xunit;
@@ -166,6 +167,41 @@ namespace Cemiyet.Api.Tests
             var authors = await authorsResponse.Content.ReadAsAsync<List<Author>>();
 
             var response = await _httpClient.DeleteAsync($"authors/{authors.Last().Id}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
+        {
+            string[] ids = {Guid.NewGuid().ToString(), Guid.NewGuid().ToString()};
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(_httpClient.BaseAddress + "authors"),
+                Content = new StringContent(JsonConvert.SerializeObject(ids), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _httpClient.SendAsync(request);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
+        {
+            var authorsResponse = await _httpClient.GetAsync("authors");
+            var authors = await authorsResponse.Content.ReadAsAsync<List<Author>>();
+
+            var dmc = new DeleteManyCommand {Ids = authors.TakeLast(2).Select(g => g.Id).ToArray()};
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(_httpClient.BaseAddress + "authors"),
+                Content = new StringContent(JsonConvert.SerializeObject(dmc), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _httpClient.SendAsync(request);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }

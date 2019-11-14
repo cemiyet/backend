@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Cemiyet.Core.Entities;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.Contexts;
 using MediatR;

@@ -2,6 +2,7 @@ using System;
 using Cemiyet.Application.Authors.Commands.Add;
 using Cemiyet.Application.Authors.Commands.UpdatePartially;
 using Cemiyet.Application.Authors.Commands.Update;
+using Cemiyet.Application.Authors.Commands.DeleteOne;
 using Cemiyet.Application.Authors.Queries.List;
 using Cemiyet.Application.Authors.Queries.Details;
 using FluentValidation.TestHelper;
@@ -17,6 +18,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly AddCommandValidator _addCommandValidator;
         private readonly UpdatePartiallyCommandValidator _updatePartiallyCommandValidator;
         private readonly UpdateCommandValidator _updateCommandValidator;
+        private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
 
         public AuthorsValidatorTests()
         {
@@ -26,6 +28,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _addCommandValidator = new AddCommandValidator();
             _updatePartiallyCommandValidator = new UpdatePartiallyCommandValidator();
             _updateCommandValidator = new UpdateCommandValidator();
+            _deleteOneCommandValidator = new DeleteOneCommandValidator();
         }
 
         [Fact]
@@ -245,6 +248,18 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             var ucValidator = _updateCommandValidator.TestValidate(ucWithGoodData);
             ucValidator.ShouldNotHaveValidationErrorFor(x => x.Name);
             ucValidator.ShouldNotHaveValidationErrorFor(x => x.Bio);
+        }
+
+        [Fact]
+        public void DeleteOneCommand_ShouldHave_ValidationErrors()
+        {
+            _deleteOneCommandValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
+        }
+
+        [Fact]
+        public void DeleteOneCommand_ShouldNotHave_ValidationErrors()
+        {
+            _deleteOneCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
         }
     }
 }

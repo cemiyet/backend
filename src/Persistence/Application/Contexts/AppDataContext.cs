@@ -21,6 +21,7 @@ namespace Cemiyet.Persistence.Application.Contexts
         public DbSet<Dimension> Dimensions { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Author> Authors { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,7 @@ namespace Cemiyet.Persistence.Application.Contexts
             modelBuilder.ApplyConfiguration(new DimensionConfiguration());
             modelBuilder.ApplyConfiguration(new GenreConfiguration());
             modelBuilder.ApplyConfiguration(new AuthorConfiguration());
+            modelBuilder.ApplyConfiguration(new PublisherConfiguration());
 
             // use snake case naming convention
             foreach (var entity in modelBuilder.Model.GetEntityTypes())

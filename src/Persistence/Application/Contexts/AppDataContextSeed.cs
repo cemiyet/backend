@@ -12,6 +12,7 @@ namespace Cemiyet.Persistence.Application.Contexts
             SeedGenres(context);
             SeedDimensions(context);
             SeedAuthors(context);
+            SeedPublishers(context);
         }
 
         private static void SeedGenres(AppDataContext context)
@@ -219,6 +220,38 @@ namespace Cemiyet.Persistence.Application.Contexts
             };
 
             context.Authors.AddRange(authors);
+            context.SaveChanges();
+        }
+
+        private static void SeedPublishers(AppDataContext context)
+        {
+            if (context.Publishers.Any()) return;
+
+            var publishers = new List<Publisher>
+            {
+                new Publisher
+                {
+                    Name = "Ötüken Neşriyat", Description = "", CreationDate = DateTime.UtcNow
+                },
+                new Publisher
+                {
+                    Name = "Türkiye İş Bankası Kültür Yayınları", Description = "", CreationDate = DateTime.UtcNow
+                },
+                new Publisher
+                {
+                    Name = "Yapı Kredi Yayınları", Description = "", CreationDate = DateTime.UtcNow
+                },
+                new Publisher
+                {
+                    Name = "İthaki Yayınları", Description = "", CreationDate = DateTime.UtcNow
+                },
+                new Publisher
+                {
+                    Name = "Kronik Kitap", Description = "", CreationDate = DateTime.UtcNow
+                }
+            };
+
+            context.Publishers.AddRange(publishers);
             context.SaveChanges();
         }
     }

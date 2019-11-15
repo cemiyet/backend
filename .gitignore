@@ -7,3 +7,6 @@
 # .NET Core build folders
 [bB]in/
 [oO]bj/
+
+# Sublime Workspace files are user-specific
+*.sublime-workspace

@@ -136,7 +136,7 @@ namespace Cemiyet.Api.Tests
             {
                 Method = HttpMethod.Patch,
                 RequestUri = new Uri(_httpClient.BaseAddress + $"dimensions/{dimensions.First().Id}"),
-                Content = new StringContent(JsonConvert.SerializeObject(new {Width = 5.0}), Encoding.UTF8,
+                Content = new StringContent(JsonConvert.SerializeObject(new { Width = 5.0 }), Encoding.UTF8,
                                             "application/json")
             };
 
@@ -164,7 +164,7 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            string[] ids = {Guid.NewGuid().ToString(), Guid.NewGuid().ToString()};
+            string[] ids = { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
 
             var request = new HttpRequestMessage
             {
@@ -183,7 +183,7 @@ namespace Cemiyet.Api.Tests
             var dimensionsResponse = await _httpClient.GetAsync("dimensions");
             var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<Dimension>>();
 
-            var dmc = new DeleteManyCommand {Ids = dimensions.TakeLast(2).Select(g => g.Id).ToArray()};
+            var dmc = new DeleteManyCommand { Ids = dimensions.TakeLast(2).Select(g => g.Id).ToArray() };
 
             var request = new HttpRequestMessage
             {

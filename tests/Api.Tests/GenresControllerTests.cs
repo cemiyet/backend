@@ -121,7 +121,7 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            string[] ids = {Guid.NewGuid().ToString(), Guid.NewGuid().ToString()};
+            string[] ids = { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
 
             var request = new HttpRequestMessage
             {
@@ -140,7 +140,7 @@ namespace Cemiyet.Api.Tests
             var genresResponse = await _httpClient.GetAsync("genres");
             var genres = await genresResponse.Content.ReadAsAsync<List<Genre>>();
 
-            var dmc = new DeleteManyCommand {Ids = genres.TakeLast(2).Select(g => g.Id).ToArray()};
+            var dmc = new DeleteManyCommand { Ids = genres.TakeLast(2).Select(g => g.Id).ToArray() };
 
             var request = new HttpRequestMessage
             {

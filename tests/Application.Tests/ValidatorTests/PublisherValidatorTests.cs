@@ -163,7 +163,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         [Fact]
         public void UpdatePartiallyCommand_ShouldNotHave_ValidationErrors()
         {
-            var upcWithEmptyData = new UpdatePartiallyCommand {Name = "YAYINEVİ", Description = default};
+            var upcWithEmptyData = new UpdatePartiallyCommand { Name = "YAYINEVİ", Description = default };
             var upcValidator = _updatePartiallyCommandValidator.TestValidate(upcWithEmptyData);
             upcValidator.ShouldNotHaveValidationErrorFor(x => x.Name);
             upcValidator.ShouldNotHaveValidationErrorFor(x => x.Description);

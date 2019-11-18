@@ -64,7 +64,7 @@ namespace Cemiyet.Api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(PublisherNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteOne(Guid id) => await Mediator.Send(new DeleteOneCommand {Id = id});
+        public async Task<ActionResult<Unit>> DeleteOne(Guid id) => await Mediator.Send(new DeleteOneCommand { Id = id });
 
         [HttpDelete]
         [Consumes(MediaTypeNames.Application.Json)]

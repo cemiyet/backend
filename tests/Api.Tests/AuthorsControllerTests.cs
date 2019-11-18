@@ -104,7 +104,7 @@ namespace Cemiyet.Api.Tests
             {
                 Method = HttpMethod.Patch,
                 RequestUri = new Uri(_httpClient.BaseAddress + $"authors/{authors.First().Id}"),
-                Content = new StringContent(JsonConvert.SerializeObject(new {Name = "YAZAR"}), Encoding.UTF8,
+                Content = new StringContent(JsonConvert.SerializeObject(new { Name = "YAZAR" }), Encoding.UTF8,
                                             "application/json")
             };
 
@@ -173,7 +173,7 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            string[] ids = {Guid.NewGuid().ToString(), Guid.NewGuid().ToString()};
+            string[] ids = { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
 
             var request = new HttpRequestMessage
             {
@@ -192,7 +192,7 @@ namespace Cemiyet.Api.Tests
             var authorsResponse = await _httpClient.GetAsync("authors");
             var authors = await authorsResponse.Content.ReadAsAsync<List<Author>>();
 
-            var dmc = new DeleteManyCommand {Ids = authors.TakeLast(2).Select(g => g.Id).ToArray()};
+            var dmc = new DeleteManyCommand { Ids = authors.TakeLast(2).Select(g => g.Id).ToArray() };
 
             var request = new HttpRequestMessage
             {

@@ -1,0 +1,63 @@
+{
+    "folders":
+    [
+        {
+            "path": "src",
+            "name": "Projects"
+        },
+        {
+            "path": "tests",
+            "name": "Tests"
+        }
+    ],
+    "settings":
+    {
+        "folder_exclude_patterns":
+        [
+            ".git",
+            ".idea",
+            ".vs",
+            ".vscode",
+            "bin",
+            "obj"
+        ],
+        "rulers":
+        [
+            120
+        ]
+    },
+    "build_systems":
+    [
+        {
+            "name": "dotnet build - solution",
+            "shell_cmd": "dotnet build ${project_path}",
+            "working_dir": "${project_path}",
+            "selector": "source.cs"
+        },
+        {
+            "name": "dotnet test - solution",
+            "shell_cmd": "dotnet test ${project_path}",
+            "working_dir": "${project_path}",
+            "selector": "source.cs"
+        },
+        {
+            "name": "dotnet format - solution",
+            "shell_cmd": "dotnet format -w ${project_path}\\Cemiyet.sln",
+            "working_dir": "${project_path}",
+            "selector": "source.cs"
+        },
+        {
+            "name": "dotnet format - file",
+            "shell_cmd": "dotnet format -v diag --files ${file}",
+            "working_dir": "${project_path}",
+            "selector": "source.cs"
+        },
+        {
+            "name": "dotnet run - api",
+            "shell_cmd": "dotnet run ${project_path} -p src/api",
+            "working_dir": "${project_path}",
+            "selector": "source.cs"
+        }
+    ],
+    "solution_file": "./Cemiyet.sln",
+}

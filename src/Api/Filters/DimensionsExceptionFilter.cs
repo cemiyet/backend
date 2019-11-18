@@ -11,10 +11,10 @@ namespace Cemiyet.Api.Filters
         {
             if (context.Exception is DimensionNotFoundException)
             {
-                context.HttpContext.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
 
-            context.Result = new JsonResult(new {context.Exception.Message});
+            context.Result = new JsonResult(new { context.Exception.Message });
             base.OnException(context);
         }
     }

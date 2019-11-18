@@ -13,7 +13,7 @@ namespace Cemiyet.Persistence.Tests
 
         public PagingExtensionsTests()
         {
-            _data = new List<int> {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+            _data = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             _dataQueryable = _data.AsQueryable();
         }
 
@@ -35,13 +35,13 @@ namespace Cemiyet.Persistence.Tests
             var rFirstPage = _dataQueryable.PagedToList(1, pageSize);
             Assert.NotEmpty(rFirstPage);
             Assert.Equal(pageSize, actual: rFirstPage.Count);
-            Assert.Equal(new List<int> {1, 2, 3, 4, 5}, rFirstPage);
+            Assert.Equal(new List<int> { 1, 2, 3, 4, 5 }, rFirstPage);
 
             pageSize = _data.Count / 3;
             var rSecondPage = _dataQueryable.PagedToList(2, pageSize);
             Assert.NotEmpty(rSecondPage);
             Assert.Equal(pageSize, actual: rSecondPage.Count);
-            Assert.Equal(new List<int> {4, 5, 6}, rSecondPage);
+            Assert.Equal(new List<int> { 4, 5, 6 }, rSecondPage);
         }
     }
 }

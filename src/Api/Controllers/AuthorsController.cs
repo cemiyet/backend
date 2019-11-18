@@ -38,7 +38,7 @@ namespace Cemiyet.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Author), 200)]
         [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
-        public async Task<ActionResult<Author>> Details(Guid id) => await Mediator.Send(new DetailsQuery {Id = id});
+        public async Task<ActionResult<Author>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
 
         [HttpPatch("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -64,7 +64,7 @@ namespace Cemiyet.Api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(DimensionNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteOne(Guid id) => await Mediator.Send(new DeleteOneCommand {Id = id});
+        public async Task<ActionResult<Unit>> DeleteOne(Guid id) => await Mediator.Send(new DeleteOneCommand { Id = id });
 
         [HttpDelete]
         [Consumes(MediaTypeNames.Application.Json)]

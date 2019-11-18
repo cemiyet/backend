@@ -37,14 +37,14 @@ namespace Cemiyet.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Genre), 200)]
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public async Task<ActionResult<Genre>> Details(Guid id) => await Mediator.Send(new DetailsQuery {Id = id});
+        public async Task<ActionResult<Genre>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
 
-//        [HttpGet("{id}/books")]
-//        [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-//        public IActionResult ListBooks(Guid id, [FromQuery] ListQuery query)
-//        {
-//            throw new NotImplementedException("TODO (v0.3)");
-//        }
+        // [HttpGet("{id}/books")]
+        // [ProducesResponseType(typeof(GenreNotFoundException), 400)]
+        // public IActionResult ListBooks(Guid id, [FromQuery] ListQuery query)
+        // {
+        //     throw new NotImplementedException("TODO (v0.3)");
+        // }
 
         [HttpPut("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -59,7 +59,7 @@ namespace Cemiyet.Api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteOne(Guid id) => await Mediator.Send(new DeleteOneCommand {Id = id});
+        public async Task<ActionResult<Unit>> DeleteOne(Guid id) => await Mediator.Send(new DeleteOneCommand { Id = id });
 
         [HttpDelete]
         [Consumes(MediaTypeNames.Application.Json)]

@@ -96,8 +96,8 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         public void DeleteManyCommand_ShouldHave_ValidationErrors()
         {
             Guid[] ids = { };
-            Guid[] ids2 = {Guid.NewGuid()};
-            Guid[] ids3 = {Guid.Empty, Guid.Empty, Guid.Empty};
+            Guid[] ids2 = { Guid.NewGuid() };
+            Guid[] ids3 = { Guid.Empty, Guid.Empty, Guid.Empty };
 
             _deleteManyCommandValidator.ShouldHaveValidationErrorFor(x => x.Ids, ids);
             _deleteManyCommandValidator.ShouldHaveValidationErrorFor(x => x.Ids, ids2);
@@ -107,7 +107,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         [Fact]
         public void DeleteManyCommand_ShouldNotHave_ValidationErrors()
         {
-            Guid[] ids = {Guid.NewGuid(), Guid.NewGuid()};
+            Guid[] ids = { Guid.NewGuid(), Guid.NewGuid() };
 
             _deleteManyCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Ids, ids);
         }

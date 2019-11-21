@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Cemiyet.Core.Entities
 {
@@ -13,5 +13,6 @@ namespace Cemiyet.Core.Entities
 
         // TODO (v0.4): create relations with user model.
         public T CreatorId { get; set; }
+        // public User Creator { get; set; }
     }
 }

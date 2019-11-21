@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Cemiyet.Core.Entities
 {
@@ -9,5 +10,7 @@ namespace Cemiyet.Core.Entities
     {
         public string Name { get; set; }
         public string Description { get; set; }
+
+        public ICollection<BookEdition> BookEditions { get; set; }
     }
 }

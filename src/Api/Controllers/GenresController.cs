@@ -9,8 +9,10 @@ using Cemiyet.Application.Genres.Commands.DeleteOne;
 using Cemiyet.Application.Genres.Commands.Update;
 using Cemiyet.Application.Genres.Queries.Details;
 using Cemiyet.Application.Genres.Queries.List;
+using Cemiyet.Application.Genres.Queries.ListBooks;
 using Cemiyet.Core.Entities;
 using Cemiyet.Core.Exceptions;
+using Cemiyet.Persistence.Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,12 +41,14 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
         public async Task<ActionResult<Genre>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
 
-        // [HttpGet("{id}/books")]
-        // [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        // public IActionResult ListBooks(Guid id, [FromQuery] ListQuery query)
-        // {
-        //     throw new NotImplementedException("TODO (v0.3)");
-        // }
+        [HttpGet("{id}/books")]
+        [ProducesResponseType(typeof(List<BookViewModel>), 200)]
+        [ProducesResponseType(typeof(GenreNotFoundException), 400)]
+        public async Task<ActionResult<List<BookViewModel>>> ListBooks(Guid id, [FromQuery] ListBooksQuery query)
+        {
+            query.Id = id;
+            return await Mediator.Send(query);
+        }
 
         [HttpPut("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]

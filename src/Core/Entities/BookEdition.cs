@@ -13,13 +13,13 @@ namespace Cemiyet.Core.Entities
         public DateTime CreationDate { get; set; }
 
         public Guid PublishersId { get; set; }
-        public Publisher Publisher { get; set; }
+        public virtual Publisher Publisher { get; set; }
 
         public Guid BooksId { get; set; }
-        public Book Book { get; set; }
+        public virtual Book Book { get; set; }
 
         public Guid DimensionsId { get; set; }
-        public Dimension Dimensions { get; set; }
+        public virtual Dimension Dimensions { get; set; }
 
         // TODO (v0.4): create relations with user model.
         public Guid CreatorId { get; set; }

@@ -11,6 +11,6 @@ namespace Cemiyet.Core.Entities
         public double Width { get; set; }
         public double Height { get; set; }
 
-        public ICollection<BookEdition> BookEditions { get; set; }
+        public virtual ICollection<BookEdition> BookEditions { get; set; }
     }
 }

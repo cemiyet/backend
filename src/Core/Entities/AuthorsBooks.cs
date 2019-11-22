@@ -8,9 +8,9 @@ namespace Cemiyet.Core.Entities
     public class AuthorsBooks
     {
         public Guid AuthorsId { get; set; }
-        public Author Author { get; set; }
+        public virtual Author Author { get; set; }
 
         public Guid BooksId { get; set; }
-        public Book Book { get; set; }
+        public virtual Book Book { get; set; }
     }
 }

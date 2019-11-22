@@ -10,6 +10,6 @@ namespace Cemiyet.Core.Entities
     {
         public string Name { get; set; }
 
-        public ICollection<BooksGenres> Books { get; set; }
+        public virtual ICollection<BooksGenres> Books { get; set; }
     }
 }

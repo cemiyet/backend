@@ -12,6 +12,6 @@ namespace Cemiyet.Core.Entities
         public string Surname { get; set; }
         public string Bio { get; set; }
 
-        public ICollection<AuthorsBooks> Books { get; set; }
+        public virtual ICollection<AuthorsBooks> Books { get; set; }
     }
 }

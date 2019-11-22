@@ -11,8 +11,8 @@ namespace Cemiyet.Core.Entities
         public string Title { get; set; }
         public string Description { get; set; }
 
-        public ICollection<BookEdition> Editions { get; set; }
-        public ICollection<BooksGenres> Genres { get; set; }
-        public ICollection<AuthorsBooks> Authors { get; set; }
+        public virtual ICollection<BooksGenres> Genres { get; set; }
+        public virtual ICollection<AuthorsBooks> Authors { get; set; }
+        public virtual ICollection<BookEdition> Editions { get; set; }
     }
 }

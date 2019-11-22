@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace Cemiyet.Api
 {
@@ -24,14 +25,19 @@ namespace Cemiyet.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<AppDataContext>(options =>
-            {
-                options.UseNpgsql(Configuration.GetConnectionString("MainDataContext"));
-            });
-
             services.AddControllers().AddFluentValidation(configuration =>
             {
                 configuration.RegisterValidatorsFromAssembly(typeof(ListQuery).Assembly);
+            }).AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            });
+
+            services.AddDbContext<AppDataContext>(options =>
+            {
+                options.UseLazyLoadingProxies()
+                       .UseNpgsql(Configuration.GetConnectionString("MainDataContext"));
             });
 
             services.AddMediatR(typeof(ListQuery).Assembly);

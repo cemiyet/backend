@@ -12,7 +12,7 @@ namespace Cemiyet.Core.Entities
 
         public T EntityId { get; set; }
 
-        // TODO (v0.4): create relations with user model.
+        // TODO (v0.5): create relations with user model.
         public T ModifierId { get; set; }
     }
 

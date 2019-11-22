@@ -100,7 +100,7 @@ namespace Cemiyet.Persistence.Application.Contexts
                         OldValue = originalValue,
                         NewValue = currentValue,
                         ModificationDate = modificationDate
-                        // TODO (v0.4): create relations with user model.
+                        // TODO (v0.5): create relations with user model.
                         // ModifierId =
                     };
                     EntityChanges.Add(ec);

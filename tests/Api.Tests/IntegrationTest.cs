@@ -28,12 +28,12 @@ namespace Cemiyet.Api.Tests
             _httpClient = applicationFactory.CreateClient();
         }
 
-        // TODO (v0.4)
+        // TODO (v0.5)
         /*private async Task AuthtenticateAsync()
         {
         }*/
 
-        // TODO (v0.4)
+        // TODO (v0.5)
         /*private async Task RegisterAsync()
         {
         }*/

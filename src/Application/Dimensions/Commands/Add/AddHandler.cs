@@ -24,7 +24,7 @@ namespace Cemiyet.Application.Dimensions.Commands.Add
                 Height = request.Height,
                 CreationDate = DateTime.UtcNow,
                 // CreatorId =
-                // TODO (v0.4): add creator id.
+                // TODO (v0.5): add creator id.
             };
 
             _context.Dimensions.Add(dimension);

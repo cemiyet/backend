@@ -21,7 +21,7 @@ namespace Cemiyet.Core.Entities
         public Guid DimensionsId { get; set; }
         public virtual Dimension Dimensions { get; set; }
 
-        // TODO (v0.4): create relations with user model.
+        // TODO (v0.5): create relations with user model.
         public Guid CreatorId { get; set; }
         // public User Creator { get; set; }
     }

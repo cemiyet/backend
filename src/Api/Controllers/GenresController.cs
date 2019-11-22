@@ -10,7 +10,6 @@ using Cemiyet.Application.Genres.Commands.Update;
 using Cemiyet.Application.Genres.Queries.Details;
 using Cemiyet.Application.Genres.Queries.List;
 using Cemiyet.Application.Genres.Queries.ListBooks;
-using Cemiyet.Core.Entities;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.ViewModels;
 using MediatR;
@@ -32,14 +31,14 @@ namespace Cemiyet.Api.Controllers
         public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data) => await Mediator.Send(data);
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<Genre>), 200)]
+        [ProducesResponseType(typeof(List<GenreViewModel>), 200)]
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public async Task<ActionResult<List<Genre>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
+        public async Task<ActionResult<List<GenreViewModel>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Genre), 200)]
+        [ProducesResponseType(typeof(GenreViewModel), 200)]
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public async Task<ActionResult<Genre>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
+        public async Task<ActionResult<GenreViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
 
         [HttpGet("{id}/books")]
         [ProducesResponseType(typeof(List<BookViewModel>), 200)]

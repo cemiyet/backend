@@ -1,13 +1,13 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Cemiyet.Core.Entities;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.Contexts;
+using Cemiyet.Persistence.Application.ViewModels;
 using MediatR;
 
 namespace Cemiyet.Application.Genres.Queries.Details
 {
-    public class DetailsHandler : IRequestHandler<DetailsQuery, Genre>
+    public class DetailsHandler : IRequestHandler<DetailsQuery, GenreViewModel>
     {
         private readonly AppDataContext _context;
 
@@ -16,14 +16,14 @@ namespace Cemiyet.Application.Genres.Queries.Details
             _context = context;
         }
 
-        public async Task<Genre> Handle(DetailsQuery request, CancellationToken cancellationToken)
+        public async Task<GenreViewModel> Handle(DetailsQuery request, CancellationToken cancellationToken)
         {
             var genre = await _context.Genres.FindAsync(request.Id);
 
             if (genre == null)
                 throw new GenreNotFoundException(request.Id);
 
-            return genre;
+            return GenreViewModel.CreateFromGenre(genre, true);
         }
     }
 }

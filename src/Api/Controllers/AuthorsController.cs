@@ -8,8 +8,9 @@ using Cemiyet.Application.Authors.Commands.UpdatePartially;
 using Cemiyet.Application.Authors.Commands.Update;
 using Cemiyet.Application.Authors.Commands.DeleteOne;
 using Cemiyet.Application.Authors.Commands.DeleteMany;
-using Cemiyet.Application.Authors.Queries.List;
 using Cemiyet.Application.Authors.Queries.Details;
+using Cemiyet.Application.Authors.Queries.List;
+using Cemiyet.Application.Authors.Queries.ListBooks;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.ViewModels;
 using MediatR;
@@ -39,6 +40,15 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(AuthorViewModel), 200)]
         [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
         public async Task<ActionResult<AuthorViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
+
+        [HttpGet("{id}/books")]
+        [ProducesResponseType(typeof(List<BookViewModel>), 200)]
+        [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
+        public async Task<ActionResult<List<BookViewModel>>> ListBooks(Guid id, [FromQuery] ListBooksQuery query)
+        {
+            query.Id = id;
+            return await Mediator.Send(query);
+        }
 
         [HttpPatch("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]

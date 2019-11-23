@@ -36,11 +36,6 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
         public async Task<ActionResult<List<AuthorViewModel>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(AuthorViewModel), 200)]
-        [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
-        public async Task<ActionResult<AuthorViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
-
         [HttpGet("{id}/books")]
         [ProducesResponseType(typeof(List<BookViewModel>), 200)]
         [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
@@ -49,6 +44,11 @@ namespace Cemiyet.Api.Controllers
             query.Id = id;
             return await Mediator.Send(query);
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(AuthorViewModel), 200)]
+        [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
+        public async Task<ActionResult<AuthorViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
 
         [HttpPatch("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]

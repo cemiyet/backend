@@ -10,6 +10,7 @@ using Cemiyet.Application.Publishers.Commands.DeleteOne;
 using Cemiyet.Application.Publishers.Commands.DeleteMany;
 using Cemiyet.Application.Publishers.Queries.List;
 using Cemiyet.Application.Publishers.Queries.Details;
+using Cemiyet.Application.Publishers.Queries.ListBooks;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.ViewModels;
 using MediatR;
@@ -34,6 +35,15 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(List<PublisherViewModel>), 200)]
         [ProducesResponseType(typeof(PublisherNotFoundException), 400)]
         public async Task<ActionResult<List<PublisherViewModel>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
+
+        [HttpGet("{id}/books")]
+        [ProducesResponseType(typeof(List<BookEditionViewModel>), 200)]
+        [ProducesResponseType(typeof(PublisherNotFoundException), 400)]
+        public async Task<ActionResult<List<BookEditionViewModel>>> ListBooks(Guid id, [FromQuery] ListBooksQuery query)
+        {
+            query.Id = id;
+            return await Mediator.Send(query);
+        }
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PublisherViewModel), 200)]

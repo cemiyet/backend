@@ -35,11 +35,6 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
         public async Task<ActionResult<List<GenreViewModel>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(GenreViewModel), 200)]
-        [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public async Task<ActionResult<GenreViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
-
         [HttpGet("{id}/books")]
         [ProducesResponseType(typeof(List<BookViewModel>), 200)]
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
@@ -48,6 +43,11 @@ namespace Cemiyet.Api.Controllers
             query.Id = id;
             return await Mediator.Send(query);
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(GenreViewModel), 200)]
+        [ProducesResponseType(typeof(GenreNotFoundException), 400)]
+        public async Task<ActionResult<GenreViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
 
         [HttpPut("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]

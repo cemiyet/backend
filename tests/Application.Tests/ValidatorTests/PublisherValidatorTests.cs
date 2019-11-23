@@ -5,6 +5,7 @@ using Cemiyet.Application.Publishers.Commands.Update;
 using Cemiyet.Application.Publishers.Commands.DeleteOne;
 using Cemiyet.Application.Publishers.Commands.DeleteMany;
 using Cemiyet.Application.Publishers.Queries.List;
+using Cemiyet.Application.Publishers.Queries.ListBooks;
 using Cemiyet.Application.Publishers.Queries.Details;
 using FluentValidation.TestHelper;
 using Xunit;
@@ -14,6 +15,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
     public class PublishersValidatorTests
     {
         private readonly ListQueryValidator _listQueryValidator;
+        private readonly ListBooksQueryValidator _listBooksQueryValidator;
         private readonly DetailsQueryValidator _detailsQueryValidator;
 
         private readonly AddCommandValidator _addCommandValidator;
@@ -25,6 +27,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         public PublishersValidatorTests()
         {
             _listQueryValidator = new ListQueryValidator();
+            _listBooksQueryValidator = new ListBooksQueryValidator();
             _detailsQueryValidator = new DetailsQueryValidator();
 
             _addCommandValidator = new AddCommandValidator();
@@ -49,6 +52,24 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         {
             _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, 5);
             _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, 50);
+        }
+
+        [Fact]
+        public void ListBooksQuery_ShouldHave_ValidationErrors()
+        {
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, 0);
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, -1);
+
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, 0);
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, -1);
+        }
+
+        [Fact]
+        public void ListBooksQuery_ShouldNotHave_ValidationErrors()
+        {
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, default(Guid));
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, 5);
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, 50);
         }
 
         [Fact]

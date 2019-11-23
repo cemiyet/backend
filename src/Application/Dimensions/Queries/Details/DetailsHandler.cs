@@ -1,13 +1,13 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Cemiyet.Core.Entities;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.Contexts;
+using Cemiyet.Persistence.Application.ViewModels;
 using MediatR;
 
 namespace Cemiyet.Application.Dimensions.Queries.Details
 {
-    public class DetailsHandler : IRequestHandler<DetailsQuery, Dimension>
+    public class DetailsHandler : IRequestHandler<DetailsQuery, DimensionViewModel>
     {
         private readonly AppDataContext _context;
 
@@ -16,14 +16,14 @@ namespace Cemiyet.Application.Dimensions.Queries.Details
             _context = context;
         }
 
-        public async Task<Dimension> Handle(DetailsQuery request, CancellationToken cancellationToken)
+        public async Task<DimensionViewModel> Handle(DetailsQuery request, CancellationToken cancellationToken)
         {
             var dimension = await _context.Dimensions.FindAsync(request.Id);
 
             if (dimension == null)
                 throw new DimensionNotFoundException(request.Id);
 
-            return dimension;
+            return DimensionViewModel.CreateFromDimension(dimension);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Cemiyet.Application.Genres.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
+using Cemiyet.Persistence.Application.ViewModels;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -46,7 +47,7 @@ namespace Cemiyet.Api.Tests
             var response = await _httpClient.GetAsync("genres");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-            var responseData = await response.Content.ReadAsAsync<List<Genre>>();
+            var responseData = await response.Content.ReadAsAsync<List<GenreViewModel>>();
             Assert.NotEmpty(responseData);
         }
 
@@ -61,7 +62,7 @@ namespace Cemiyet.Api.Tests
         public async Task Details_WithCorrectId_ShouldReturn_GenreObject()
         {
             var genresResponse = await _httpClient.GetAsync("genres");
-            var genres = await genresResponse.Content.ReadAsAsync<List<Genre>>();
+            var genres = await genresResponse.Content.ReadAsAsync<List<GenreViewModel>>();
 
             var response = await _httpClient.GetAsync($"genres/{genres.First().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -91,7 +92,7 @@ namespace Cemiyet.Api.Tests
         public async Task Update_WithCorrectData_ShouldReturn_OK()
         {
             var genresResponse = await _httpClient.GetAsync("genres");
-            var genres = await genresResponse.Content.ReadAsAsync<List<Genre>>();
+            var genres = await genresResponse.Content.ReadAsAsync<List<GenreViewModel>>();
 
             var response = await _httpClient.PutAsJsonAsync($"genres/{genres.Last().Id}", new
             {

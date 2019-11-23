@@ -7,14 +7,29 @@ using System.Text;
 using System.Threading.Tasks;
 using Cemiyet.Application.Dimensions.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
+using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Xunit;
 
 namespace Cemiyet.Api.Tests
 {
-    public class DimensionsControllerTests : IntegrationTest
+    public class DimensionsControllerTests : IClassFixture<WebApplicationFactory<Startup>>
     {
+        private readonly HttpClient _httpClient;
+
+        public DimensionsControllerTests(WebApplicationFactory<Startup> webApplicationFactory)
+        {
+            using var scope = webApplicationFactory.Services.GetService<IServiceScopeFactory>().CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<AppDataContext>();
+
+            AppDataContextSeed.Seed(context);
+
+            _httpClient = webApplicationFactory.CreateClient();
+        }
+
         [Fact]
         public async Task Add_WithoutCorrectData_ShouldReturn_BadRequest()
         {

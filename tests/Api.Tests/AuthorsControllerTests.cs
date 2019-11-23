@@ -7,14 +7,31 @@ using System.Text;
 using System.Threading.Tasks;
 using Cemiyet.Application.Authors.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
+using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Xunit;
 
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
+
 namespace Cemiyet.Api.Tests
 {
-    public class AuthorsControllerTests : IntegrationTest
+    public class AuthorsControllerTests : IClassFixture<WebApplicationFactory<Startup>>
     {
+        private readonly HttpClient _httpClient;
+
+        public AuthorsControllerTests(WebApplicationFactory<Startup> webApplicationFactory)
+        {
+            using var scope = webApplicationFactory.Services.GetService<IServiceScopeFactory>().CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<AppDataContext>();
+
+            AppDataContextSeed.Seed(context);
+
+            _httpClient = webApplicationFactory.CreateClient();
+        }
+
         [Fact]
         public async Task Add_WithoutCorrectData_ShouldReturn_BadRequest()
         {
@@ -56,6 +73,26 @@ namespace Cemiyet.Api.Tests
 
             var responseData = await response.Content.ReadAsAsync<List<AuthorViewModel>>();
             Assert.NotEmpty(responseData);
+        }
+
+        [Fact]
+        public async Task ListBooks_WithoutCorrectPaging_ShouldReturn_BadRequest()
+        {
+            var authorsResponse = await _httpClient.GetAsync("authors");
+            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
+
+            var response = await _httpClient.GetAsync($"authors/{authors.First().Id}/books?page=-1&pageSize=-5");
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task ListBooks_WithoutPaging_ShouldReturn_DefaultPagedResult()
+        {
+            var authorsResponse = await _httpClient.GetAsync("authors");
+            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
+
+            var response = await _httpClient.GetAsync($"authors/{authors.First().Id}/books");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cemiyet.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cemiyet.Persistence.Application.Contexts
 {
@@ -9,6 +10,17 @@ namespace Cemiyet.Persistence.Application.Contexts
     {
         public static void Seed(AppDataContext context)
         {
+            context.Database.ExecuteSqlRaw(@"truncate table
+                                                    authors_books,
+                                                    authors,
+                                                    book_editions,
+                                                    books_genres,
+                                                    books,
+                                                    dimensions,
+                                                    entity_changes,
+                                                    genres,
+                                                    publishers;");
+
             SeedGenres(context);
             SeedDimensions(context);
             SeedAuthors(context);
@@ -295,22 +307,23 @@ namespace Cemiyet.Persistence.Application.Contexts
                     {
                         new AuthorsBooks
                         {
-                            Author = context.Authors.Single(a => a.Name == "Mustafa Kemal" && a.Surname == "Atatürk")
+                            Author = context.Authors.SingleOrDefault(
+                                a => a.Name == "Mustafa Kemal" && a.Surname == "Atatürk")
                         }
                     },
                     Genres = new List<BooksGenres>
                     {
                         new BooksGenres
                         {
-                            Genre = context.Genres.Single(g => g.Name == "Anı")
+                            Genre = context.Genres.SingleOrDefault(g => g.Name == "Anı")
                         },
                         new BooksGenres
                         {
-                            Genre = context.Genres.Single(g => g.Name == "Anlatı")
+                            Genre = context.Genres.SingleOrDefault(g => g.Name == "Anlatı")
                         },
                         new BooksGenres
                         {
-                            Genre = context.Genres.Single(g => g.Name == "Tarih")
+                            Genre = context.Genres.SingleOrDefault(g => g.Name == "Tarih")
                         }
                     },
                     CreationDate = DateTime.UtcNow
@@ -333,9 +346,9 @@ namespace Cemiyet.Persistence.Application.Contexts
                     PageCount = 599,
                     PrintDate = new DateTime(2019, 6, 28),
                     CreationDate = DateTime.UtcNow,
-                    Publisher = context.Publishers.Single(p => p.Name == "Türkiye İş Bankası Kültür Yayınları"),
-                    Book = context.Books.Single(b => b.Title == "Nutuk"),
-                    Dimensions = context.Dimensions.Single(d => d.Width == 15.5 && d.Height == 23)
+                    Publisher = context.Publishers.SingleOrDefault(p => p.Name == "Türkiye İş Bankası Kültür Yayınları"),
+                    Book = context.Books.SingleOrDefault(b => b.Title == "Nutuk"),
+                    Dimensions = context.Dimensions.SingleOrDefault(d => d.Width == 15.5 && d.Height == 23)
                 },
                 new BookEdition
                 {
@@ -343,9 +356,9 @@ namespace Cemiyet.Persistence.Application.Contexts
                     PageCount = 1197,
                     PrintDate = new DateTime(2019, 11, 05),
                     CreationDate = DateTime.UtcNow,
-                    Publisher = context.Publishers.Single(p => p.Name == "Yapı Kredi Yayınları"),
-                    Book = context.Books.Single(b => b.Title == "Nutuk"),
-                    Dimensions = context.Dimensions.Single(d => d.Width == 10.5 && d.Height == 17)
+                    Publisher = context.Publishers.SingleOrDefault(p => p.Name == "Yapı Kredi Yayınları"),
+                    Book = context.Books.SingleOrDefault(b => b.Title == "Nutuk"),
+                    Dimensions = context.Dimensions.SingleOrDefault(d => d.Width == 10.5 && d.Height == 17)
                 },
             };
 

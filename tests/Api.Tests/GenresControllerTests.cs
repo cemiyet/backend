@@ -7,14 +7,29 @@ using System.Text;
 using System.Threading.Tasks;
 using Cemiyet.Application.Genres.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
+using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Xunit;
 
 namespace Cemiyet.Api.Tests
 {
-    public class GenresControllerTests : IntegrationTest
+    public class GenresControllerTests : IClassFixture<WebApplicationFactory<Startup>>
     {
+        private readonly HttpClient _httpClient;
+
+        public GenresControllerTests(WebApplicationFactory<Startup> webApplicationFactory)
+        {
+            using var scope = webApplicationFactory.Services.GetService<IServiceScopeFactory>().CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<AppDataContext>();
+
+            AppDataContextSeed.Seed(context);
+
+            _httpClient = webApplicationFactory.CreateClient();
+        }
+
         [Fact]
         public async Task Add_WithoutCorrectData_ShouldReturn_BadRequest()
         {
@@ -49,6 +64,26 @@ namespace Cemiyet.Api.Tests
 
             var responseData = await response.Content.ReadAsAsync<List<GenreViewModel>>();
             Assert.NotEmpty(responseData);
+        }
+
+        [Fact]
+        public async Task ListBooks_WithoutCorrectPaging_ShouldReturn_BadRequest()
+        {
+            var genresResponse = await _httpClient.GetAsync("genres");
+            var genres = await genresResponse.Content.ReadAsAsync<List<GenreViewModel>>();
+
+            var response = await _httpClient.GetAsync($"genres/{genres.First().Id}/books?page=-1&pageSize=-5");
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task ListBooks_WithoutPaging_ShouldReturn_DefaultPagedResult()
+        {
+            var genresResponse = await _httpClient.GetAsync("genres");
+            var genres = await genresResponse.Content.ReadAsAsync<List<GenreViewModel>>();
+
+            var response = await _httpClient.GetAsync($"genres/{genres.First().Id}/books");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]

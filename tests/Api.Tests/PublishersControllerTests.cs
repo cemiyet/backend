@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Cemiyet.Application.Publishers.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
+using Cemiyet.Persistence.Application.ViewModels;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -52,7 +53,7 @@ namespace Cemiyet.Api.Tests
             var response = await _httpClient.GetAsync("publishers");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-            var responseData = await response.Content.ReadAsAsync<List<Publisher>>();
+            var responseData = await response.Content.ReadAsAsync<List<PublisherViewModel>>();
             Assert.NotEmpty(responseData);
         }
 
@@ -67,12 +68,12 @@ namespace Cemiyet.Api.Tests
         public async Task Details_WithCorrectId_ShouldReturn_PublisherObject()
         {
             var publishersResponse = await _httpClient.GetAsync("publishers");
-            var publishers = await publishersResponse.Content.ReadAsAsync<List<Publisher>>();
+            var publishers = await publishersResponse.Content.ReadAsAsync<List<PublisherViewModel>>();
 
             var response = await _httpClient.GetAsync($"publishers/{publishers.First().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-            var responseData = await response.Content.ReadAsAsync<Publisher>();
+            var responseData = await response.Content.ReadAsAsync<PublisherViewModel>();
             Assert.NotNull(responseData);
         }
 
@@ -80,7 +81,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var publishersResponse = await _httpClient.GetAsync("publishers");
-            var publishers = await publishersResponse.Content.ReadAsAsync<List<Publisher>>();
+            var publishers = await publishersResponse.Content.ReadAsAsync<List<PublisherViewModel>>();
 
             var request = new HttpRequestMessage
             {
@@ -97,7 +98,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
             var publishersResponse = await _httpClient.GetAsync("publishers");
-            var publishers = await publishersResponse.Content.ReadAsAsync<List<Publisher>>();
+            var publishers = await publishersResponse.Content.ReadAsAsync<List<PublisherViewModel>>();
 
             var request = new HttpRequestMessage
             {
@@ -122,7 +123,7 @@ namespace Cemiyet.Api.Tests
         public async Task Update_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var publishersResponse = await _httpClient.GetAsync("publishers");
-            var publishers = await publishersResponse.Content.ReadAsAsync<List<Publisher>>();
+            var publishers = await publishersResponse.Content.ReadAsAsync<List<PublisherViewModel>>();
 
             var response = await _httpClient.PutAsJsonAsync($"publishers/{publishers.First().Id}", default(Publisher));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -140,7 +141,7 @@ namespace Cemiyet.Api.Tests
         public async Task Update_WithCorrectData_ShouldReturn_OK()
         {
             var publishersResponse = await _httpClient.GetAsync("publishers");
-            var publishers = await publishersResponse.Content.ReadAsAsync<List<Publisher>>();
+            var publishers = await publishersResponse.Content.ReadAsAsync<List<PublisherViewModel>>();
 
             var response = await _httpClient.PutAsJsonAsync($"publishers/{publishers.Last().Id}", new
             {
@@ -162,7 +163,7 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteOne_WithCorrectId_ShouldReturn_OK()
         {
             var publishersResponse = await _httpClient.GetAsync("publishers");
-            var publishers = await publishersResponse.Content.ReadAsAsync<List<Publisher>>();
+            var publishers = await publishersResponse.Content.ReadAsAsync<List<PublisherViewModel>>();
 
             var response = await _httpClient.DeleteAsync($"publishers/{publishers.Last().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -188,7 +189,7 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
         {
             var publishersResponse = await _httpClient.GetAsync("publishers");
-            var publishers = await publishersResponse.Content.ReadAsAsync<List<Publisher>>();
+            var publishers = await publishersResponse.Content.ReadAsAsync<List<PublisherViewModel>>();
 
             var dmc = new DeleteManyCommand { Ids = publishers.TakeLast(2).Select(g => g.Id).ToArray() };
 

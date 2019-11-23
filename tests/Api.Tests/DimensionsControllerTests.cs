@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Cemiyet.Application.Dimensions.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
+using Cemiyet.Persistence.Application.ViewModels;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -47,7 +48,7 @@ namespace Cemiyet.Api.Tests
             var response = await _httpClient.GetAsync("dimensions");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-            var responseData = await response.Content.ReadAsAsync<List<Dimension>>();
+            var responseData = await response.Content.ReadAsAsync<List<DimensionViewModel>>();
             Assert.NotEmpty(responseData);
         }
 
@@ -62,12 +63,12 @@ namespace Cemiyet.Api.Tests
         public async Task Details_WithCorrectId_ShouldReturn_DimensionObject()
         {
             var dimensionsResponse = await _httpClient.GetAsync("dimensions");
-            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<Dimension>>();
+            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<DimensionViewModel>>();
 
             var response = await _httpClient.GetAsync($"dimensions/{dimensions.First().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-            var responseData = await response.Content.ReadAsAsync<Dimension>();
+            var responseData = await response.Content.ReadAsAsync<DimensionViewModel>();
             Assert.NotNull(responseData);
         }
 
@@ -82,7 +83,7 @@ namespace Cemiyet.Api.Tests
         public async Task Update_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var dimensionsResponse = await _httpClient.GetAsync("dimensions");
-            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<Dimension>>();
+            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<DimensionViewModel>>();
 
             var response = await _httpClient.PutAsJsonAsync($"dimensions/{dimensions.First().Id}", default(Dimension));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -98,7 +99,7 @@ namespace Cemiyet.Api.Tests
         public async Task Update_WithCorrectData_ShouldReturn_OK()
         {
             var dimensionsResponse = await _httpClient.GetAsync("dimensions");
-            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<Dimension>>();
+            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<DimensionViewModel>>();
 
             var response = await _httpClient.PutAsJsonAsync($"dimensions/{dimensions.Last().Id}", new
             {
@@ -113,7 +114,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var dimensionsResponse = await _httpClient.GetAsync("dimensions");
-            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<Dimension>>();
+            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<DimensionViewModel>>();
 
             var request = new HttpRequestMessage
             {
@@ -130,7 +131,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
             var dimensionsResponse = await _httpClient.GetAsync("dimensions");
-            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<Dimension>>();
+            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<DimensionViewModel>>();
 
             var request = new HttpRequestMessage
             {
@@ -155,7 +156,7 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteOne_WithCorrectId_ShouldReturn_OK()
         {
             var dimensionsResponse = await _httpClient.GetAsync("dimensions");
-            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<Dimension>>();
+            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<DimensionViewModel>>();
 
             var response = await _httpClient.DeleteAsync($"dimensions/{dimensions.Last().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -181,7 +182,7 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
         {
             var dimensionsResponse = await _httpClient.GetAsync("dimensions");
-            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<Dimension>>();
+            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<DimensionViewModel>>();
 
             var dmc = new DeleteManyCommand { Ids = dimensions.TakeLast(2).Select(g => g.Id).ToArray() };
 

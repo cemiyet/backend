@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Cemiyet.Application.Authors.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
+using Cemiyet.Persistence.Application.ViewModels;
 using Newtonsoft.Json;
 using Xunit;
 
@@ -53,7 +54,7 @@ namespace Cemiyet.Api.Tests
             var response = await _httpClient.GetAsync("authors");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-            var responseData = await response.Content.ReadAsAsync<List<Author>>();
+            var responseData = await response.Content.ReadAsAsync<List<AuthorViewModel>>();
             Assert.NotEmpty(responseData);
         }
 
@@ -68,12 +69,12 @@ namespace Cemiyet.Api.Tests
         public async Task Details_WithCorrectId_ShouldReturn_AuthorObject()
         {
             var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<Author>>();
+            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
 
             var response = await _httpClient.GetAsync($"authors/{authors.First().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-            var responseData = await response.Content.ReadAsAsync<Author>();
+            var responseData = await response.Content.ReadAsAsync<AuthorViewModel>();
             Assert.NotNull(responseData);
         }
 
@@ -81,7 +82,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<Author>>();
+            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
 
             var request = new HttpRequestMessage
             {
@@ -98,7 +99,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
             var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<Author>>();
+            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
 
             var request = new HttpRequestMessage
             {
@@ -123,7 +124,7 @@ namespace Cemiyet.Api.Tests
         public async Task Update_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<Author>>();
+            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
 
             var response = await _httpClient.PutAsJsonAsync($"authors/{authors.First().Id}", default(Author));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -141,7 +142,7 @@ namespace Cemiyet.Api.Tests
         public async Task Update_WithCorrectData_ShouldReturn_OK()
         {
             var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<Author>>();
+            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
 
             var response = await _httpClient.PutAsJsonAsync($"authors/{authors.Last().Id}", new
             {
@@ -164,7 +165,7 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteOne_WithCorrectId_ShouldReturn_OK()
         {
             var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<Author>>();
+            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
 
             var response = await _httpClient.DeleteAsync($"authors/{authors.Last().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -190,7 +191,7 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
         {
             var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<Author>>();
+            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
 
             var dmc = new DeleteManyCommand { Ids = authors.TakeLast(2).Select(g => g.Id).ToArray() };
 

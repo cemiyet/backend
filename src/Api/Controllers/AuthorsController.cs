@@ -10,8 +10,8 @@ using Cemiyet.Application.Authors.Commands.DeleteOne;
 using Cemiyet.Application.Authors.Commands.DeleteMany;
 using Cemiyet.Application.Authors.Queries.List;
 using Cemiyet.Application.Authors.Queries.Details;
-using Cemiyet.Core.Entities;
 using Cemiyet.Core.Exceptions;
+using Cemiyet.Persistence.Application.ViewModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,14 +31,14 @@ namespace Cemiyet.Api.Controllers
         public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data) => await Mediator.Send(data);
 
         [HttpGet]
-        [ProducesResponseType(typeof(List<Author>), 200)]
+        [ProducesResponseType(typeof(List<AuthorViewModel>), 200)]
         [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
-        public async Task<ActionResult<List<Author>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
+        public async Task<ActionResult<List<AuthorViewModel>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Author), 200)]
+        [ProducesResponseType(typeof(AuthorViewModel), 200)]
         [ProducesResponseType(typeof(AuthorNotFoundException), 400)]
-        public async Task<ActionResult<Author>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
+        public async Task<ActionResult<AuthorViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
 
         [HttpPatch("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]

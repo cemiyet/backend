@@ -1,10 +1,10 @@
 using System;
-using Cemiyet.Core.Entities;
+using Cemiyet.Persistence.Application.ViewModels;
 using MediatR;
 
 namespace Cemiyet.Application.Authors.Queries.Details
 {
-    public class DetailsQuery : IRequest<Author>
+    public class DetailsQuery : IRequest<AuthorViewModel>
     {
         public Guid Id { get; set; }
     }

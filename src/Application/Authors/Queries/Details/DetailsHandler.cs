@@ -1,13 +1,13 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Cemiyet.Core.Entities;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.Contexts;
+using Cemiyet.Persistence.Application.ViewModels;
 using MediatR;
 
 namespace Cemiyet.Application.Authors.Queries.Details
 {
-    public class DetailsHandler : IRequestHandler<DetailsQuery, Author>
+    public class DetailsHandler : IRequestHandler<DetailsQuery, AuthorViewModel>
     {
         private readonly AppDataContext _context;
 
@@ -16,14 +16,14 @@ namespace Cemiyet.Application.Authors.Queries.Details
             _context = context;
         }
 
-        public async Task<Author> Handle(DetailsQuery request, CancellationToken cancellationToken)
+        public async Task<AuthorViewModel> Handle(DetailsQuery request, CancellationToken cancellationToken)
         {
             var author = await _context.Authors.FindAsync(request.Id);
 
             if (author == null)
                 throw new AuthorNotFoundException(request.Id);
 
-            return author;
+            return AuthorViewModel.CreateFromAuthor(author);
         }
     }
 }

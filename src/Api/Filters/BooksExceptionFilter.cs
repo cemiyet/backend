@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 using Cemiyet.Core.Exceptions;
 using Microsoft.AspNetCore.Mvc;

@@ -6,7 +6,7 @@ namespace Cemiyet.Application.Books.Queries.ListEdition
     {
         public ListEditionQueryValidator()
         {
-            RuleFor(lq => lq.Id).NotNull();
+            RuleFor(leq => leq.Id).NotNull();
             RuleFor(pm => pm.Page).GreaterThan(0);
             RuleFor(pm => pm.PageSize).GreaterThan(0);
         }

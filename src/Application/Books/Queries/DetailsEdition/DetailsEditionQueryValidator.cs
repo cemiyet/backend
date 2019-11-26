@@ -6,8 +6,8 @@ namespace Cemiyet.Application.Books.Queries.DetailsEdition
     {
         public DetailsEditionQueryValidator()
         {
-            RuleFor(leq => leq.Id).NotEmpty();
-            RuleFor(leq => leq.Isbn).NotEmpty();
+            RuleFor(deq => deq.Id).NotEmpty();
+            RuleFor(deq => deq.Isbn).NotEmpty();
         }
     }
 }

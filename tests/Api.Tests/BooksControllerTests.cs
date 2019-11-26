@@ -47,6 +47,35 @@ namespace Cemiyet.Api.Tests
         }
 
         [Fact]
+        public async Task ListEdition_WithoutCorrectPaging_ShouldReturn_BadRequest()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
+
+            var response = await _httpClient.GetAsync($"books/{books.First().Id}/editions?page=-1&pageSize=-5");
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task ListEdition_WithoutPaging_ShouldReturn_DefaultPagedResult()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
+
+            var response = await _httpClient.GetAsync($"books/{books.First().Id}/editions");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            var responseData = await response.Content.ReadAsAsync<List<BookEditionViewModel>>();
+            Assert.NotEmpty(responseData);
+        }
+
+        [Fact]
         public async Task Details_WithoutCorrectId_ShouldReturn_BadRequest()
         {
             var response = await _httpClient.GetAsync($"books/{Guid.NewGuid()}");
@@ -57,12 +86,44 @@ namespace Cemiyet.Api.Tests
         public async Task Details_WithCorrectId_ShouldReturn_BookObject()
         {
             var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
             var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
 
             var response = await _httpClient.GetAsync($"books/{books.First().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             var responseData = await response.Content.ReadAsAsync<BookViewModel>();
+            Assert.NotNull(responseData);
+        }
+
+        [Fact]
+        public async Task DetailsEdition_WithoutCorrectId_ShouldReturn_BadRequest()
+        {
+            var response = await _httpClient.GetAsync($"books/{Guid.NewGuid()}");
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DetailsEdition_WithCorrectId_ShouldReturn_BookEditionObject()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
+
+            var editionsResponse = await _httpClient.GetAsync($"books/{books.First().Id}/editions");
+            Assert.Equal(HttpStatusCode.OK, editionsResponse.StatusCode);
+
+            var editions = await editionsResponse.Content.ReadAsAsync<List<BookEditionViewModel>>();
+            Assert.NotNull(editions);
+
+            var response = await _httpClient.GetAsync($"books/{books.First().Id}/editions/{editions.First().Isbn}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            var responseData = await response.Content.ReadAsAsync<BookEditionViewModel>();
             Assert.NotNull(responseData);
         }
     }

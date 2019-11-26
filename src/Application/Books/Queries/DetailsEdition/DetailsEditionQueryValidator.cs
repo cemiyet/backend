@@ -7,7 +7,10 @@ namespace Cemiyet.Application.Books.Queries.DetailsEdition
         public DetailsEditionQueryValidator()
         {
             RuleFor(deq => deq.Id).NotEmpty();
-            RuleFor(deq => deq.Isbn).NotEmpty();
+            RuleFor(deq => deq.Isbn)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .NotEmpty()
+                .MaximumLength(13);
         }
     }
 }

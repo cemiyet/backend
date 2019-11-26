@@ -69,6 +69,20 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         {
             _detailsQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
         }
+
+        [Fact]
+        public void DetailsEditionQuery_ShouldHave_ValidationErrors()
+        {
+            _detailsEditionQueryValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
+            _detailsEditionQueryValidator.ShouldHaveValidationErrorFor(x => x.Isbn, default(Guid).ToString());
+        }
+
+        [Fact]
+        public void DetailsEditionQuery_ShouldNotHave_ValidationErrors()
+        {
+            _detailsEditionQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _detailsEditionQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Isbn, "0123456789111");
+        }
     }
 }
 

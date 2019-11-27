@@ -56,6 +56,21 @@ namespace Cemiyet.Api
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<AppDataContext>();
                 context.Database.Migrate();
+
+                if (env.IsDevelopment())
+                {
+                    context.Database.ExecuteSqlRaw(@"truncate table
+                                                    authors_books,
+                                                    authors,
+                                                    book_editions,
+                                                    books_genres,
+                                                    books,
+                                                    dimensions,
+                                                    entity_changes,
+                                                    genres,
+                                                    publishers;");
+                }
+                
                 AppDataContextSeed.Seed(context);
             }
 

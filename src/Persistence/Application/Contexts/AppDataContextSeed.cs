@@ -10,17 +10,6 @@ namespace Cemiyet.Persistence.Application.Contexts
     {
         public static void Seed(AppDataContext context)
         {
-            context.Database.ExecuteSqlRaw(@"truncate table
-                                                    authors_books,
-                                                    authors,
-                                                    book_editions,
-                                                    books_genres,
-                                                    books,
-                                                    dimensions,
-                                                    entity_changes,
-                                                    genres,
-                                                    publishers;");
-
             SeedGenres(context);
             SeedDimensions(context);
             SeedAuthors(context);

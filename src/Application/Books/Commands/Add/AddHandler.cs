@@ -26,6 +26,8 @@ namespace Cemiyet.Application.Books.Commands.Add
                 Genres = new List<BooksGenres>(),
                 Authors = new List<AuthorsBooks>(),
                 CreationDate = DateTime.UtcNow
+                // CreatorId =
+                // TODO (v0.5): add creator id.
             };
 
             foreach (var genreId in request.Genres)

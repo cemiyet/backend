@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Core.Entities;
 using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace Cemiyet.Api.Tests
@@ -27,6 +26,40 @@ namespace Cemiyet.Api.Tests
             AppDataContextSeed.Seed(context);
 
             _httpClient = webApplicationFactory.CreateClient();
+        }
+
+        [Fact]
+        public async Task Add_WithoutCorrectData_ShouldReturn_BadRequest()
+        {
+            var response = await _httpClient.PostAsJsonAsync("books/", default(Book));
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+            var response2 = await _httpClient.PostAsJsonAsync("books/", new Book
+            {
+                Title = "abc",
+                Description = "ddd"
+            });
+            Assert.Equal(HttpStatusCode.BadRequest, response2.StatusCode);
+        }
+
+        [Fact]
+        public async Task Add_WithCorrectData_ShouldReturn_OK()
+        {
+            var genreResponse = await _httpClient.GetAsync("genres?page=1&pageSize=2");
+            var genreData = await genreResponse.Content.ReadAsAsync<List<GenreViewModel>>();
+
+            var authorResponse = await _httpClient.GetAsync("authors?page=1&pageSize=2");
+            var authorData = await authorResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
+
+            var response = await _httpClient.PostAsJsonAsync("books/", new AddCommand
+            {
+                Title = "abc",
+                Description = "abcdesc",
+                Genres = genreData.Select(g => g.Id).ToList(),
+                Authors = authorData.Select(a => a.Id).ToList()
+            });
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]

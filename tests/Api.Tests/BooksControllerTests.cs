@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Cemiyet.Application.Books.Commands.Add;
+using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Core.Entities;
 using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
@@ -47,9 +48,11 @@ namespace Cemiyet.Api.Tests
         {
             var genreResponse = await _httpClient.GetAsync("genres?page=1&pageSize=2");
             var genreData = await genreResponse.Content.ReadAsAsync<List<GenreViewModel>>();
+            Assert.NotNull(genreData);
 
             var authorResponse = await _httpClient.GetAsync("authors?page=1&pageSize=2");
             var authorData = await authorResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
+            Assert.NotNull(authorData);
 
             var response = await _httpClient.PostAsJsonAsync("books/", new AddCommand
             {
@@ -57,6 +60,60 @@ namespace Cemiyet.Api.Tests
                 Description = "abcdesc",
                 GenreIds = genreData.Select(g => g.Id).ToList(),
                 AuthorIds = authorData.Select(a => a.Id).ToList()
+            });
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task AddEdition_WithoutCorrectData_ShouldReturn_BadRequest()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
+
+            var response = await _httpClient.PostAsJsonAsync($"books/{books.First().Id}/editions", default(BookEdition));
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+            var response2 = await _httpClient.PostAsJsonAsync($"books/{books.First().Id}/editions", new AddEditionCommand
+            {
+                Isbn = "",
+                PageCount = short.MinValue
+            });
+            Assert.Equal(HttpStatusCode.BadRequest, response2.StatusCode);
+        }
+
+        [Fact]
+        public async Task AddEdition_WithCorrectData_ShouldReturn_OK()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
+
+            var dimensionsResponse = await _httpClient.GetAsync("dimensions");
+            Assert.Equal(HttpStatusCode.OK, dimensionsResponse.StatusCode);
+
+            var dimensions = await dimensionsResponse.Content.ReadAsAsync<List<DimensionViewModel>>();
+            Assert.NotNull(dimensions);
+
+            var publishersResponse = await _httpClient.GetAsync("publishers");
+            Assert.Equal(HttpStatusCode.OK, publishersResponse.StatusCode);
+
+            var publishers = await publishersResponse.Content.ReadAsAsync<List<PublisherViewModel>>();
+            Assert.NotNull(publishers);
+
+            var response = await _httpClient.PostAsJsonAsync($"books/{books.First().Id}/editions", new AddEditionCommand
+            {
+                Isbn = "0123456789111",
+                PrintDate = DateTime.Now,
+                PageCount = short.MaxValue,
+                Id = books.First().Id,
+                DimensionsId = dimensions.First().Id,
+                PublishersId = publishers.First().Id
             });
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

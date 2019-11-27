@@ -1,4 +1,4 @@
-using System.Data;
+using Cemiyet.Core;
 using FluentValidation;
 
 namespace Cemiyet.Application.Books.Commands.AddEdition
@@ -12,7 +12,12 @@ namespace Cemiyet.Application.Books.Commands.AddEdition
                 .NotEmpty()
                 .Length(13);
 
-            RuleFor(aec => aec.PageCount).NotEmpty();
+            RuleFor(aec => aec.PageCount)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .NotEmpty()
+                .GreaterThanOrEqualTo(Constants.BookEditionMinPageSize);
+
+            RuleFor(aec => aec.Id).NotEmpty();
             RuleFor(aec => aec.PrintDate).NotEmpty();
             RuleFor(aec => aec.BooksId).NotEmpty();
             RuleFor(aec => aec.DimensionsId).NotEmpty();

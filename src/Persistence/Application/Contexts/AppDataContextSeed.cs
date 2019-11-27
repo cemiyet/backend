@@ -303,14 +303,6 @@ namespace Cemiyet.Persistence.Application.Contexts
                                     Ey Türk istikbalinin evlâdı! İşte, bu ahval ve şerâit içinde dahi, vazifen;
                                     Türk İstiklâl ve Cumhuriyetini kurtarmaktır!
                                     Muhtaç olduğun kudret, damarlarındaki asil kanda mevcuttur!",
-                    Authors = new List<AuthorsBooks>
-                    {
-                        new AuthorsBooks
-                        {
-                            Author = context.Authors.SingleOrDefault(
-                                a => a.Name == "Mustafa Kemal" && a.Surname == "Atatürk")
-                        }
-                    },
                     Genres = new List<BooksGenres>
                     {
                         new BooksGenres
@@ -326,8 +318,39 @@ namespace Cemiyet.Persistence.Application.Contexts
                             Genre = context.Genres.SingleOrDefault(g => g.Name == "Tarih")
                         }
                     },
+                    Authors = new List<AuthorsBooks>
+                    {
+                        new AuthorsBooks
+                        {
+                            Author = context.Authors.SingleOrDefault(
+                                a => a.Name == "Mustafa Kemal" && a.Surname == "Atatürk")
+                        }
+                    },
                     CreationDate = DateTime.UtcNow
                 },
+                new Book
+                {
+                    Title = "Bozkurtlar",
+                    Description = @"BOZKURTLAR, Ateş çocuk dergisinin 7 Ocak 1937’de çıkan 7. sayısından, 29 ve 30. sayılar haricinde, 40. sayısına kadar tefrika edilip kitap olarak yayınlanacağı 1946’ya dek yarım kalan Bozkurtların Ölümü ve onun devamı olarak 1949’da yayınlanan Bozkurtlar Diriliyor’un, Ötüken Neşriyat tarafından 1973’te büyük yazarının lütufkâr müsaadeleriyle birleştirilip neşredilen ilk baskısında aldığı yeni ismidir.
+                                    Birinci Gök Türk Kağanlığı’nın çöküşü ve Kür Şad önderliğindeki 40 Türk bahadırının canları pahasına esarete başkaldırarak bağımsızlık ateşini yakmalarının, onların unutulmaz ihtilal girişiminden elli yıl sonra, Kutluk Şad liderliğindeki Türklerin İkinci Gök Türk Kağanlığı’nın kurt başlı sancağını yeniden yükseltmelerinin temiz ve ince işlenmiş destansı bir dille anlatıldığı bu büyük Türk romanı, yazarı hayattayken klasikleşmiş ve pek çok nesli millî gurur ve şuur yoluna sevk ederek ölümsüzleşmiştir.
+                                    Bozkurtlar, okuyucularını asırlar öncesine, ata yurtlarını yoğuran eski tasa ve kıvançların, zafer ve yenilgilerin; bozkırda şekillenen eski Türk yaşayış ve töresinin, ahlâk ve erdemlerinin yüceltildiği ülküleştirilmiş bir kahramanlık diyarına taşır. Bu iklimin havasını soluyacak Türk çocukları, karşılarında, atalarının göz alıcı bir aydınlıkta parıldayan faziletli hayat sahnelerini bulacaklardır.",
+                    Genres = new List<BooksGenres>
+                    {
+                        new BooksGenres
+                        {
+                            Genre = context.Genres.SingleOrDefault(g => g.Name == "Tarihi Roman")
+                        }
+                    },
+                    Authors = new List<AuthorsBooks>
+                    {
+                        new AuthorsBooks
+                        {
+                            Author = context.Authors.SingleOrDefault(
+                                a => a.Name == "Nihal" && a.Surname == "Atsız")
+                        }
+                    },
+                    CreationDate = DateTime.UtcNow
+                }
             };
 
             context.Books.AddRange(books);

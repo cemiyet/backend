@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Cemiyet.Api.Filters;
+using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Queries.List;
 using Cemiyet.Application.Books.Queries.ListEdition;
 using Cemiyet.Application.Books.Queries.Details;
@@ -19,6 +21,12 @@ namespace Cemiyet.Api.Controllers
         public BooksController(IMediator mediator) : base(mediator)
         {
         }
+
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
+        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data) => await Mediator.Send(data);
 
         [HttpGet]
         [ProducesResponseType(typeof(List<BookViewModel>), 200)]

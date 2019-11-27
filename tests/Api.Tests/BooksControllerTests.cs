@@ -55,8 +55,8 @@ namespace Cemiyet.Api.Tests
             {
                 Title = "abc",
                 Description = "abcdesc",
-                Genres = genreData.Select(g => g.Id).ToList(),
-                Authors = authorData.Select(a => a.Id).ToList()
+                GenreIds = genreData.Select(g => g.Id).ToList(),
+                AuthorIds = authorData.Select(a => a.Id).ToList()
             });
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

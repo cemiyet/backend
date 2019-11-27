@@ -30,7 +30,7 @@ namespace Cemiyet.Application.Books.Commands.Add
                 // TODO (v0.5): add creator id.
             };
 
-            foreach (var genreId in request.Genres)
+            foreach (var genreId in request.GenreIds)
             {
                 var genre = _context.Genres.Find(genreId);
 
@@ -40,7 +40,7 @@ namespace Cemiyet.Application.Books.Commands.Add
                 book.Genres.Add(new BooksGenres { Genre = genre });
             }
 
-            foreach (var authorId in request.Authors)
+            foreach (var authorId in request.AuthorIds)
             {
                 var author = _context.Authors.Find(authorId);
 

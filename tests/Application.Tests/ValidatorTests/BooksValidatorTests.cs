@@ -96,8 +96,8 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         {
             _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Title, "");
             _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Description, "");
-            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Genres, new List<Guid>());
-            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Authors, new List<Guid>());
+            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.GenreIds, new List<Guid>());
+            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.AuthorIds, new List<Guid>());
 
             _addCommandValidator.ShouldHaveValidationErrorFor(
                 x => x.Description,
@@ -131,8 +131,8 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         {
             _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Title, "Lorem ipsum dolor sit.");
             _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Description, "Lorem ipsum dolor sit.");
-            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Genres, new List<Guid> { new Guid(), new Guid() });
-            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Authors, new List<Guid> { new Guid(), new Guid() });
+            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.GenreIds, new List<Guid> { new Guid(), new Guid() });
+            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.AuthorIds, new List<Guid> { new Guid(), new Guid() });
         }
 
     }

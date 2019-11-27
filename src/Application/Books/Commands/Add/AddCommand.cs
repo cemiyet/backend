@@ -9,7 +9,7 @@ namespace Cemiyet.Application.Books.Commands.Add
         public string Title { get; set; }
         public string Description { get; set; }
 
-        public ICollection<Guid> Genres { get; set; }
-        public ICollection<Guid> Authors { get; set; }
+        public ICollection<Guid> GenreIds { get; set; }
+        public ICollection<Guid> AuthorIds { get; set; }
     }
 }

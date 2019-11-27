@@ -16,8 +16,8 @@ namespace Cemiyet.Application.Books.Commands.Add
                 .NotEmpty()
                 .MaximumLength(2500);
 
-            RuleFor(ac => ac.Genres).NotEmpty();
-            RuleFor(ac => ac.Authors).NotEmpty();
+            RuleFor(ac => ac.GenreIds).NotEmpty();
+            RuleFor(ac => ac.AuthorIds).NotEmpty();
         }
     }
 }

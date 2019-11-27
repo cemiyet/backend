@@ -4,6 +4,7 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Cemiyet.Api.Filters;
 using Cemiyet.Application.Books.Commands.Add;
+using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Queries.List;
 using Cemiyet.Application.Books.Queries.ListEdition;
 using Cemiyet.Application.Books.Queries.Details;
@@ -28,15 +29,16 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
         public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data) => await Mediator.Send(data);
 
+        [HttpPost("{id}/editions")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
+        public async Task<ActionResult<Unit>> AddEdition([FromBody] AddEditionCommand data) => await Mediator.Send(data);
+
         [HttpGet]
         [ProducesResponseType(typeof(List<BookViewModel>), 200)]
         [ProducesResponseType(typeof(BookNotFoundException), 400)]
         public async Task<ActionResult<List<BookViewModel>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
-
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(BookViewModel), 200)]
-        [ProducesResponseType(typeof(BookNotFoundException), 400)]
-        public async Task<ActionResult<BookViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
 
         [HttpGet("{id}/editions")]
         [ProducesResponseType(typeof(List<BookEditionViewModel>), 200)]
@@ -47,6 +49,11 @@ namespace Cemiyet.Api.Controllers
             query.Id = id;
             return await Mediator.Send(query);
         }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(BookViewModel), 200)]
+        [ProducesResponseType(typeof(BookNotFoundException), 400)]
+        public async Task<ActionResult<BookViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
 
         [HttpGet("{id}/editions/{isbn}")]
         [ProducesResponseType(typeof(BookEditionViewModel), 200)]

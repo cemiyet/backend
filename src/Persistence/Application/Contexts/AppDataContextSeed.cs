@@ -143,6 +143,10 @@ namespace Cemiyet.Persistence.Application.Contexts
                 },
                 new Dimension
                 {
+                    Width = 12, Height = 19.5, CreationDate = DateTime.UtcNow
+                },
+                new Dimension
+                {
                     Width = 12.5, Height = 19.5, CreationDate = DateTime.UtcNow
                 },
                 new Dimension
@@ -371,6 +375,16 @@ namespace Cemiyet.Persistence.Application.Contexts
                     Publisher = context.Publishers.SingleOrDefault(p => p.Name == "Yapı Kredi Yayınları"),
                     Book = context.Books.SingleOrDefault(b => b.Title == "Nutuk"),
                     Dimensions = context.Dimensions.SingleOrDefault(d => d.Width == 10.5 && d.Height == 17)
+                },
+                new BookEdition
+                {
+                    Isbn = "9789754378009",
+                    PageCount = 584,
+                    PrintDate = new DateTime(2019, 09, 01),
+                    CreationDate = DateTime.UtcNow,
+                    Publisher = context.Publishers.SingleOrDefault(p => p.Name == "Ötüken Neşriyat"),
+                    Book = context.Books.SingleOrDefault(b => b.Title == "Bozkurtlar"),
+                    Dimensions = context.Dimensions.SingleOrDefault(d => d.Width == 12 && d.Height == 19.5)
                 },
             };
 

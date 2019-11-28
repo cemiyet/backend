@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Commands.DeleteOne;
+using Cemiyet.Application.Books.Commands.DeleteOneEdition;
 using Cemiyet.Application.Books.Queries.List;
 using Cemiyet.Application.Books.Queries.ListEdition;
 using Cemiyet.Application.Books.Queries.Details;
@@ -24,6 +25,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly AddEditionCommandValidator _addEditionCommandValidator;
 
         private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
+        private readonly DeleteOneEditionCommandValidator _deleteOneEditionCommandValidator;
 
         public BooksValidatorTests()
         {
@@ -36,6 +38,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _addEditionCommandValidator = new AddEditionCommandValidator();
 
             _deleteOneCommandValidator = new DeleteOneCommandValidator();
+            _deleteOneEditionCommandValidator = new DeleteOneEditionCommandValidator();
         }
 
         [Fact]
@@ -175,6 +178,20 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         public void DeleteOneCommand_ShouldNotHave_ValidationErrors()
         {
             _deleteOneCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+        }
+
+        [Fact]
+        public void DeleteOneEditionCommand_ShouldHave_ValidationErrors()
+        {
+            _deleteOneEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.Isbn, "");
+            _deleteOneEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.Isbn, Guid.NewGuid().ToString());
+            _deleteOneEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.Isbn, "123456789011");
+        }
+
+        [Fact]
+        public void DeleteOneEditionCommand_ShouldNotHave_ValidationErrors()
+        {
+            _deleteOneEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Isbn, "1234567890111");
         }
     }
 }

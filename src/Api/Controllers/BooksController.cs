@@ -6,6 +6,7 @@ using Cemiyet.Api.Filters;
 using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Commands.DeleteOne;
+using Cemiyet.Application.Books.Commands.DeleteOneEdition;
 using Cemiyet.Application.Books.Queries.List;
 using Cemiyet.Application.Books.Queries.ListEdition;
 using Cemiyet.Application.Books.Queries.Details;
@@ -65,5 +66,10 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(BookNotFoundException), 400)]
         public async Task<ActionResult<Unit>> DeleteOne(Guid id) => await Mediator.Send(new DeleteOneCommand { Id = id });
+
+        [HttpDelete("{id}/editions/{isbn}")]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(BookNotFoundException), 400)]
+        public async Task<ActionResult<Unit>> DeleteOneEdition([FromRoute] DeleteOneEditionCommand command) => await Mediator.Send(command);
     }
 }

@@ -4,6 +4,7 @@ using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Commands.DeleteOne;
 using Cemiyet.Application.Books.Commands.DeleteOneEdition;
+using Cemiyet.Application.Books.Commands.DeleteMany;
 using Cemiyet.Application.Books.Queries.List;
 using Cemiyet.Application.Books.Queries.ListEdition;
 using Cemiyet.Application.Books.Queries.Details;
@@ -27,6 +28,8 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
         private readonly DeleteOneEditionCommandValidator _deleteOneEditionCommandValidator;
 
+        private readonly DeleteManyCommandValidator _deleteManyCommandValidator;
+
         public BooksValidatorTests()
         {
             _listQueryValidator = new ListQueryValidator();
@@ -39,6 +42,8 @@ namespace Cemiyet.Application.Tests.ValidatorTests
 
             _deleteOneCommandValidator = new DeleteOneCommandValidator();
             _deleteOneEditionCommandValidator = new DeleteOneEditionCommandValidator();
+
+            _deleteManyCommandValidator = new DeleteManyCommandValidator();
         }
 
         [Fact]
@@ -192,6 +197,26 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         public void DeleteOneEditionCommand_ShouldNotHave_ValidationErrors()
         {
             _deleteOneEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Isbn, "1234567890111");
+        }
+
+        [Fact]
+        public void DeleteManyCommand_ShouldHave_ValidationErrors()
+        {
+            Guid[] ids = { };
+            Guid[] ids2 = { Guid.NewGuid() };
+            Guid[] ids3 = { Guid.Empty, Guid.Empty, Guid.Empty };
+
+            _deleteManyCommandValidator.ShouldHaveValidationErrorFor(x => x.Ids, ids);
+            _deleteManyCommandValidator.ShouldHaveValidationErrorFor(x => x.Ids, ids2);
+            _deleteManyCommandValidator.ShouldHaveValidationErrorFor(x => x.Ids, ids3);
+        }
+
+        [Fact]
+        public void DeleteManyCommand_ShouldNotHave_ValidationErrors()
+        {
+            Guid[] ids = { Guid.NewGuid(), Guid.NewGuid() };
+
+            _deleteManyCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Ids, ids);
         }
     }
 }

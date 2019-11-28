@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Commands.DeleteMany;
+using Cemiyet.Application.Books.Commands.DeleteManyEdition;
 using Cemiyet.Core.Entities;
 using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
@@ -298,6 +299,50 @@ namespace Cemiyet.Api.Tests
                 Method = HttpMethod.Delete,
                 RequestUri = new Uri(_httpClient.BaseAddress + "books"),
                 Content = new StringContent(JsonConvert.SerializeObject(dmc), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _httpClient.SendAsync(request);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteManyEdition_WithoutCorrectIds_ShouldReturn_BadRequest()
+        {
+            string[] isbns = { Guid.NewGuid().ToString(), "" };
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(_httpClient.BaseAddress + "books"),
+                Content = new StringContent(JsonConvert.SerializeObject(isbns), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _httpClient.SendAsync(request);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteManyEdition_WithCorrectIds_ShouldReturn_OK()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
+
+            var editionsResponse = await _httpClient.GetAsync($"books/{books.First().Id}/editions");
+            Assert.Equal(HttpStatusCode.OK, editionsResponse.StatusCode);
+
+            var editions = await editionsResponse.Content.ReadAsAsync<List<BookEditionViewModel>>();
+            Assert.NotNull(editions);
+
+            var dmec = new DeleteManyEditionCommand { Isbns = editions.Select(e => e.Isbn).ToArray() };
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(_httpClient.BaseAddress + "books"),
+                Content = new StringContent(JsonConvert.SerializeObject(dmec), Encoding.UTF8, "application/json")
             };
 
             var response = await _httpClient.SendAsync(request);

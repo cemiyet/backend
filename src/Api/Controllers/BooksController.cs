@@ -7,6 +7,7 @@ using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Commands.DeleteOne;
 using Cemiyet.Application.Books.Commands.DeleteOneEdition;
+using Cemiyet.Application.Books.Commands.DeleteMany;
 using Cemiyet.Application.Books.Queries.List;
 using Cemiyet.Application.Books.Queries.ListEdition;
 using Cemiyet.Application.Books.Queries.Details;
@@ -69,7 +70,13 @@ namespace Cemiyet.Api.Controllers
 
         [HttpDelete("{id}/editions/{isbn}")]
         [ProducesResponseType(typeof(Unit), 200)]
-        [ProducesResponseType(typeof(BookNotFoundException), 400)]
+        [ProducesResponseType(typeof(BookEditionNotFoundException), 400)]
         public async Task<ActionResult<Unit>> DeleteOneEdition([FromRoute] DeleteOneEditionCommand command) => await Mediator.Send(command);
+
+        [HttpDelete]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(BookNotFoundException), 400)]
+        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data) => await Mediator.Send(data);
     }
 }

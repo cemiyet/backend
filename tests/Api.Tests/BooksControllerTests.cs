@@ -233,5 +233,37 @@ namespace Cemiyet.Api.Tests
             var response = await _httpClient.DeleteAsync($"books/{books.Last().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
+
+        [Fact]
+        public async Task DeleteOneEdition_WithoutCorrectId_ShouldReturn_BadRequest()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
+
+            var response = await _httpClient.DeleteAsync($"books/{books.First().Id}/editions/1");
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteOneEdition_WithCorrectId_ShouldReturn_OK()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
+
+            var editionsResponse = await _httpClient.GetAsync($"books/{books.First().Id}/editions");
+            Assert.Equal(HttpStatusCode.OK, editionsResponse.StatusCode);
+
+            var editions = await editionsResponse.Content.ReadAsAsync<List<BookEditionViewModel>>();
+            Assert.NotNull(editions);
+
+            var response = await _httpClient.DeleteAsync($"books/{books.First().Id}/editions/{editions.First().Isbn}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }

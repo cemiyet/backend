@@ -216,5 +216,22 @@ namespace Cemiyet.Api.Tests
             var responseData = await response.Content.ReadAsAsync<BookEditionViewModel>();
             Assert.NotNull(responseData);
         }
+
+        [Fact]
+        public async Task DeleteOne_WithoutCorrectId_ShouldReturn_BadRequest()
+        {
+            var response = await _httpClient.DeleteAsync($"books/{Guid.NewGuid()}");
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteOne_WithCorrectId_ShouldReturn_OK()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+
+            var response = await _httpClient.DeleteAsync($"books/{books.Last().Id}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }

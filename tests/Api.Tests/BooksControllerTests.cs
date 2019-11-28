@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
+using Cemiyet.Application.Books.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
 using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace Cemiyet.Api.Tests
@@ -263,6 +266,41 @@ namespace Cemiyet.Api.Tests
             Assert.NotNull(editions);
 
             var response = await _httpClient.DeleteAsync($"books/{books.First().Id}/editions/{editions.First().Isbn}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
+        {
+            string[] ids = { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(_httpClient.BaseAddress + "books"),
+                Content = new StringContent(JsonConvert.SerializeObject(ids), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _httpClient.SendAsync(request);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+
+            var dmc = new DeleteManyCommand { Ids = books.TakeLast(2).Select(g => g.Id).ToArray() };
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Delete,
+                RequestUri = new Uri(_httpClient.BaseAddress + "books"),
+                Content = new StringContent(JsonConvert.SerializeObject(dmc), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _httpClient.SendAsync(request);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }

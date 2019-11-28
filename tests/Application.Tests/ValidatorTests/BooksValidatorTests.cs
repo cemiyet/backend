@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
+using Cemiyet.Application.Books.Commands.DeleteOne;
 using Cemiyet.Application.Books.Queries.List;
 using Cemiyet.Application.Books.Queries.ListEdition;
 using Cemiyet.Application.Books.Queries.Details;
@@ -22,6 +23,8 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly AddCommandValidator _addCommandValidator;
         private readonly AddEditionCommandValidator _addEditionCommandValidator;
 
+        private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
+
         public BooksValidatorTests()
         {
             _listQueryValidator = new ListQueryValidator();
@@ -31,6 +34,8 @@ namespace Cemiyet.Application.Tests.ValidatorTests
 
             _addCommandValidator = new AddCommandValidator();
             _addEditionCommandValidator = new AddEditionCommandValidator();
+
+            _deleteOneCommandValidator = new DeleteOneCommandValidator();
         }
 
         [Fact]
@@ -158,6 +163,18 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _addEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
             _addEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.DimensionsId, Guid.NewGuid());
             _addEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.PublishersId, Guid.NewGuid());
+        }
+
+        [Fact]
+        public void DeleteOneCommand_ShouldHave_ValidationErrors()
+        {
+            _deleteOneCommandValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
+        }
+
+        [Fact]
+        public void DeleteOneCommand_ShouldNotHave_ValidationErrors()
+        {
+            _deleteOneCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
         }
     }
 }

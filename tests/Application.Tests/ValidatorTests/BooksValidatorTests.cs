@@ -5,6 +5,7 @@ using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Commands.DeleteOne;
 using Cemiyet.Application.Books.Commands.DeleteOneEdition;
 using Cemiyet.Application.Books.Commands.DeleteMany;
+using Cemiyet.Application.Books.Commands.DeleteManyEdition;
 using Cemiyet.Application.Books.Queries.List;
 using Cemiyet.Application.Books.Queries.ListEdition;
 using Cemiyet.Application.Books.Queries.Details;
@@ -29,6 +30,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly DeleteOneEditionCommandValidator _deleteOneEditionCommandValidator;
 
         private readonly DeleteManyCommandValidator _deleteManyCommandValidator;
+        private readonly DeleteManyEditionCommandValidator _deleteManyEditionCommandValidator;
 
         public BooksValidatorTests()
         {
@@ -44,6 +46,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _deleteOneEditionCommandValidator = new DeleteOneEditionCommandValidator();
 
             _deleteManyCommandValidator = new DeleteManyCommandValidator();
+            _deleteManyEditionCommandValidator = new DeleteManyEditionCommandValidator();
         }
 
         [Fact]
@@ -217,6 +220,26 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             Guid[] ids = { Guid.NewGuid(), Guid.NewGuid() };
 
             _deleteManyCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Ids, ids);
+        }
+
+        [Fact]
+        public void DeleteManyEditionCommand_ShouldHave_ValidationErrors()
+        {
+            string[] isbns = { };
+            string[] isbns2 = { Guid.NewGuid().ToString() };
+            string[] isbns3 = { Guid.NewGuid().ToString(), "Guid.Empty", "" };
+
+            _deleteManyEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.Isbns, isbns);
+            _deleteManyEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.Isbns, isbns2);
+            _deleteManyEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.Isbns, isbns3);
+        }
+
+        [Fact]
+        public void DeleteManyEditionCommand_ShouldNotHave_ValidationErrors()
+        {
+            string[] isbns = { "1234567890111", "0123456789111" };
+
+            _deleteManyEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Isbns, isbns);
         }
     }
 }

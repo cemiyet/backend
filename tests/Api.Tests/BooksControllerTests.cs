@@ -117,6 +117,7 @@ namespace Cemiyet.Api.Tests
                 PageCount = short.MaxValue,
                 Id = books.First().Id,
                 DimensionsId = dimensions.First().Id,
+                BooksId = books.First().Id,
                 PublishersId = publishers.First().Id
             });
 
@@ -233,14 +234,14 @@ namespace Cemiyet.Api.Tests
         }
 
         [Fact]
-        public async Task DetailsEdition_WithoutCorrectId_ShouldReturn_BadRequest()
+        public async Task DetailsEdition_WithoutCorrectIsbn_ShouldReturn_BadRequest()
         {
-            var response = await _httpClient.GetAsync($"books/{Guid.NewGuid()}");
+            var response = await _httpClient.GetAsync($"books/{Guid.NewGuid()}/editions/1234567890111");
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
         [Fact]
-        public async Task DetailsEdition_WithCorrectId_ShouldReturn_BookEditionObject()
+        public async Task DetailsEdition_WithCorrectIsbn_ShouldReturn_BookEditionObject()
         {
             var booksResponse = await _httpClient.GetAsync("books");
             Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);

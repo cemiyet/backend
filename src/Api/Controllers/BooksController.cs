@@ -6,6 +6,7 @@ using Cemiyet.Api.Filters;
 using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Commands.Update;
+using Cemiyet.Application.Books.Commands.UpdateEdition;
 using Cemiyet.Application.Books.Commands.DeleteOne;
 using Cemiyet.Application.Books.Commands.DeleteOneEdition;
 using Cemiyet.Application.Books.Commands.DeleteMany;
@@ -49,6 +50,16 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(BookNotFoundException), 400)]
         public async Task<ActionResult<Unit>> Update([FromRoute] Guid id, [FromBody] UpdateCommand data)
+        {
+            data.Id = id;
+            return await Mediator.Send(data);
+        }
+
+        [HttpPut("{id}/editions/{isbn}")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(BookEditionNotFoundException), 400)]
+        public async Task<ActionResult<Unit>> UpdateEdition([FromRoute] Guid id, [FromBody] UpdateEditionCommand data)
         {
             data.Id = id;
             return await Mediator.Send(data);

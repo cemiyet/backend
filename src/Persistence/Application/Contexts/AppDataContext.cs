@@ -81,7 +81,8 @@ namespace Cemiyet.Persistence.Application.Contexts
 
             foreach (var entity in entities)
             {
-                if (!entity.IsKeySet) continue;
+                // todo: currently can't log values without Id property. (like book editions)
+                if (!entity.IsKeySet || entity.GetType().GetProperty("Id") == null) continue;
 
                 var entityId = entity.OriginalValues["Id"].ToString();
                 var properties = entity.OriginalValues.Properties.Where(p => p.Name != "ModificationDate").ToList();

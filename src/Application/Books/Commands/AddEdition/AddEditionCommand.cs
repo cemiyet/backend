@@ -10,7 +10,7 @@ namespace Cemiyet.Application.Books.Commands.AddEdition
         public short PageCount { get; set; }
         public DateTime PrintDate { get; set; }
 
-        public Guid BooksId => Id;
+        public Guid BooksId { get; set; }
         public Guid DimensionsId { get; set; }
         public Guid PublishersId { get; set; }
     }

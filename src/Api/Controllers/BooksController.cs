@@ -38,7 +38,11 @@ namespace Cemiyet.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<ActionResult<Unit>> AddEdition([FromBody] AddEditionCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> AddEdition([FromRoute] Guid id, [FromBody] AddEditionCommand data)
+        {
+            data.Id = id;
+            return await Mediator.Send(data);
+        }
 
         [HttpPut("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]

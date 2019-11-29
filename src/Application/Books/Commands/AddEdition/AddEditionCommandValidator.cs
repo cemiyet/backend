@@ -17,7 +17,7 @@ namespace Cemiyet.Application.Books.Commands.AddEdition
                 .NotEmpty()
                 .GreaterThanOrEqualTo(Constants.BookEditionMinPageSize);
 
-            RuleFor(aec => aec.Id).NotEmpty();
+            RuleFor(aec => aec.Id).NotNull();
             RuleFor(aec => aec.PrintDate).NotEmpty();
             RuleFor(aec => aec.BooksId).NotEmpty();
             RuleFor(aec => aec.DimensionsId).NotEmpty();

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Cemiyet.Api.Filters;
 using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
+using Cemiyet.Application.Books.Commands.Update;
 using Cemiyet.Application.Books.Commands.DeleteOne;
 using Cemiyet.Application.Books.Commands.DeleteOneEdition;
 using Cemiyet.Application.Books.Commands.DeleteMany;
@@ -38,6 +39,16 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
         public async Task<ActionResult<Unit>> AddEdition([FromBody] AddEditionCommand data) => await Mediator.Send(data);
+
+        [HttpPut("{id}")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(BookNotFoundException), 400)]
+        public async Task<ActionResult<Unit>> Update([FromRoute] Guid id, [FromBody] UpdateCommand data)
+        {
+            data.Id = id;
+            return await Mediator.Send(data);
+        }
 
         [HttpGet]
         [ProducesResponseType(typeof(List<BookViewModel>), 200)]

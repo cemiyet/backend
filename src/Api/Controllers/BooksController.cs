@@ -91,7 +91,7 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(BookNotFoundException), 400)]
         public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data) => await Mediator.Send(data);
 
-        [HttpDelete("{id}/editions/{isbn}")]
+        [HttpDelete("{id}/editions")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(BookEditionNotFoundException), 400)]

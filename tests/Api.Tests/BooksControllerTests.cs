@@ -124,6 +124,46 @@ namespace Cemiyet.Api.Tests
         }
 
         [Fact]
+        public async Task Update_WithoutCorrectId_ShouldReturn_BadRequest()
+        {
+            var response = await _httpClient.PutAsJsonAsync($"books/{Guid.NewGuid()}", default(Author));
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Update_WithoutCorrectData_ShouldReturn_BadRequest()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+
+            var response = await _httpClient.PutAsJsonAsync($"books/{books.First().Id}", default(Book));
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+            response = await _httpClient.PutAsJsonAsync($"books/{books.First().Id}", new Book
+            {
+                Title = "",
+                Description = null
+            });
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Update_WithCorrectData_ShouldReturn_OK()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+
+            var response = await _httpClient.PutAsJsonAsync($"books/{books.Last().Id}", new
+            {
+                Title = "Title",
+                Description = "Description",
+            });
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+
+        [Fact]
         public async Task List_WithoutCorrectPaging_ShouldReturn_BadRequest()
         {
             var response = await _httpClient.GetAsync("books?page=-1&pageSize=-5");

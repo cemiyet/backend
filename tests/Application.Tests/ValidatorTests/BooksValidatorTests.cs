@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Commands.Update;
+using Cemiyet.Application.Books.Commands.UpdateEdition;
 using Cemiyet.Application.Books.Commands.DeleteOne;
 using Cemiyet.Application.Books.Commands.DeleteOneEdition;
 using Cemiyet.Application.Books.Commands.DeleteMany;
@@ -28,6 +29,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly AddEditionCommandValidator _addEditionCommandValidator;
 
         private readonly UpdateCommandValidator _updateCommandValidator;
+        private readonly UpdateEditionCommandValidator _updateEditionCommandValidator;
 
         private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
         private readonly DeleteOneEditionCommandValidator _deleteOneEditionCommandValidator;
@@ -46,6 +48,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _addEditionCommandValidator = new AddEditionCommandValidator();
 
             _updateCommandValidator = new UpdateCommandValidator();
+            _updateEditionCommandValidator = new UpdateEditionCommandValidator();
 
             _deleteOneCommandValidator = new DeleteOneCommandValidator();
             _deleteOneEditionCommandValidator = new DeleteOneEditionCommandValidator();
@@ -165,7 +168,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _addEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.Isbn, "");
             _addEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.PageCount, default(short));
             _addEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.PrintDate, default(DateTime));
-            _addEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
+            _addEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.BooksId, default(Guid));
             _addEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.DimensionsId, default(Guid));
             _addEditionCommandValidator.ShouldHaveValidationErrorFor(x => x.PublishersId, default(Guid));
         }
@@ -177,6 +180,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _addEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.PageCount, short.MaxValue);
             _addEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.PrintDate, DateTime.Now);
             _addEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _addEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.BooksId, Guid.NewGuid());
             _addEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.DimensionsId, Guid.NewGuid());
             _addEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.PublishersId, Guid.NewGuid());
         }
@@ -290,6 +294,59 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             ucValidator.ShouldNotHaveValidationErrorFor(x => x.Description);
         }
 
+        [Fact]
+        public void UpdateEditionCommand_ShouldHave_ValidationErrors()
+        {
+            var uecWithNullData = new UpdateEditionCommand();
+            var uecValidator = _updateEditionCommandValidator.TestValidate(uecWithNullData);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.Isbn);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.PageCount);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.PrintDate);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.PublishersId);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.BooksId);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.DimensionsId);
+
+            var uecWithNullData2 = new UpdateEditionCommand
+            {
+                Id = Guid.Empty,
+                Isbn = null,
+                PageCount = 0
+            };
+
+            uecValidator = _updateEditionCommandValidator.TestValidate(uecWithNullData2);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.Isbn);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.PageCount);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.PrintDate);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.PublishersId);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.BooksId);
+            uecValidator.ShouldHaveValidationErrorFor(x => x.DimensionsId);
+        }
+
+        [Fact]
+        public void UpdateEditionCommand_ShouldNotHave_ValidationErrors()
+        {
+            _updateEditionCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+
+            var uecWithGoodData = new UpdateEditionCommand
+            {
+                Id = Guid.NewGuid(),
+                Isbn = "1234567890111",
+                PageCount = 255,
+                PrintDate = DateTime.Now,
+                PublishersId = Guid.NewGuid(),
+                BooksId = Guid.NewGuid(),
+                DimensionsId = Guid.NewGuid()
+            };
+
+            var uecValidator = _updateEditionCommandValidator.TestValidate(uecWithGoodData);
+            uecValidator.ShouldNotHaveValidationErrorFor(x => x.Id);
+            uecValidator.ShouldNotHaveValidationErrorFor(x => x.Isbn);
+            uecValidator.ShouldNotHaveValidationErrorFor(x => x.PageCount);
+            uecValidator.ShouldNotHaveValidationErrorFor(x => x.PrintDate);
+            uecValidator.ShouldNotHaveValidationErrorFor(x => x.PublishersId);
+            uecValidator.ShouldNotHaveValidationErrorFor(x => x.BooksId);
+            uecValidator.ShouldNotHaveValidationErrorFor(x => x.DimensionsId);
+        }
     }
 }
 

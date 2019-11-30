@@ -60,9 +60,12 @@ namespace Cemiyet.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(BookEditionNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> UpdateEdition([FromRoute] Guid id, [FromBody] UpdateEditionCommand data)
+        public async Task<ActionResult<Unit>> UpdateEdition([FromRoute] Guid id,
+                                                            [FromRoute] string isbn,
+                                                            [FromBody] UpdateEditionCommand data)
         {
             data.Id = id;
+            data.Isbn = isbn;
             return await Mediator.Send(data);
         }
 

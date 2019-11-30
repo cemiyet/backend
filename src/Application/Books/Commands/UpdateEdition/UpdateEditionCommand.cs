@@ -7,6 +7,7 @@ namespace Cemiyet.Application.Books.Commands.UpdateEdition
     {
         public Guid Id { get; set; }
         public string Isbn { get; set; }
+        public string NewIsbn { get; set; }
         public short PageCount { get; set; }
         public DateTime PrintDate { get; set; }
 

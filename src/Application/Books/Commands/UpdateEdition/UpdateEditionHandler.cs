@@ -38,7 +38,9 @@ namespace Cemiyet.Application.Books.Commands.UpdateEdition
             if (publisher == null)
                 throw new PublisherNotFoundException(request.PublishersId);
 
-            bookEdition.Isbn = request.Isbn;
+            if (!string.IsNullOrEmpty(request.NewIsbn) && !request.NewIsbn.Equals(request.Isbn))
+                bookEdition.Isbn = request.NewIsbn;
+
             bookEdition.PageCount = request.PageCount;
             bookEdition.PrintDate = request.PrintDate;
             bookEdition.Book = book;

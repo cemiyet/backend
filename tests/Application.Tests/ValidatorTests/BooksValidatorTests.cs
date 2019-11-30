@@ -304,7 +304,6 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         {
             var uecWithNullData = new UpdateEditionCommand();
             var uecValidator = _updateEditionCommandValidator.TestValidate(uecWithNullData);
-            uecValidator.ShouldHaveValidationErrorFor(x => x.Isbn);
             uecValidator.ShouldHaveValidationErrorFor(x => x.PageCount);
             uecValidator.ShouldHaveValidationErrorFor(x => x.PrintDate);
             uecValidator.ShouldHaveValidationErrorFor(x => x.PublishersId);
@@ -319,7 +318,6 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             };
 
             uecValidator = _updateEditionCommandValidator.TestValidate(uecWithNullData2);
-            uecValidator.ShouldHaveValidationErrorFor(x => x.Isbn);
             uecValidator.ShouldHaveValidationErrorFor(x => x.PageCount);
             uecValidator.ShouldHaveValidationErrorFor(x => x.PrintDate);
             uecValidator.ShouldHaveValidationErrorFor(x => x.PublishersId);

@@ -9,6 +9,7 @@ using Cemiyet.Application.Books.Commands.DeleteOne;
 using Cemiyet.Application.Books.Commands.DeleteOneEdition;
 using Cemiyet.Application.Books.Commands.DeleteMany;
 using Cemiyet.Application.Books.Commands.DeleteManyEdition;
+using Cemiyet.Application.Books.Commands.UpdatePartiallyEdition;
 using Cemiyet.Application.Books.Queries.List;
 using Cemiyet.Application.Books.Queries.ListEdition;
 using Cemiyet.Application.Books.Queries.Details;
@@ -33,6 +34,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly UpdateEditionCommandValidator _updateEditionCommandValidator;
 
         private readonly UpdatePartiallyCommandValidator _updatePartiallyCommandValidator;
+        private readonly UpdatePartiallyEditionCommandValidator _updatePartiallyEditionCommandValidator;
 
         private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
         private readonly DeleteOneEditionCommandValidator _deleteOneEditionCommandValidator;
@@ -54,6 +56,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _updateEditionCommandValidator = new UpdateEditionCommandValidator();
 
             _updatePartiallyCommandValidator = new UpdatePartiallyCommandValidator();
+            _updatePartiallyEditionCommandValidator = new UpdatePartiallyEditionCommandValidator();
 
             _deleteOneCommandValidator = new DeleteOneCommandValidator();
             _deleteOneEditionCommandValidator = new DeleteOneEditionCommandValidator();
@@ -350,6 +353,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             uecValidator.ShouldNotHaveValidationErrorFor(x => x.BooksId);
             uecValidator.ShouldNotHaveValidationErrorFor(x => x.DimensionsId);
         }
+
         [Fact]
         public void UpdatePartiallyCommand_ShouldHave_ValidationErrors()
         {
@@ -415,6 +419,45 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             upcValidator.ShouldNotHaveValidationErrorFor(x => x.Description);
         }
 
+        [Fact]
+        public void UpdatePartiallyEditionCommand_ShouldHave_ValidationErrors()
+        {
+            var upecWithBadData = new UpdatePartiallyEditionCommand
+            {
+                Isbn = "0123456789",
+                NewIsbn = "1234567890"
+            };
+
+            var upecValidator = _updatePartiallyEditionCommandValidator.TestValidate(upecWithBadData);
+            upecValidator.ShouldHaveValidationErrorFor(x => x.Isbn);
+            upecValidator.ShouldHaveValidationErrorFor(x => x.NewIsbn);
+            upecValidator.ShouldHaveValidationErrorFor(x => x.PageCount);
+            upecValidator.ShouldHaveValidationErrorFor(x => x.PrintDate);
+            upecValidator.ShouldHaveValidationErrorFor(x => x.BooksId);
+            upecValidator.ShouldHaveValidationErrorFor(x => x.DimensionsId);
+            upecValidator.ShouldHaveValidationErrorFor(x => x.PublishersId);
+        }
+
+        [Fact]
+        public void UpdatePartiallyEditionCommand_ShouldNotHave_ValidationErrors()
+        {
+            var upecWithEmptyData = new UpdatePartiallyEditionCommand
+            {
+                NewIsbn = "1234567890111",
+                PageCount = short.MaxValue,
+                PrintDate = DateTime.UtcNow,
+            };
+
+            var upecValidator = _updatePartiallyEditionCommandValidator.TestValidate(upecWithEmptyData);
+            upecValidator.ShouldNotHaveValidationErrorFor(x => x.Id);
+            upecValidator.ShouldNotHaveValidationErrorFor(x => x.Isbn);
+            upecValidator.ShouldNotHaveValidationErrorFor(x => x.NewIsbn);
+            upecValidator.ShouldNotHaveValidationErrorFor(x => x.PageCount);
+            upecValidator.ShouldNotHaveValidationErrorFor(x => x.PrintDate);
+            upecValidator.ShouldNotHaveValidationErrorFor(x => x.BooksId);
+            upecValidator.ShouldNotHaveValidationErrorFor(x => x.DimensionsId);
+            upecValidator.ShouldNotHaveValidationErrorFor(x => x.PublishersId);
+        }
     }
 }
 

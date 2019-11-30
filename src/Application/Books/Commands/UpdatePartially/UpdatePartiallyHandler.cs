@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.Contexts;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cemiyet.Application.Books.Commands.UpdatePartially
 {
@@ -28,6 +29,9 @@ namespace Cemiyet.Application.Books.Commands.UpdatePartially
 
             if (!string.IsNullOrEmpty(request.Description) && request.Description != book.Description)
                 book.Description = request.Description;
+
+            if (_context.Entry(book).State != EntityState.Modified)
+                throw new Exception("Nothing updated.");
 
             var success = await _context.SaveChangesAsync() > 0;
 

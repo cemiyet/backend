@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.Contexts;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cemiyet.Application.Authors.Commands.UpdatePartially
 {
@@ -31,6 +32,9 @@ namespace Cemiyet.Application.Authors.Commands.UpdatePartially
 
             if (!string.IsNullOrEmpty(request.Bio) && request.Bio != author.Bio)
                 author.Bio = request.Bio;
+
+            if (_context.Entry(author).State != EntityState.Modified)
+                throw new Exception("Nothing updated.");
 
             var success = await _context.SaveChangesAsync() > 0;
 

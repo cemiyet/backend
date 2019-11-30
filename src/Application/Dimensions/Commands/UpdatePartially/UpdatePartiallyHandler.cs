@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.Contexts;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cemiyet.Application.Dimensions.Commands.UpdatePartially
 {
@@ -28,6 +29,9 @@ namespace Cemiyet.Application.Dimensions.Commands.UpdatePartially
 
             if (!request.Height.Equals(default) && Math.Abs(request.Width - dimension.Width) > 0.1)
                 dimension.Height = request.Height;
+
+            if (_context.Entry(dimension).State != EntityState.Modified)
+                throw new Exception("Nothing updated.");
 
             var success = await _context.SaveChangesAsync() > 0;
 

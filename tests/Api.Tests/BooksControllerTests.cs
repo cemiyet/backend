@@ -224,6 +224,43 @@ namespace Cemiyet.Api.Tests
         }
 
         [Fact]
+        public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri(_httpClient.BaseAddress + $"books/{books.First().Id}"),
+                Content = new StringContent(JsonConvert.SerializeObject(new { }), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _httpClient.SendAsync(request);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri(_httpClient.BaseAddress + $"books/{books.First().Id}"),
+                Content = new StringContent(JsonConvert.SerializeObject(new
+                {
+                    Title = "BAŞLIK"
+                }), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _httpClient.SendAsync(request);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
         public async Task List_WithoutCorrectPaging_ShouldReturn_BadRequest()
         {
             var response = await _httpClient.GetAsync("books?page=-1&pageSize=-5");

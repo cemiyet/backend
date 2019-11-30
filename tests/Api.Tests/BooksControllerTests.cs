@@ -261,6 +261,62 @@ namespace Cemiyet.Api.Tests
         }
 
         [Fact]
+        public async Task UpdatePartiallyEdition_WithoutCorrectData_ShouldReturn_BadRequest()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
+
+            var editionsResponse = await _httpClient.GetAsync($"books/{books.First().Id}/editions");
+            Assert.Equal(HttpStatusCode.OK, editionsResponse.StatusCode);
+
+            var editions = await editionsResponse.Content.ReadAsAsync<List<BookEditionViewModel>>();
+            Assert.NotNull(editions);
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri(_httpClient.BaseAddress + $"books/{editions.First().Book.Id}/editions/{editions.First().Isbn}"),
+                Content = new StringContent(JsonConvert.SerializeObject(new { Isbn = "1", NewIsbn = "", BooksId = Guid.Empty }), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _httpClient.SendAsync(request);
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task UpdatePartiallyEdition_WithCorrectData_ShouldReturn_OK()
+        {
+            var booksResponse = await _httpClient.GetAsync("books");
+            Assert.Equal(HttpStatusCode.OK, booksResponse.StatusCode);
+
+            var books = await booksResponse.Content.ReadAsAsync<List<BookViewModel>>();
+            Assert.NotNull(books);
+
+            var editionsResponse = await _httpClient.GetAsync($"books/{books.First().Id}/editions");
+            Assert.Equal(HttpStatusCode.OK, editionsResponse.StatusCode);
+
+            var editions = await editionsResponse.Content.ReadAsAsync<List<BookEditionViewModel>>();
+            Assert.NotNull(editions);
+
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Patch,
+                RequestUri = new Uri(_httpClient.BaseAddress + $"books/{editions.First().Book.Id}/editions/{editions.First().Isbn}"),
+                Content = new StringContent(JsonConvert.SerializeObject(new
+                {
+                    NewIsbn = "1234567890111",
+                    PageCount = short.MaxValue
+                }), Encoding.UTF8, "application/json")
+            };
+
+            var response = await _httpClient.SendAsync(request);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
         public async Task List_WithoutCorrectPaging_ShouldReturn_BadRequest()
         {
             var response = await _httpClient.GetAsync("books?page=-1&pageSize=-5");

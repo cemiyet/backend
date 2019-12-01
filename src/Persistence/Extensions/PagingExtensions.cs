@@ -22,8 +22,8 @@ namespace Cemiyet.Persistence.Extensions
             return await query.Skip(skip).Take(pageSize).ToListAsync();
         }
 
-        public static List<T> PagedToList<T>(this IQueryable<T> query,
-                                             int page = 1, int pageSize = Constants.PageSize)
+        public static ICollection<T> PagedToList<T>(this IEnumerable<T> query,
+                                                    int page = 1, int pageSize = Constants.PageSize)
         {
             var skip = (page - 1) * pageSize;
 

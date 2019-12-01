@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
+using Cemiyet.Persistence.Extensions;
 using MediatR;
 
 namespace Cemiyet.Application.Genres.Queries.ListBooks
@@ -25,7 +26,8 @@ namespace Cemiyet.Application.Genres.Queries.ListBooks
             if (genre == null)
                 throw new GenreNotFoundException(request.Id);
 
-            return BookViewModel.CreateFromBooks(genre.Books.Select(gb => gb.Book).ToList(), true, true, true).ToList();
+            return BookViewModel.CreateFromBooks(genre.Books.Select(gb => gb.Book).PagedToList(request.Page, request.PageSize),
+                                                 true, true, true).ToList();
         }
     }
 }

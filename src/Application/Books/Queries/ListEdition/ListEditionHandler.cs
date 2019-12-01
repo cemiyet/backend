@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
+using Cemiyet.Persistence.Extensions;
 using MediatR;
 
 namespace Cemiyet.Application.Books.Queries.ListEdition
@@ -25,7 +26,8 @@ namespace Cemiyet.Application.Books.Queries.ListEdition
             if (book == null)
                 throw new BookNotFoundException(request.Id);
 
-            return BookEditionViewModel.CreateFromBookEditions(book.Editions, true, true, true).ToList();
+            return BookEditionViewModel.CreateFromBookEditions(book.Editions.PagedToList(request.Page, request.PageSize),
+                                                               true, true, true).ToList();
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Cemiyet.Core.Exceptions;
 using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
+using Cemiyet.Persistence.Extensions;
 using MediatR;
 
 namespace Cemiyet.Application.Publishers.Queries.ListBooks
@@ -25,7 +26,8 @@ namespace Cemiyet.Application.Publishers.Queries.ListBooks
             if (publisher == null)
                 throw new PublisherNotFoundException(request.Id);
 
-            return BookEditionViewModel.CreateFromBookEditions(publisher.BookEditions, true, true, true).ToList();
+            return BookEditionViewModel.CreateFromBookEditions(publisher.BookEditions.PagedToList(request.Page, request.PageSize),
+                                                               true, true, true).ToList();
         }
     }
 }

@@ -6,7 +6,7 @@
     <AssemblyName>Cemiyet.Application.Tests</AssemblyName>
     <RootNamespace>Cemiyet.Application.Tests</RootNamespace>
     <PackageId>Cemiyet.Application.Tests</PackageId>
-    <PackageVersion>0.2.0</PackageVersion>
+    <PackageVersion>0.3.0</PackageVersion>
     <Authors>Nuri Uzunoğlu</Authors>
     <RepositoryUrl>https://github.com/nuriu/cemiyet-backend</RepositoryUrl>
     <Company>Cemiyet</Company>

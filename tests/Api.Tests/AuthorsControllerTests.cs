@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Cemiyet.Api.Tests.Extensions;
 using Cemiyet.Application.Authors.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
 using Cemiyet.Persistence.Application.Contexts;
@@ -36,14 +37,14 @@ namespace Cemiyet.Api.Tests
         public async Task Add_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var response = await _httpClient.PostAsJsonAsync("authors/", default(Author));
-            var response2 = await _httpClient.PostAsJsonAsync("authors/", new Author
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+            response = await _httpClient.PostAsJsonAsync("authors/", new Author
             {
                 Name = "",
                 Surname = "V3L1"
             });
-
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
-            Assert.Equal(HttpStatusCode.BadRequest, response2.StatusCode);
         }
 
         [Fact]
@@ -54,63 +55,46 @@ namespace Cemiyet.Api.Tests
                 Name = "Yazar",
                 Surname = "Veli"
             });
-
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]
         public async Task List_WithoutCorrectPaging_ShouldReturn_BadRequest()
         {
-            var response = await _httpClient.GetAsync("authors?page=-1&pageSize=-5");
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            await _httpClient.AssertedGetAsync("authors?page=-1&pageSize=-5", HttpStatusCode.BadRequest);
         }
 
         [Fact]
         public async Task List_WithoutPaging_ShouldReturn_DefaultPagedResult()
         {
-            var response = await _httpClient.GetAsync("authors");
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-            var responseData = await response.Content.ReadAsAsync<List<AuthorViewModel>>();
-            Assert.NotEmpty(responseData);
+            await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
         }
 
         [Fact]
         public async Task ListBooks_WithoutCorrectPaging_ShouldReturn_BadRequest()
         {
-            var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
-
-            var response = await _httpClient.GetAsync($"authors/{authors.First().Id}/books?page=-1&pageSize=-5");
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
+            await _httpClient.AssertedGetAsync($"authors/{authors.First().Id}/books?page=-1&pageSize=-5", HttpStatusCode.BadRequest);
         }
 
         [Fact]
         public async Task ListBooks_WithoutPaging_ShouldReturn_DefaultPagedResult()
         {
-            var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
-
-            var response = await _httpClient.GetAsync($"authors/{authors.First().Id}/books");
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
+            await _httpClient.AssertedGetAsync($"authors/{authors.First().Id}/books", HttpStatusCode.OK);
         }
 
         [Fact]
         public async Task Details_WithoutCorrectId_ShouldReturn_BadRequest()
         {
-            var response = await _httpClient.GetAsync($"authors/{Guid.NewGuid()}");
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            await _httpClient.AssertedGetAsync($"authors/{Guid.NewGuid()}", HttpStatusCode.BadRequest);
         }
 
         [Fact]
         public async Task Details_WithCorrectId_ShouldReturn_AuthorObject()
         {
-            var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
-
-            var response = await _httpClient.GetAsync($"authors/{authors.First().Id}");
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
+            var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
+            var response = await _httpClient.AssertedGetAsync($"authors/{authors.First().Id}", HttpStatusCode.OK);
             var responseData = await response.Content.ReadAsAsync<AuthorViewModel>();
             Assert.NotNull(responseData);
         }
@@ -118,35 +102,19 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
-            var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
-
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Patch,
-                RequestUri = new Uri(_httpClient.BaseAddress + $"authors/{authors.First().Id}"),
-                Content = new StringContent(JsonConvert.SerializeObject(new { }), Encoding.UTF8, "application/json")
-            };
-
-            var response = await _httpClient.SendAsync(request);
+            var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"authors/{authors.First().Id}", new { });
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
         [Fact]
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
-            var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
-
-            var request = new HttpRequestMessage
+            var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"authors/{authors.First().Id}", new
             {
-                Method = HttpMethod.Patch,
-                RequestUri = new Uri(_httpClient.BaseAddress + $"authors/{authors.First().Id}"),
-                Content = new StringContent(JsonConvert.SerializeObject(new { Name = "YAZAR" }), Encoding.UTF8,
-                                            "application/json")
-            };
-
-            var response = await _httpClient.SendAsync(request);
+                Name = "YAZAR"
+            });
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -160,8 +128,7 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task Update_WithoutCorrectData_ShouldReturn_BadRequest()
         {
-            var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
+            var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
 
             var response = await _httpClient.PutAsJsonAsync($"authors/{authors.First().Id}", default(Author));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
@@ -178,16 +145,13 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task Update_WithCorrectData_ShouldReturn_OK()
         {
-            var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
-
+            var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
             var response = await _httpClient.PutAsJsonAsync($"authors/{authors.Last().Id}", new
             {
                 Name = "Name",
                 Surname = "Surname",
                 Bio = "Bio"
             });
-
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -201,9 +165,7 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task DeleteOne_WithCorrectId_ShouldReturn_OK()
         {
-            var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
-
+            var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
             var response = await _httpClient.DeleteAsync($"authors/{authors.Last().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
@@ -211,35 +173,21 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            string[] ids = { Guid.NewGuid().ToString(), Guid.NewGuid().ToString() };
-
-            var request = new HttpRequestMessage
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "authors", new []
             {
-                Method = HttpMethod.Delete,
-                RequestUri = new Uri(_httpClient.BaseAddress + "authors"),
-                Content = new StringContent(JsonConvert.SerializeObject(ids), Encoding.UTF8, "application/json")
-            };
-
-            var response = await _httpClient.SendAsync(request);
+                Guid.NewGuid().ToString(), Guid.NewGuid().ToString()
+            });
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
         [Fact]
         public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
         {
-            var authorsResponse = await _httpClient.GetAsync("authors");
-            var authors = await authorsResponse.Content.ReadAsAsync<List<AuthorViewModel>>();
-
-            var dmc = new DeleteManyCommand { Ids = authors.TakeLast(2).Select(g => g.Id).ToArray() };
-
-            var request = new HttpRequestMessage
+            var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "authors", new DeleteManyCommand
             {
-                Method = HttpMethod.Delete,
-                RequestUri = new Uri(_httpClient.BaseAddress + "authors"),
-                Content = new StringContent(JsonConvert.SerializeObject(dmc), Encoding.UTF8, "application/json")
-            };
-
-            var response = await _httpClient.SendAsync(request);
+                Ids = authors.TakeLast(2).Select(g => g.Id).ToArray()
+            });
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
     }

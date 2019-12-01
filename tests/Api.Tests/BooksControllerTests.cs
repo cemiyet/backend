@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Cemiyet.Api.Tests.Extensions;
 using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Commands.DeleteMany;
@@ -176,8 +177,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var books = await GetEntityListFromUri<BookViewModel>("books");
-            var request = CreateRequestMessage(HttpMethod.Patch, $"books/{books.First().Id}", new { });
-            var response = await _httpClient.SendAsync(request);
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"books/{books.First().Id}", new { });
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
@@ -185,11 +185,10 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
             var books = await GetEntityListFromUri<BookViewModel>("books");
-            var request = CreateRequestMessage(HttpMethod.Patch, $"books/{books.First().Id}", new
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"books/{books.First().Id}", new
             {
                 Title = "BAŞLIK"
             });
-            var response = await _httpClient.SendAsync(request);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -199,13 +198,12 @@ namespace Cemiyet.Api.Tests
             var books = await GetEntityListFromUri<BookViewModel>("books");
             var book = books.First();
             var edition = book.Editions.First();
-            var request = CreateRequestMessage(HttpMethod.Patch, $"books/{book.Id}/editions/{edition.Isbn}", new
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"books/{book.Id}/editions/{edition.Isbn}", new
             {
                 Isbn = "1",
                 NewIsbn = "",
                 BooksId = Guid.Empty
             });
-            var response = await _httpClient.SendAsync(request);
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
@@ -215,12 +213,11 @@ namespace Cemiyet.Api.Tests
             var books = await GetEntityListFromUri<BookViewModel>("books");
             var book = books.First();
             var edition = book.Editions.First();
-            var request = CreateRequestMessage(HttpMethod.Patch, $"books/{book.Id}/editions/{edition.Isbn}", new
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"books/{book.Id}/editions/{edition.Isbn}", new
             {
                 NewIsbn = "1234567890111",
                 PageCount = short.MaxValue
             });
-            var response = await _httpClient.SendAsync(request);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -320,12 +317,11 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            var request = CreateRequestMessage(HttpMethod.Delete, "books", new[]
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "books", new[]
             {
                 Guid.NewGuid().ToString(),
                 Guid.NewGuid().ToString()
             });
-            var response = await _httpClient.SendAsync(request);
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
@@ -333,22 +329,20 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
         {
             var books = await GetEntityListFromUri<BookViewModel>("books");
-            var request = CreateRequestMessage(HttpMethod.Delete, "books", new DeleteManyCommand
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "books", new DeleteManyCommand
             {
                 Ids = books.TakeLast(2).Select(g => g.Id).ToArray()
             });
-            var response = await _httpClient.SendAsync(request);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]
         public async Task DeleteManyEdition_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            var request = CreateRequestMessage(HttpMethod.Delete, "books", new[]
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "books", new[]
             {
                 Guid.NewGuid().ToString(), ""
             });
-            var response = await _httpClient.SendAsync(request);
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
@@ -356,11 +350,10 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteManyEdition_WithCorrectIds_ShouldReturn_OK()
         {
             var books = await GetEntityListFromUri<BookViewModel>("books");
-            var request = CreateRequestMessage(HttpMethod.Delete, "books", new DeleteManyEditionCommand
+            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "books", new DeleteManyEditionCommand
             {
                 Isbns = books.First().Editions.Select(e => e.Isbn).ToArray()
             });
-            var response = await _httpClient.SendAsync(request);
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
@@ -380,16 +373,6 @@ namespace Cemiyet.Api.Tests
             Assert.Equal(code, response.StatusCode);
 
             return response;
-        }
-
-        private HttpRequestMessage CreateRequestMessage(HttpMethod method, string uri, object content)
-        {
-            return new HttpRequestMessage
-            {
-                Method = method,
-                RequestUri = new Uri(_httpClient.BaseAddress + uri),
-                Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json")
-            };
         }
     }
 }

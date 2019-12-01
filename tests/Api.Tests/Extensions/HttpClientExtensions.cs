@@ -11,7 +11,8 @@ namespace Cemiyet.Api.Tests.Extensions
 {
     public static class HttpClientExtensions
     {
-        public static async Task<HttpResponseMessage> AssertedGetAsync(this HttpClient client, string uri, HttpStatusCode code)
+        public static async Task<HttpResponseMessage> AssertedGetAsync(this HttpClient client, string uri,
+                                                                       HttpStatusCode code)
         {
             var response = await client.GetAsync(uri);
             Assert.Equal(code, response.StatusCode);
@@ -25,16 +26,21 @@ namespace Cemiyet.Api.Tests.Extensions
             Assert.NotEmpty(collection);
             return collection;
         }
-        
-        public static async Task<HttpResponseMessage> SendRequestMessageAsync(this HttpClient client, HttpMethod method,
-                                                                              string uri, object content)
+
+        public static async Task<HttpResponseMessage> AssertedSendRequestMessageAsync(this HttpClient client,
+                                                                                      HttpMethod method,
+                                                                                      string uri,
+                                                                                      object content,
+                                                                                      HttpStatusCode code)
         {
-            return await client.SendAsync(new HttpRequestMessage
+            var response = await client.SendAsync(new HttpRequestMessage
             {
                 Method = method,
                 RequestUri = new Uri(client.BaseAddress + uri),
                 Content = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json")
             });
+            Assert.Equal(code, response.StatusCode);
+            return response;
         }
     }
 }

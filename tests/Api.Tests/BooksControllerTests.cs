@@ -175,19 +175,18 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"books/{books.First().Id}", new { });
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"books/{books.First().Id}",
+                                                              new { }, HttpStatusCode.BadRequest);
         }
 
         [Fact]
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"books/{books.First().Id}", new
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"books/{books.First().Id}", new
             {
                 Title = "BAŞLIK"
-            });
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            }, HttpStatusCode.OK);
         }
 
         [Fact]
@@ -196,13 +195,12 @@ namespace Cemiyet.Api.Tests
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
             var book = books.First();
             var edition = book.Editions.First();
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"books/{book.Id}/editions/{edition.Isbn}", new
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"books/{book.Id}/editions/{edition.Isbn}", new
             {
                 Isbn = "1",
                 NewIsbn = "",
                 BooksId = Guid.Empty
-            });
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            }, HttpStatusCode.BadRequest);
         }
 
         [Fact]
@@ -211,12 +209,11 @@ namespace Cemiyet.Api.Tests
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
             var book = books.First();
             var edition = book.Editions.First();
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"books/{book.Id}/editions/{edition.Isbn}", new
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"books/{book.Id}/editions/{edition.Isbn}", new
             {
                 NewIsbn = "1234567890111",
                 PageCount = short.MaxValue
-            });
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            }, HttpStatusCode.OK);
         }
 
         [Fact]
@@ -315,44 +312,40 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "books", new[]
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "books", new[]
             {
                 Guid.NewGuid().ToString(),
                 Guid.NewGuid().ToString()
-            });
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            }, HttpStatusCode.BadRequest);
         }
 
         [Fact]
         public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "books", new DeleteManyCommand
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "books", new DeleteManyCommand
             {
                 Ids = books.TakeLast(2).Select(g => g.Id).ToArray()
-            });
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            }, HttpStatusCode.OK);
         }
 
         [Fact]
         public async Task DeleteManyEdition_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "books", new[]
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "books", new[]
             {
                 Guid.NewGuid().ToString(), ""
-            });
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            }, HttpStatusCode.BadRequest);
         }
 
         [Fact]
         public async Task DeleteManyEdition_WithCorrectIds_ShouldReturn_OK()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "books", new DeleteManyEditionCommand
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "books", new DeleteManyEditionCommand
             {
                 Isbns = books.First().Editions.Select(e => e.Isbn).ToArray()
-            });
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            }, HttpStatusCode.OK);
         }
     }
 }

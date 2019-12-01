@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Cemiyet.Api.Tests.Extensions;
 using Cemiyet.Application.Authors.Commands.DeleteMany;
@@ -12,7 +10,6 @@ using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
@@ -103,19 +100,18 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"authors/{authors.First().Id}", new { });
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"authors/{authors.First().Id}",
+                                                              new { }, HttpStatusCode.BadRequest);
         }
 
         [Fact]
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
             var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Patch, $"authors/{authors.First().Id}", new
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"authors/{authors.First().Id}", new
             {
                 Name = "YAZAR"
-            });
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            }, HttpStatusCode.OK);
         }
 
         [Fact]
@@ -173,22 +169,20 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "authors", new []
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "authors", new []
             {
                 Guid.NewGuid().ToString(), Guid.NewGuid().ToString()
-            });
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            }, HttpStatusCode.BadRequest);
         }
 
         [Fact]
         public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
         {
             var authors = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("authors");
-            var response = await _httpClient.SendRequestMessageAsync(HttpMethod.Delete, "authors", new DeleteManyCommand
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "authors", new DeleteManyCommand
             {
                 Ids = authors.TakeLast(2).Select(g => g.Id).ToArray()
-            });
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            }, HttpStatusCode.OK);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Cemiyet.Persistence.Application.ViewModels
                 dto.Authors = AuthorViewModel.CreateFromAuthors(book.Authors.Select(ba => ba.Author).ToList());
 
             if (includeEditions)
-                dto.Editions = BookEditionViewModel.CreateFromBookEditions(book.Editions);
+                dto.Editions = BookEditionViewModel.CreateFromBookEditions(book.Editions, false, true, true);
 
             return dto;
         }

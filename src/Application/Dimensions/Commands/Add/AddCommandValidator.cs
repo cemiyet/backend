@@ -6,8 +6,15 @@ namespace Cemiyet.Application.Dimensions.Commands.Add
     {
         public AddCommandValidator()
         {
-            RuleFor(ac => ac.Width).NotEmpty();
-            RuleFor(ac => ac.Height).NotEmpty();
+            RuleFor(ac => ac.Width)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .NotEmpty()
+                .GreaterThan(1);
+
+            RuleFor(ac => ac.Height)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .NotEmpty()
+                .GreaterThan(1);
         }
     }
 }

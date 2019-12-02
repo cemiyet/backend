@@ -34,21 +34,22 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _deleteManyCommandValidator = new DeleteManyCommandValidator();
         }
 
-        [Fact]
-        public void ListQuery_ShouldHave_ValidationErrors()
+        [Theory]
+        [InlineData(0, -1)]
+        [InlineData(-1, 0)]
+        public void ListQuery_ShouldHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, 0);
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, -1);
-
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, 0);
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, -1);
+            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageValue);
+            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
-        [Fact]
-        public void ListQuery_ShouldNotHave_ValidationErrors()
+        [Theory]
+        [InlineData(5, 50)]
+        [InlineData(50, 5)]
+        public void ListQuery_ShouldNotHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, 5);
-            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, 50);
+            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, pageValue);
+            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
         [Fact]
@@ -63,40 +64,70 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _detailsQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
         }
 
-        [Fact]
-        public void UpdateCommand_ShouldHave_ValidationErrors()
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(0, 0)]
+        [InlineData(-1, -1)]
+        public void AddCommand_ShouldHave_ValidationErrors(double widthValue, double heightValue)
         {
-            _updateCommandValidator.ShouldHaveValidationErrorFor(x => x.Width, 0);
-            _updateCommandValidator.ShouldHaveValidationErrorFor(x => x.Height, 0);
+            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Width, widthValue);
+            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Height, heightValue);
         }
 
-        [Fact]
-        public void UpdateCommand_ShouldNotHave_ValidationErrors()
+        [Theory]
+        [InlineData(12.5, 2)]
+        [InlineData(1.1, 22.3)]
+        [InlineData(15, 20)]
+        public void AddCommand_ShouldNotHave_ValidationErrors(double widthValue, double heightValue)
+        {
+            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Width, widthValue);
+            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Height, heightValue);
+        }
+
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(0, 0)]
+        [InlineData(-1, -1)]
+        public void UpdateCommand_ShouldHave_ValidationErrors(double widthValue, double heightValue)
+        {
+            _updateCommandValidator.ShouldHaveValidationErrorFor(x => x.Width, widthValue);
+            _updateCommandValidator.ShouldHaveValidationErrorFor(x => x.Height, heightValue);
+        }
+
+        [Theory]
+        [InlineData(2, 2)]
+        [InlineData(1.1, 1.1)]
+        public void UpdateCommand_ShouldNotHave_ValidationErrors(double widthValue, double heightValue)
         {
             _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
-            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Width, 12.5);
-            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Height, 22.3);
+            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Width, widthValue);
+            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Height, heightValue);
         }
 
-        [Fact]
-        public void UpdatePartiallyCommand_ShouldHave_ValidationErrors()
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(0, 0)]
+        [InlineData(-1, -1)]
+        public void UpdatePartiallyCommand_ShouldHave_ValidationErrors(double widthValue, double heightValue)
         {
-            _updatePartiallyCommandValidator.ShouldHaveValidationErrorFor(x => x.Width, 0);
-            _updatePartiallyCommandValidator.ShouldHaveValidationErrorFor(x => x.Height, 0);
+            _updatePartiallyCommandValidator.ShouldHaveValidationErrorFor(x => x.Width, widthValue);
+            _updatePartiallyCommandValidator.ShouldHaveValidationErrorFor(x => x.Height, heightValue);
         }
 
-        [Fact]
-        public void UpdatePartiallyCommand_ShouldNotHave_ValidationErrors()
+        [Theory]
+        [InlineData(2, 2)]
+        [InlineData(1.1, 1.1)]
+        public void UpdatePartiallyCommand_ShouldNotHave_ValidationErrors(double widthValue, double heightValue)
         {
-            _updatePartiallyCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Width, 1);
-            _updatePartiallyCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Height, 1);
+            _updatePartiallyCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Width, widthValue);
+            _updatePartiallyCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Height, heightValue);
 
-            var upc1 = new UpdatePartiallyCommand { Width = 1 };
+            var upc1 = new UpdatePartiallyCommand { Width = widthValue };
             var res1 = _updatePartiallyCommandValidator.TestValidate(upc1);
             res1.ShouldNotHaveValidationErrorFor(x => x.Width);
             res1.ShouldNotHaveValidationErrorFor(x => x.Height);
 
-            var upc2 = new UpdatePartiallyCommand { Height = 1 };
+            var upc2 = new UpdatePartiallyCommand { Height = heightValue };
             var res2 = _updatePartiallyCommandValidator.TestValidate(upc2);
             res2.ShouldNotHaveValidationErrorFor(x => x.Width);
             res2.ShouldNotHaveValidationErrorFor(x => x.Height);
@@ -132,20 +163,6 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             Guid[] ids = { Guid.NewGuid(), Guid.NewGuid() };
 
             _deleteManyCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Ids, ids);
-        }
-
-        [Fact]
-        public void AddCommand_ShouldHave_ValidationErrors()
-        {
-            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Width, 0);
-            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Height, 0);
-        }
-
-        [Fact]
-        public void AddCommand_ShouldNotHave_ValidationErrors()
-        {
-            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Width, 12.5);
-            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Height, 22.3);
         }
     }
 }

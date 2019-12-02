@@ -42,8 +42,8 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         [InlineData(-1, 0)]
         public void ListQuery_ShouldHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageValue);
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
+            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageValue);
+            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
         [Theory]

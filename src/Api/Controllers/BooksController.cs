@@ -139,6 +139,6 @@ namespace Cemiyet.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(BookEditionNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyEditionCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> DeleteManyEdition([FromBody] DeleteManyEditionCommand data) => await Mediator.Send(data);
     }
 }

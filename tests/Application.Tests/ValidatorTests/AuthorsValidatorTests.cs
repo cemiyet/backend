@@ -54,22 +54,28 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, 50);
         }
 
-        [Fact]
-        public void ListBooksQuery_ShouldHave_ValidationErrors()
+        [Theory]
+        [InlineData(0, -1)]
+        [InlineData(-1, 0)]
+        public void ListBooksQuery_ShouldHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, 0);
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, -1);
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
 
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, 0);
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, -1);
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageValue);
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageSizeValue);
+
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageValue);
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
-        [Fact]
-        public void ListBooksQuery_ShouldNotHave_ValidationErrors()
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(5, 50)]
+        public void ListBooksQuery_ShouldNotHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, default(Guid));
-            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, 5);
-            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, 50);
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, pageValue);
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
         [Fact]

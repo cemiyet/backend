@@ -26,7 +26,7 @@ namespace Cemiyet.Application.Authors.Queries.ListBooks
             if (author == null)
                 throw new AuthorNotFoundException(request.Id);
 
-            return BookViewModel.CreateFromBooks(author.Books.Select(gb => gb.Book).PagedToList(request.Page, request.PageSize),
+            return BookViewModel.CreateFromBooks(author.Books.Select(ab => ab.Book).PagedToList(request.Page, request.PageSize),
                                                  true, true, true).ToList();
         }
     }

@@ -24,6 +24,7 @@ namespace Cemiyet.Persistence.Application.Contexts
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<BookEdition> BookEditions { get; set; }
+        public DbSet<Serie> Series { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +37,9 @@ namespace Cemiyet.Persistence.Application.Contexts
             modelBuilder.ApplyConfiguration(new BookEditionConfiguration());
             modelBuilder.ApplyConfiguration(new BooksGenresConfiguration());
             modelBuilder.ApplyConfiguration(new AuthorsBooksConfiguration());
+            modelBuilder.ApplyConfiguration(new SerieConfiguration());
+            modelBuilder.ApplyConfiguration(new SeriesAuthorsConfiguration());
+            modelBuilder.ApplyConfiguration(new SeriesBooksConfiguration());
 
             // use snake case naming convention
             foreach (var entity in modelBuilder.Model.GetEntityTypes())

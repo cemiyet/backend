@@ -6,6 +6,7 @@ using Cemiyet.Application.Authors.Commands.DeleteOne;
 using Cemiyet.Application.Authors.Commands.DeleteMany;
 using Cemiyet.Application.Authors.Queries.List;
 using Cemiyet.Application.Authors.Queries.ListBooks;
+using Cemiyet.Application.Authors.Queries.ListSeries;
 using Cemiyet.Application.Authors.Queries.Details;
 using FluentValidation.TestHelper;
 using Xunit;
@@ -16,6 +17,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
     {
         private readonly ListQueryValidator _listQueryValidator;
         private readonly ListBooksQueryValidator _listBooksQueryValidator;
+        private readonly ListSeriesQueryValidator _listSeriesQueryValidator;
         private readonly DetailsQueryValidator _detailsQueryValidator;
 
         private readonly AddCommandValidator _addCommandValidator;
@@ -28,6 +30,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         {
             _listQueryValidator = new ListQueryValidator();
             _listBooksQueryValidator = new ListBooksQueryValidator();
+            _listSeriesQueryValidator = new ListSeriesQueryValidator();
             _detailsQueryValidator = new DetailsQueryValidator();
 
             _addCommandValidator = new AddCommandValidator();
@@ -74,6 +77,27 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, pageValue);
             _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
+
+        [Theory]
+        [InlineData(0, -1)]
+        [InlineData(-1, 0)]
+        public void ListSeriesQuery_ShouldHave_ValidationErrors(int pageValue, int pageSizeValue)
+        {
+            _listSeriesQueryValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
+            _listSeriesQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageValue);
+            _listSeriesQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
+        }
+
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(5, 50)]
+        public void ListSeriesQuery_ShouldNotHave_ValidationErrors(int pageValue, int pageSizeValue)
+        {
+            _listSeriesQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _listSeriesQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, pageValue);
+            _listSeriesQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
+        }
+
 
         [Fact]
         public void DetailsQuery_ShouldHave_ValidationErrors()

@@ -82,6 +82,20 @@ namespace Cemiyet.Api.Tests
         }
 
         [Fact]
+        public async Task ListSeries_WithoutCorrectPaging_ShouldReturn_BadRequest()
+        {
+            var authors = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("authors");
+            await _httpClient.AssertedGetAsync($"authors/{authors.First().Id}/series?page=-1&pageSize=-5", HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task ListSeries_WithoutPaging_ShouldReturn_DefaultPagedResult()
+        {
+            var authors = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("authors");
+            await _httpClient.AssertedGetAsync($"authors/{authors.First().Id}/series", HttpStatusCode.OK);
+        }
+
+        [Fact]
         public async Task Details_WithoutCorrectId_ShouldReturn_BadRequest()
         {
             await _httpClient.AssertedGetAsync($"authors/{Guid.NewGuid()}", HttpStatusCode.BadRequest);

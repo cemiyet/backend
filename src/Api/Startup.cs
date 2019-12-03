@@ -60,17 +60,20 @@ namespace Cemiyet.Api
                 if (env.IsDevelopment())
                 {
                     context.Database.ExecuteSqlRaw(@"truncate table
+                                                    series_authors,
                                                     authors_books,
                                                     authors,
+                                                    series_books,
                                                     book_editions,
                                                     books_genres,
                                                     books,
+                                                    series,
                                                     dimensions,
                                                     entity_changes,
                                                     genres,
                                                     publishers;");
                 }
-                
+
                 AppDataContextSeed.Seed(context);
             }
 

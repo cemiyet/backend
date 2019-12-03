@@ -21,7 +21,7 @@ namespace Cemiyet.Application.Books.Queries.List
         public async Task<List<BookViewModel>> Handle(ListQuery request, CancellationToken cancellationToken)
         {
             var bookSet = await _context.Books.PagedToListAsync(request.Page, request.PageSize);
-            return BookViewModel.CreateFromBooks(bookSet, true, true, true).ToList();
+            return BookViewModel.CreateFromBooks(bookSet, true, true, true, true).ToList();
         }
     }
 }

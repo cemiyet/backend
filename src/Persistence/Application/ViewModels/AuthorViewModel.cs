@@ -12,8 +12,11 @@ namespace Cemiyet.Persistence.Application.ViewModels
         public string Bio { get; set; }
 
         public ICollection<BookViewModel> Books { get; set; }
+        public ICollection<SerieViewModel> Series { get; set; }
 
-        public static AuthorViewModel CreateFromAuthor(Author author, bool includeBooks = false)
+        public static AuthorViewModel CreateFromAuthor(Author author,
+                                                       bool includeBooks = false,
+                                                       bool includeSeries = false)
         {
             var dto = new AuthorViewModel
             {
@@ -26,16 +29,19 @@ namespace Cemiyet.Persistence.Application.ViewModels
             };
 
             if (includeBooks)
-                dto.Books = BookViewModel.CreateFromBooks(author.Books.Select(gb => gb.Book).ToList(),
-                                                          true, true, true);
+                dto.Books = BookViewModel.CreateFromBooks(author.Books.Select(ab => ab.Book).ToList(), true, true, true);
+
+            if (includeSeries)
+                dto.Series = SerieViewModel.CreateFromSeries(author.Series.Select(sa => sa.Serie).ToList(), false, true);
 
             return dto;
         }
 
         public static ICollection<AuthorViewModel> CreateFromAuthors(ICollection<Author> authors,
-                                                                     bool includeBooks = false)
+                                                                     bool includeBooks = false,
+                                                                     bool includeSeries = false)
         {
-            return authors.Select(b => CreateFromAuthor(b, includeBooks)).ToList();
+            return authors.Select(a => CreateFromAuthor(a, includeBooks, includeSeries)).ToList();
         }
     }
 }

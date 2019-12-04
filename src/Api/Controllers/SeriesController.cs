@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using Cemiyet.Api.Filters;
 using Cemiyet.Application.Series.Queries.List;
@@ -17,6 +15,7 @@ namespace Cemiyet.Api.Controllers
         public SeriesController(IMediator mediator) : base(mediator)
         {
         }
+
         [HttpGet]
         [ProducesResponseType(typeof(List<SerieViewModel>), 200)]
         [ProducesResponseType(typeof(SerieNotFoundException), 400)]

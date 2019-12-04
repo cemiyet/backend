@@ -1,4 +1,3 @@
-using System;
 using Cemiyet.Application.Series.Queries.List;
 using FluentValidation.TestHelper;
 using Xunit;

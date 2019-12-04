@@ -12,5 +12,7 @@ namespace Cemiyet.Core.Entities
 
         public Guid BooksId { get; set; }
         public virtual Book Book { get; set; }
+
+        public short Order { get; set; }
     }
 }

@@ -486,10 +486,12 @@ namespace Cemiyet.Persistence.Application.Contexts
                     {
                         new SeriesBooks
                         {
+                            Order = 1,
                             Book = context.Books.SingleOrDefault(b => b.Title == "Rüzgarın Adı")
                         },
                         new SeriesBooks
                         {
+                            Order = 2,
                             Book = context.Books.SingleOrDefault(b => b.Title == "Bilge Adamın Korkusu")
                         }
                     },

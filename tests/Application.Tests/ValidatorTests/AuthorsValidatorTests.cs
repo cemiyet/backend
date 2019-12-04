@@ -98,7 +98,6 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _listSeriesQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
-
         [Fact]
         public void DetailsQuery_ShouldHave_ValidationErrors()
         {

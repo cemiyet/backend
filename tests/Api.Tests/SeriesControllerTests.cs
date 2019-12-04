@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -33,7 +35,22 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task List_WithoutPaging_ShouldReturn_DefaultPagedResult()
         {
-            await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("series");
+            await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
+        }
+
+        [Fact]
+        public async Task Details_WithoutCorrectId_ShouldReturn_BadRequest()
+        {
+            await _httpClient.AssertedGetAsync($"series/{Guid.NewGuid()}", HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task Details_WithCorrectId_ShouldReturn_SerieObject()
+        {
+            var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
+            var response = await _httpClient.AssertedGetAsync($"series/{series.First().Id}", HttpStatusCode.OK);
+            var responseData = await response.Content.ReadAsAsync<SerieViewModel>();
+            Assert.NotNull(responseData);
         }
     }
 }

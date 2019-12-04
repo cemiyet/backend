@@ -11,7 +11,7 @@ namespace Cemiyet.Persistence.Application.ViewModels
         public string Description { get; set; }
 
         public ICollection<AuthorViewModel> Authors { get; set; }
-        public ICollection<BookViewModel> Books { get; set; }
+        public ICollection<SerieBookViewModel> Books { get; set; }
 
         public static SerieViewModel CreateFromSerie(Serie serie,
                                                      bool includeAuthors = false,
@@ -30,7 +30,7 @@ namespace Cemiyet.Persistence.Application.ViewModels
                 dto.Authors = AuthorViewModel.CreateFromAuthors(serie.Authors.Select(sa => sa.Author).ToList());
 
             if (includeBooks)
-                dto.Books = BookViewModel.CreateFromBooks(serie.Books.Select(sb => sb.Book).ToList());
+                dto.Books = SerieBookViewModel.CreateFromSeriesBooks(serie.Books);
 
             return dto;
         }

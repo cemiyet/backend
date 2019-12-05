@@ -13,6 +13,5 @@ namespace Cemiyet.Core.Entities
         public string Bio { get; set; }
 
         public virtual ICollection<AuthorsBooks> Books { get; set; }
-        public virtual ICollection<SeriesAuthors> Series { get; set; }
     }
 }

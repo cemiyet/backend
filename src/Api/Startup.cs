@@ -60,7 +60,6 @@ namespace Cemiyet.Api
                 if (env.IsDevelopment())
                 {
                     context.Database.ExecuteSqlRaw(@"truncate table
-                                                    series_authors,
                                                     authors_books,
                                                     authors,
                                                     series_books,

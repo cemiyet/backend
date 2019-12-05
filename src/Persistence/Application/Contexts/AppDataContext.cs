@@ -38,7 +38,6 @@ namespace Cemiyet.Persistence.Application.Contexts
             modelBuilder.ApplyConfiguration(new BooksGenresConfiguration());
             modelBuilder.ApplyConfiguration(new AuthorsBooksConfiguration());
             modelBuilder.ApplyConfiguration(new SerieConfiguration());
-            modelBuilder.ApplyConfiguration(new SeriesAuthorsConfiguration());
             modelBuilder.ApplyConfiguration(new SeriesBooksConfiguration());
 
             // use snake case naming convention

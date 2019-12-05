@@ -475,13 +475,6 @@ namespace Cemiyet.Persistence.Application.Contexts
                 new Serie
                 {
                     Title = "Kralkatili Güncesi",
-                    Authors = new List<SeriesAuthors>
-                    {
-                        new SeriesAuthors
-                        {
-                            Author = context.Authors.SingleOrDefault(a => a.Name == "Patrick" && a.Surname == "Rothfuss")
-                        }
-                    },
                     Books = new List<SeriesBooks>
                     {
                         new SeriesBooks

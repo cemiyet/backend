@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Cemiyet.Api.Tests.Extensions;
+using Cemiyet.Core.Entities;
 using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -24,6 +25,30 @@ namespace Cemiyet.Api.Tests
             AppDataContextSeed.Seed(context);
 
             _httpClient = webApplicationFactory.CreateClient();
+        }
+
+        [Fact]
+        public async Task Add_WithoutCorrectData_ShouldReturn_BadRequest()
+        {
+            var response = await _httpClient.PostAsJsonAsync("series/", default(Serie));
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+            response = await _httpClient.PostAsJsonAsync("series/", new Serie
+            {
+                Title = ""
+            });
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Add_WithCorrectData_ShouldReturn_OK()
+        {
+            var response = await _httpClient.PostAsJsonAsync("series/", new Serie
+            {
+                Title = "Yayıncılık Serisi",
+                Description = ""
+            });
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]

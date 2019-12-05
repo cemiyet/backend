@@ -27,7 +27,7 @@ namespace Cemiyet.Persistence.Application.ViewModels
             return dto;
         }
 
-        public static ICollection<GenreViewModel> CreateFromGenres(ICollection<Genre> genres, bool includeBooks = false)
+        public static ICollection<GenreViewModel> CreateFromGenres(IEnumerable<Genre> genres, bool includeBooks = false)
         {
             return genres.Select(g => CreateFromGenre(g, includeBooks)).ToList();
         }

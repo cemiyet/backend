@@ -29,7 +29,7 @@ namespace Cemiyet.Persistence.Application.ViewModels
             return dto;
         }
 
-        public static ICollection<PublisherViewModel> CreateFromPublishers(ICollection<Publisher> publisher,
+        public static ICollection<PublisherViewModel> CreateFromPublishers(IEnumerable<Publisher> publisher,
                                                                            bool includeBookEditions = false)
         {
             return publisher.Select(p => CreateFromPublisher(p, includeBookEditions)).ToList();

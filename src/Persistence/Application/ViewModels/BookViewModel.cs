@@ -45,7 +45,7 @@ namespace Cemiyet.Persistence.Application.ViewModels
             return dto;
         }
 
-        public static ICollection<BookViewModel> CreateFromBooks(ICollection<Book> books,
+        public static ICollection<BookViewModel> CreateFromBooks(IEnumerable<Book> books,
                                                                  bool includeGenres = false,
                                                                  bool includeAuthors = false,
                                                                  bool includeEditions = false,

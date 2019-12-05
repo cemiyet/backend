@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cemiyet.Core.Entities;
+using Cemiyet.Core.Extensions;
 
 namespace Cemiyet.Persistence.Application.ViewModels
 {
@@ -27,7 +28,7 @@ namespace Cemiyet.Persistence.Application.ViewModels
             };
 
             if (includeAuthors)
-                dto.Authors = AuthorViewModel.CreateFromAuthors(serie.Authors.Select(sa => sa.Author).ToList());
+                dto.Authors = AuthorViewModel.CreateFromAuthors(serie.Books.GetAuthors());
 
             if (includeBooks)
                 dto.Books = SerieBookViewModel.CreateFromSeriesBooks(serie.Books);
@@ -35,7 +36,7 @@ namespace Cemiyet.Persistence.Application.ViewModels
             return dto;
         }
 
-        public static ICollection<SerieViewModel> CreateFromSeries(ICollection<Serie> series,
+        public static ICollection<SerieViewModel> CreateFromSeries(IEnumerable<Serie> series,
                                                                    bool includeAuthors = false,
                                                                    bool includeBooks = false)
         {

@@ -29,7 +29,7 @@ namespace Cemiyet.Persistence.Application.ViewModels
             return dto;
         }
 
-        public static ICollection<DimensionViewModel> CreateFromDimensions(ICollection<Dimension> dimensions,
+        public static ICollection<DimensionViewModel> CreateFromDimensions(IEnumerable<Dimension> dimensions,
                                                                            bool includeBookEditions = false)
         {
             return dimensions.Select(d => CreateFromDimension(d, includeBookEditions)).ToList();

@@ -21,9 +21,9 @@ namespace Cemiyet.Persistence.Application.ViewModels
             return dto;
         }
 
-        public static ICollection<SerieBookViewModel> CreateFromSeriesBooks(ICollection<SeriesBooks> books)
+        public static ICollection<SerieBookViewModel> CreateFromSeriesBooks(IEnumerable<SeriesBooks> books)
         {
-            return books.Select(sb => CreateFromSerieBook(sb)).ToList();
+            return books.Select(CreateFromSerieBook).ToList();
         }
     }
 }

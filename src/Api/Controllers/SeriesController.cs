@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Cemiyet.Api.Filters;
+using Cemiyet.Application.Series.Commands.Add;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using Cemiyet.Core.Exceptions;
@@ -16,6 +18,12 @@ namespace Cemiyet.Api.Controllers
         public SeriesController(IMediator mediator) : base(mediator)
         {
         }
+
+        [HttpPost]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
+        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data) => await Mediator.Send(data);
 
         [HttpGet]
         [ProducesResponseType(typeof(List<SerieViewModel>), 200)]

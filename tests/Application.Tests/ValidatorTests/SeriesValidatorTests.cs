@@ -1,4 +1,5 @@
 using System;
+using Cemiyet.Application.Series.Commands.Add;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using FluentValidation.TestHelper;
@@ -11,10 +12,14 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly ListQueryValidator _listQueryValidator;
         private readonly DetailsQueryValidator _detailsQueryValidator;
 
+        private readonly AddCommandValidator _addCommandValidator;
+
         public SeriesValidatorTests()
         {
             _listQueryValidator = new ListQueryValidator();
             _detailsQueryValidator = new DetailsQueryValidator();
+
+            _addCommandValidator = new AddCommandValidator();
         }
 
         [Theory]
@@ -46,6 +51,25 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         {
             _detailsQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
         }
+
+        [Theory]
+        [InlineData("", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a elementum tortor. Nullam vel ligula vitae dui efficitur gravida eu sit amet erat. Ut scelerisque hendrerit arcu vitae interdum. Ut rhoncus aliquet ipsum, ac laoreet mauris facilisis in. Donec in mattis ligula. Donec massa ipsum, cursus vel tincidunt eget, volutpat sed enim. Nunc mauris nunc, mollis et massa sit amet, mattis suscipit velit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a elementum tortor. Nullam vel ligula vitae dui efficitur gravida eu sit amet erat. Ut scelerisque hendrerit arcu vitae interdum. Ut rhoncus aliquet ipsum, ac laoreet mauris facilisis in. Donec in mattis ligula. Donec massa ipsum, cursus vel tincidunt eget, volutpat sed enim. Nunc mauris nunc, mollis et massa sit amet, mattis suscipit velit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a elementum tortor. Nullam vel ligula vitae dui efficitur gravida eu sit amet erat. Ut scelerisque hendrerit arcu vitae interdum. Ut rhoncus aliquet ipsum, ac laoreet mauris facilisis in. Donec in mattis ligula. Donec massa ipsum, cursus vel tincidunt eget, volutpat sed enim. Nunc mauris nunc, mollis et massa sit amet, mattis suscipit velit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a elementum tortor. Nullam vel ligula vitae dui efficitur gravida eu sit amet erat. Ut scelerisque hendrerit arcu vitae interdum. Ut rhoncus aliquet ipsum, ac laoreet mauris facilisis in. Donec in mattis ligula. Donec massa ipsum, cursus vel tincidunt eget, volutpat sed enim. Nunc mauris nunc, mollis et massa sit amet, mattis suscipit velit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a elementum tortor. Nullam vel ligula vitae dui efficitur gravida eu sit amet erat. Ut scelerisque hendrerit arcu vitae interdum. Ut rhoncus aliquet ipsum, ac laoreet mauris facilisis in. Donec in mattis ligula. Donec massa ipsum, cursus vel tincidunt eget, volutpat sed enim. Nunc mauris nunc, mollis et massa sit amet, mattis suscipit velit.")]
+        [InlineData("Donec ac augue vel diam iaculis commodo. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Donec ac augue vel diam iaculis commodo.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a elementum tortor. Nullam vel ligula vitae dui efficitur gravida eu sit amet erat. Ut scelerisque hendrerit arcu vitae interdum. Ut rhoncus aliquet ipsum, ac laoreet mauris facilisis in. Donec in mattis ligula. Donec massa ipsum, cursus vel tincidunt eget, volutpat sed enim. Nunc mauris nunc, mollis et massa sit amet, mattis suscipit velit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a elementum tortor. Nullam vel ligula vitae dui efficitur gravida eu sit amet erat. Ut scelerisque hendrerit arcu vitae interdum. Ut rhoncus aliquet ipsum, ac laoreet mauris facilisis in. Donec in mattis ligula. Donec massa ipsum, cursus vel tincidunt eget, volutpat sed enim. Nunc mauris nunc, mollis et massa sit amet, mattis suscipit velit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a elementum tortor. Nullam vel ligula vitae dui efficitur gravida eu sit amet erat. Ut scelerisque hendrerit arcu vitae interdum. Ut rhoncus aliquet ipsum, ac laoreet mauris facilisis in. Donec in mattis ligula. Donec massa ipsum, cursus vel tincidunt eget, volutpat sed enim. Nunc mauris nunc, mollis et massa sit amet, mattis suscipit velit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a elementum tortor. Nullam vel ligula vitae dui efficitur gravida eu sit amet erat. Ut scelerisque hendrerit arcu vitae interdum. Ut rhoncus aliquet ipsum, ac laoreet mauris facilisis in. Donec in mattis ligula. Donec massa ipsum, cursus vel tincidunt eget, volutpat sed enim. Nunc mauris nunc, mollis et massa sit amet, mattis suscipit velit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a elementum tortor. Nullam vel ligula vitae dui efficitur gravida eu sit amet erat. Ut scelerisque hendrerit arcu vitae interdum. Ut rhoncus aliquet ipsum, ac laoreet mauris facilisis in. Donec in mattis ligula. Donec massa ipsum, cursus vel tincidunt eget, volutpat sed enim. Nunc mauris nunc, mollis et massa sit amet, mattis suscipit velit.")]
+        public void AddCommand_ShouldHave_ValidationErrors(string titleValue, string descriptionValue)
+        {
+            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Title, titleValue);
+            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Description, descriptionValue);
+        }
+
+        [Theory]
+        [InlineData("Lorem ipsum dolor sit.", "")]
+        [InlineData("Lorem ipsum dolor sit.", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac augue vel diam iaculis commodo. Curabitur finibus enim eget sagittis vestibulum. Suspendisse vulputate ultrices posuere.")]
+        public void AddCommand_ShouldNotHave_ValidationErrors(string titleValue, string descriptionValue)
+        {
+            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Title, titleValue);
+            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Description, descriptionValue);
+        }
+
     }
 }
 

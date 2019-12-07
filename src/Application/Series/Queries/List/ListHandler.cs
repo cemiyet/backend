@@ -21,7 +21,7 @@ namespace Cemiyet.Application.Series.Queries.List
         public async Task<List<SerieViewModel>> Handle(ListQuery request, CancellationToken cancellationToken)
         {
             var serieSet = await _context.Series.PagedToListAsync(request.Page, request.PageSize);
-            return SerieViewModel.CreateFromSeries(serieSet).ToList();
+            return SerieViewModel.CreateFromSeries(serieSet, true, true).ToList();
         }
     }
 }

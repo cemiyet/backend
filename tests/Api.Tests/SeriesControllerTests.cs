@@ -128,5 +128,22 @@ namespace Cemiyet.Api.Tests
             var response = await _httpClient.DeleteAsync($"series/{series.Last().Id}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
+
+        [Fact]
+        public async Task DeleteOneBook_WithoutCorrectIds_ShouldReturn_BadRequest()
+        {
+            var response = await _httpClient.DeleteAsync($"series/{Guid.NewGuid()}/books/{Guid.NewGuid()}");
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteOneBook_WithCorrectIds_ShouldReturn_OK()
+        {
+            var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
+            var serie = series.First();
+            var bookId = serie.Books.Select(sb => sb.Book).First().Id;
+            var response = await _httpClient.DeleteAsync($"series/{serie.Id}/books/{bookId}");
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
     }
 }

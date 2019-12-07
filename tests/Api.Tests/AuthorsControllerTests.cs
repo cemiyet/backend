@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Cemiyet.Api.Tests.Extensions;
 using Cemiyet.Application.Authors.Commands.DeleteMany;
 using Cemiyet.Core.Entities;
-using Cemiyet.Persistence.Application.Contexts;
 using Cemiyet.Persistence.Application.ViewModels;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
@@ -22,12 +22,11 @@ namespace Cemiyet.Api.Tests
 
         public AuthorsControllerTests(WebApplicationFactory<Startup> webApplicationFactory)
         {
-            using var scope = webApplicationFactory.Services.GetService<IServiceScopeFactory>().CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<AppDataContext>();
-
-            AppDataContextSeed.Seed(context);
-
-            _httpClient = webApplicationFactory.CreateClient();
+            _httpClient = webApplicationFactory.WithWebHostBuilder(builder =>
+            {
+                builder.UseTestServer();
+                builder.UseEnvironment("Test");
+            }).CreateClient();
         }
 
         [Fact]

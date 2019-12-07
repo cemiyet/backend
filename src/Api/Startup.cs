@@ -42,8 +42,7 @@ namespace Cemiyet.Api
                 }
                 else
                 {
-                    options.UseLazyLoadingProxies()
-                           .UseNpgsql(_configuration.GetConnectionString("MainDataContext"));
+                    options.UseLazyLoadingProxies().UseNpgsql(_configuration.GetConnectionString("MainDataContext"));
                 }
             });
 
@@ -65,15 +64,7 @@ namespace Cemiyet.Api
 
                 if (_environment.IsEnvironment("Test"))
                 {
-//                    context.Database.ExecuteSqlRaw(@"truncate table
-//                                                    authors_books, authors,
-//                                                    series_books,
-//                                                    book_editions, books_genres, books,
-//                                                    series,
-//                                                    dimensions,
-//                                                    entity_changes,
-//                                                    genres,
-//                                                    publishers;");
+                    context.Database.EnsureDeleted();
                 }
                 else
                 {

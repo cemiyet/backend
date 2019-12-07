@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -47,6 +48,41 @@ namespace Cemiyet.Api.Tests
             {
                 Title = "Yayıncılık Serisi",
                 Description = ""
+            });
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task AddBook_WithoutCorrectData_ShouldReturn_BadRequest()
+        {
+            var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
+            var response = await _httpClient.PostAsJsonAsync($"series/{series.First().Id}/books", new { });
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+            response = await _httpClient.PostAsJsonAsync($"series/{series.First().Id}/books", new
+            {
+                Books = new Dictionary<Guid, short>
+                {
+                    {Guid.Empty, 5},
+                    {Guid.NewGuid(), 0}
+                }
+            });
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task AddBook_WithCorrectData_ShouldReturn_OK()
+        {
+            var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
+            var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
+
+            var response = await _httpClient.PostAsJsonAsync($"series/{series.First().Id}/books", new
+            {
+                Books = new Dictionary<Guid, short>
+                {
+                    {books.First().Id, 500},
+                    {books.Skip(2).First().Id, short.MaxValue}
+                }
             });
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }

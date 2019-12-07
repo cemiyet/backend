@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cemiyet.Application.Series.Commands.Add;
 using Cemiyet.Application.Series.Commands.AddBook;
+using Cemiyet.Application.Series.Commands.DeleteOne;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using FluentValidation.TestHelper;
@@ -16,6 +17,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
 
         private readonly AddCommandValidator _addCommandValidator;
         private readonly AddBookCommandValidator _addBookCommandValidator;
+        private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
 
         public SeriesValidatorTests()
         {
@@ -24,6 +26,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
 
             _addCommandValidator = new AddCommandValidator();
             _addBookCommandValidator = new AddBookCommandValidator();
+            _deleteOneCommandValidator = new DeleteOneCommandValidator();
         }
 
         [Theory]
@@ -96,6 +99,18 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             {
                 {Guid.NewGuid(), 2}
             });
+        }
+
+        [Fact]
+        public void DeleteOneCommand_ShouldHave_ValidationErrors()
+        {
+            _deleteOneCommandValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
+        }
+
+        [Fact]
+        public void DeleteOneCommand_ShouldNotHave_ValidationErrors()
+        {
+            _deleteOneCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
         }
     }
 }

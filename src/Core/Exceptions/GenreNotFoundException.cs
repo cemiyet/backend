@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
-    public class GenreNotFoundException : Exception
+    public class GenreNotFoundException : NotFoundException
     {
         public GenreNotFoundException(Guid genreId) : base($"Could not found any genre with specified id: {genreId}")
         {

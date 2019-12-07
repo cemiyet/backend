@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
-    public class DimensionNotFoundException : Exception
+    public class DimensionNotFoundException : NotFoundException
     {
         public DimensionNotFoundException(Guid dimensionId) : base($"Could not found any dimension with specified id: {dimensionId}")
         {

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Cemiyet.Api.Filters;
 using Cemiyet.Application.Authors.Commands.Add;
 using Cemiyet.Application.Authors.Commands.UpdatePartially;
 using Cemiyet.Application.Authors.Commands.Update;
@@ -19,7 +18,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cemiyet.Api.Controllers
 {
-    [AuthorsExceptionFilter]
     public class AuthorsController : CemiyetBaseController
     {
         public AuthorsController(IMediator mediator) : base(mediator)

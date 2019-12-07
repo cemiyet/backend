@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
-    public class SerieNotFoundException : Exception
+    public class SerieNotFoundException : NotFoundException
     {
         public SerieNotFoundException(Guid serieId) : base($"Could not found any serie with specified id: {serieId}")
         {

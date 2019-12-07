@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Cemiyet.Api.Filters;
 using Cemiyet.Application.Series.Commands.Add;
 using Cemiyet.Application.Series.Commands.AddBook;
 using Cemiyet.Application.Series.Commands.DeleteOne;
@@ -15,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cemiyet.Api.Controllers
 {
-    [SeriesExceptionFilter]
     public class SeriesController : CemiyetBaseController
     {
         public SeriesController(IMediator mediator) : base(mediator)

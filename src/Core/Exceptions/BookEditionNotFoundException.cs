@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
-    public class BookEditionNotFoundException : Exception
+    public class BookEditionNotFoundException : NotFoundException
     {
         public BookEditionNotFoundException(string bookEditionId) : base($"Could not found any edition of book with specified id: {bookEditionId}")
         {

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Cemiyet.Api.Filters;
 using Cemiyet.Application.Genres.Commands.Add;
 using Cemiyet.Application.Genres.Commands.DeleteMany;
 using Cemiyet.Application.Genres.Commands.DeleteOne;
@@ -17,7 +16,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cemiyet.Api.Controllers
 {
-    [GenresExceptionFilter]
     public class GenresController : CemiyetBaseController
     {
         public GenresController(IMediator mediator) : base(mediator)

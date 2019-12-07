@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Cemiyet.Api.Filters;
 using Cemiyet.Application.Publishers.Commands.Add;
 using Cemiyet.Application.Publishers.Commands.UpdatePartially;
 using Cemiyet.Application.Publishers.Commands.Update;
@@ -18,7 +17,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cemiyet.Api.Controllers
 {
-    [PublishersExceptionFilter]
     public class PublishersController : CemiyetBaseController
     {
         public PublishersController(IMediator mediator) : base(mediator)

@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
-    public class PublisherNotFoundException : Exception
+    public class PublisherNotFoundException : NotFoundException
     {
         public PublisherNotFoundException(Guid publisherId) : base($"Could not found any publisher with specified id: {publisherId}")
         {

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Cemiyet.Api.Filters;
 using Cemiyet.Application.Books.Commands.Add;
 using Cemiyet.Application.Books.Commands.AddEdition;
 using Cemiyet.Application.Books.Commands.Update;
@@ -24,7 +23,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cemiyet.Api.Controllers
 {
-    [BooksExceptionFilter]
     public class BooksController : CemiyetBaseController
     {
         public BooksController(IMediator mediator) : base(mediator)

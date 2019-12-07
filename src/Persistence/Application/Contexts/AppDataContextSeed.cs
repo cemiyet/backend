@@ -155,15 +155,15 @@ namespace Cemiyet.Persistence.Application.Contexts
                 },
                 new Dimension
                 {
+                    Width = 12.5, Height = 20.5, CreationDate = DateTime.UtcNow
+                },
+                new Dimension
+                {
                     Width = 13, Height = 19.5, CreationDate = DateTime.UtcNow
                 },
                 new Dimension
                 {
                     Width = 13.5, Height = 19.5, CreationDate = DateTime.UtcNow
-                },
-                new Dimension
-                {
-                    Width = 12.5, Height = 20.5, CreationDate = DateTime.UtcNow
                 },
                 new Dimension
                 {
@@ -244,6 +244,10 @@ namespace Cemiyet.Persistence.Application.Contexts
                 new Author
                 {
                     Name = "Patrick", Surname = "Rothfuss", Bio = "", CreationDate = DateTime.UtcNow
+                },
+                new Author
+                {
+                    Name = "Frank", Surname = "Herbert", Bio = "", CreationDate = DateTime.UtcNow
                 }
             };
 
@@ -396,6 +400,82 @@ namespace Cemiyet.Persistence.Application.Contexts
                         }
                     },
                     CreationDate = DateTime.UtcNow
+                },
+                new Book
+                {
+                    Title = "Dune",
+                    Genres = new List<BooksGenres>
+                    {
+                        new BooksGenres
+                        {
+                            Genre = context.Genres.SingleOrDefault(g => g.Name == "Bilimkurgu")
+                        }
+                    },
+                    Authors = new List<AuthorsBooks>
+                    {
+                        new AuthorsBooks
+                        {
+                            Author = context.Authors.SingleOrDefault(a => a.Name == "Frank" && a.Surname == "Herbert")
+                        }
+                    },
+                    CreationDate = DateTime.UtcNow
+                },
+                new Book
+                {
+                    Title = "Dune Mesihi",
+                    Genres = new List<BooksGenres>
+                    {
+                        new BooksGenres
+                        {
+                            Genre = context.Genres.SingleOrDefault(g => g.Name == "Bilimkurgu")
+                        }
+                    },
+                    Authors = new List<AuthorsBooks>
+                    {
+                        new AuthorsBooks
+                        {
+                            Author = context.Authors.SingleOrDefault(a => a.Name == "Frank" && a.Surname == "Herbert")
+                        }
+                    },
+                    CreationDate = DateTime.UtcNow
+                },
+                new Book
+                {
+                    Title = "Dune Çocukları",
+                    Genres = new List<BooksGenres>
+                    {
+                        new BooksGenres
+                        {
+                            Genre = context.Genres.SingleOrDefault(g => g.Name == "Bilimkurgu")
+                        }
+                    },
+                    Authors = new List<AuthorsBooks>
+                    {
+                        new AuthorsBooks
+                        {
+                            Author = context.Authors.SingleOrDefault(a => a.Name == "Frank" && a.Surname == "Herbert")
+                        }
+                    },
+                    CreationDate = DateTime.UtcNow
+                },
+                new Book
+                {
+                    Title = "Dune Tanrı İmparatoru",
+                    Genres = new List<BooksGenres>
+                    {
+                        new BooksGenres
+                        {
+                            Genre = context.Genres.SingleOrDefault(g => g.Name == "Bilimkurgu")
+                        }
+                    },
+                    Authors = new List<AuthorsBooks>
+                    {
+                        new AuthorsBooks
+                        {
+                            Author = context.Authors.SingleOrDefault(a => a.Name == "Frank" && a.Surname == "Herbert")
+                        }
+                    },
+                    CreationDate = DateTime.UtcNow
                 }
             };
 
@@ -458,6 +538,46 @@ namespace Cemiyet.Persistence.Application.Contexts
                     Publisher = context.Publishers.SingleOrDefault(p => p.Name == "İthaki Yayınları"),
                     Book = context.Books.SingleOrDefault(b => b.Title == "Bilge Adamın Korkusu"),
                     Dimensions = context.Dimensions.SingleOrDefault(d => d.Width == 14 && d.Height == 23)
+                },
+                new BookEdition
+                {
+                    Isbn = "9786053754794",
+                    PageCount = 712,
+                    PrintDate = new DateTime(2019, 09, 26),
+                    CreationDate = DateTime.UtcNow,
+                    Publisher = context.Publishers.SingleOrDefault(p => p.Name == "İthaki Yayınları"),
+                    Book = context.Books.SingleOrDefault(b => b.Title == "Dune"),
+                    Dimensions = context.Dimensions.SingleOrDefault(d => d.Width == 13.5 && d.Height == 21)
+                },
+                new BookEdition
+                {
+                    Isbn = "9786053755319",
+                    PageCount = 304,
+                    PrintDate = new DateTime(2019, 03, 14),
+                    CreationDate = DateTime.UtcNow,
+                    Publisher = context.Publishers.SingleOrDefault(p => p.Name == "İthaki Yayınları"),
+                    Book = context.Books.SingleOrDefault(b => b.Title == "Dune Mesihi"),
+                    Dimensions = context.Dimensions.SingleOrDefault(d => d.Width == 13.5 && d.Height == 21)
+                },
+                new BookEdition
+                {
+                    Isbn = "9786053756026",
+                    PageCount = 552,
+                    PrintDate = new DateTime(2019, 02, 14),
+                    CreationDate = DateTime.UtcNow,
+                    Publisher = context.Publishers.SingleOrDefault(p => p.Name == "İthaki Yayınları"),
+                    Book = context.Books.SingleOrDefault(b => b.Title == "Dune Çocukları"),
+                    Dimensions = context.Dimensions.SingleOrDefault(d => d.Width == 13.5 && d.Height == 21)
+                },
+                new BookEdition
+                {
+                    Isbn = "9786053757207",
+                    PageCount = 512,
+                    PrintDate = new DateTime(2019, 03, 14),
+                    CreationDate = DateTime.UtcNow,
+                    Publisher = context.Publishers.SingleOrDefault(p => p.Name == "İthaki Yayınları"),
+                    Book = context.Books.SingleOrDefault(b => b.Title == "Dune Tanrı İmparatoru"),
+                    Dimensions = context.Dimensions.SingleOrDefault(d => d.Width == 13.5 && d.Height == 21)
                 }
             };
 
@@ -486,6 +606,34 @@ namespace Cemiyet.Persistence.Application.Contexts
                         {
                             Order = 2,
                             Book = context.Books.SingleOrDefault(b => b.Title == "Bilge Adamın Korkusu")
+                        }
+                    },
+                    CreationDate = DateTime.UtcNow
+                },
+                new Serie
+                {
+                    Title = "Dune",
+                    Books = new List<SeriesBooks>
+                    {
+                        new SeriesBooks
+                        {
+                            Order = 1,
+                            Book = context.Books.SingleOrDefault(b => b.Title == "Dune")
+                        },
+                        new SeriesBooks
+                        {
+                            Order = 2,
+                            Book = context.Books.SingleOrDefault(b => b.Title == "Dune Mesihi")
+                        },
+                        new SeriesBooks
+                        {
+                            Order = 3,
+                            Book = context.Books.SingleOrDefault(b => b.Title == "Dune Çocukları")
+                        },
+                        new SeriesBooks
+                        {
+                            Order = 4,
+                            Book = context.Books.SingleOrDefault(b => b.Title == "Dune Tanrı İmparatoru")
                         }
                     },
                     CreationDate = DateTime.UtcNow

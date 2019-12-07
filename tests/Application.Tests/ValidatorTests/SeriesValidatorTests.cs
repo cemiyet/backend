@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Cemiyet.Application.Series.Commands.Add;
+using Cemiyet.Application.Series.Commands.AddBook;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using FluentValidation.TestHelper;
@@ -13,6 +15,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly DetailsQueryValidator _detailsQueryValidator;
 
         private readonly AddCommandValidator _addCommandValidator;
+        private readonly AddBookCommandValidator _addBookCommandValidator;
 
         public SeriesValidatorTests()
         {
@@ -20,6 +23,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _detailsQueryValidator = new DetailsQueryValidator();
 
             _addCommandValidator = new AddCommandValidator();
+            _addBookCommandValidator = new AddBookCommandValidator();
         }
 
         [Theory]
@@ -70,6 +74,29 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Description, descriptionValue);
         }
 
+        [Fact]
+        public void AddBookCommand_ShouldHave_ValidationErrors()
+        {
+            _addBookCommandValidator.ShouldHaveValidationErrorFor(x => x.Books, new Dictionary<Guid, short>());
+            _addBookCommandValidator.ShouldHaveValidationErrorFor(x => x.Books, new Dictionary<Guid, short>
+            {
+                {Guid.NewGuid(), 0}
+            });
+            _addBookCommandValidator.ShouldHaveValidationErrorFor(x => x.Books, new Dictionary<Guid, short>
+            {
+                {Guid.Empty, 5}
+            });
+        }
+
+        [Fact]
+        public void AddBookCommand_ShouldNotHave_ValidationErrors()
+        {
+            _addBookCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _addBookCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Books, new Dictionary<Guid, short>
+            {
+                {Guid.NewGuid(), 2}
+            });
+        }
     }
 }
 

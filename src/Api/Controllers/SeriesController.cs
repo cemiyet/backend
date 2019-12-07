@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Cemiyet.Api.Filters;
 using Cemiyet.Application.Series.Commands.Add;
 using Cemiyet.Application.Series.Commands.AddBook;
+using Cemiyet.Application.Series.Commands.DeleteOne;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using Cemiyet.Core.Exceptions;
@@ -46,5 +47,10 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(SerieViewModel), 200)]
         [ProducesResponseType(typeof(SerieNotFoundException), 400)]
         public async Task<ActionResult<SerieViewModel>> Details([FromRoute] DetailsQuery query) => await Mediator.Send(query);
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(SerieNotFoundException), 400)]
+        public async Task<ActionResult<Unit>> DeleteOne([FromRoute] DeleteOneCommand command) => await Mediator.Send(command);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cemiyet.Application.Series.Commands.Add;
 using Cemiyet.Application.Series.Commands.AddBook;
 using Cemiyet.Application.Series.Commands.DeleteOne;
+using Cemiyet.Application.Series.Commands.DeleteOneBook;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using FluentValidation.TestHelper;
@@ -18,6 +19,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly AddCommandValidator _addCommandValidator;
         private readonly AddBookCommandValidator _addBookCommandValidator;
         private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
+        private readonly DeleteOneBookCommandValidator _deleteOneBookCommandValidator;
 
         public SeriesValidatorTests()
         {
@@ -27,6 +29,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _addCommandValidator = new AddCommandValidator();
             _addBookCommandValidator = new AddBookCommandValidator();
             _deleteOneCommandValidator = new DeleteOneCommandValidator();
+            _deleteOneBookCommandValidator = new DeleteOneBookCommandValidator();
         }
 
         [Theory]
@@ -111,6 +114,20 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         public void DeleteOneCommand_ShouldNotHave_ValidationErrors()
         {
             _deleteOneCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+        }
+
+        [Fact]
+        public void DeleteOneBookCommand_ShouldHave_ValidationErrors()
+        {
+            _deleteOneBookCommandValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
+            _deleteOneBookCommandValidator.ShouldHaveValidationErrorFor(x => x.BookId, default(Guid));
+        }
+
+        [Fact]
+        public void DeleteOneBookCommand_ShouldNotHave_ValidationErrors()
+        {
+            _deleteOneBookCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _deleteOneBookCommandValidator.ShouldNotHaveValidationErrorFor(x => x.BookId, Guid.NewGuid());
         }
     }
 }

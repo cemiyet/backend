@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cemiyet.Application.Series.Commands.Add;
 using Cemiyet.Application.Series.Commands.AddBook;
+using Cemiyet.Application.Series.Commands.DeleteMany;
 using Cemiyet.Application.Series.Commands.DeleteOne;
 using Cemiyet.Application.Series.Commands.DeleteOneBook;
 using Cemiyet.Application.Series.Queries.List;
@@ -20,6 +21,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly AddBookCommandValidator _addBookCommandValidator;
         private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
         private readonly DeleteOneBookCommandValidator _deleteOneBookCommandValidator;
+        private readonly DeleteManyCommandValidator _deleteManyCommandValidator;
 
         public SeriesValidatorTests()
         {
@@ -30,6 +32,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _addBookCommandValidator = new AddBookCommandValidator();
             _deleteOneCommandValidator = new DeleteOneCommandValidator();
             _deleteOneBookCommandValidator = new DeleteOneBookCommandValidator();
+            _deleteManyCommandValidator = new DeleteManyCommandValidator();
         }
 
         [Theory]
@@ -128,6 +131,26 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         {
             _deleteOneBookCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
             _deleteOneBookCommandValidator.ShouldNotHaveValidationErrorFor(x => x.BookId, Guid.NewGuid());
+        }
+
+        [Fact]
+        public void DeleteManyCommand_ShouldHave_ValidationErrors()
+        {
+            Guid[] ids = { };
+            Guid[] ids2 = { Guid.NewGuid() };
+            Guid[] ids3 = { Guid.Empty, Guid.Empty, Guid.Empty };
+
+            _deleteManyCommandValidator.ShouldHaveValidationErrorFor(x => x.Ids, ids);
+            _deleteManyCommandValidator.ShouldHaveValidationErrorFor(x => x.Ids, ids2);
+            _deleteManyCommandValidator.ShouldHaveValidationErrorFor(x => x.Ids, ids3);
+        }
+
+        [Fact]
+        public void DeleteManyCommand_ShouldNotHave_ValidationErrors()
+        {
+            Guid[] ids = { Guid.NewGuid(), Guid.NewGuid() };
+
+            _deleteManyCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Ids, ids);
         }
     }
 }

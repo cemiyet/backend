@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using Cemiyet.Application.Series.Commands.Add;
 using Cemiyet.Application.Series.Commands.AddBook;
+using Cemiyet.Application.Series.Commands.DeleteBook;
 using Cemiyet.Application.Series.Commands.DeleteMany;
 using Cemiyet.Application.Series.Commands.DeleteOne;
-using Cemiyet.Application.Series.Commands.DeleteOneBook;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using FluentValidation.TestHelper;
@@ -18,10 +18,11 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly DetailsQueryValidator _detailsQueryValidator;
 
         private readonly AddCommandValidator _addCommandValidator;
-        private readonly AddBookCommandValidator _addBookCommandValidator;
         private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
-        private readonly DeleteOneBookCommandValidator _deleteOneBookCommandValidator;
         private readonly DeleteManyCommandValidator _deleteManyCommandValidator;
+
+        private readonly AddBookCommandValidator _addBookCommandValidator;
+        private readonly DeleteBookCommandValidator _deleteBookCommandValidator;
 
         public SeriesValidatorTests()
         {
@@ -29,10 +30,11 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _detailsQueryValidator = new DetailsQueryValidator();
 
             _addCommandValidator = new AddCommandValidator();
-            _addBookCommandValidator = new AddBookCommandValidator();
             _deleteOneCommandValidator = new DeleteOneCommandValidator();
-            _deleteOneBookCommandValidator = new DeleteOneBookCommandValidator();
             _deleteManyCommandValidator = new DeleteManyCommandValidator();
+
+            _addBookCommandValidator = new AddBookCommandValidator();
+            _deleteBookCommandValidator = new DeleteBookCommandValidator();
         }
 
         [Theory]
@@ -120,17 +122,20 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         }
 
         [Fact]
-        public void DeleteOneBookCommand_ShouldHave_ValidationErrors()
+        public void DeleteBookCommand_ShouldHave_ValidationErrors()
         {
-            _deleteOneBookCommandValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
-            _deleteOneBookCommandValidator.ShouldHaveValidationErrorFor(x => x.BookId, default(Guid));
+            Guid[] ids = { };
+            Guid[] ids2 = { Guid.Empty, Guid.Empty, Guid.Empty };
+
+            _deleteBookCommandValidator.ShouldHaveValidationErrorFor(x => x.BookIds, ids);
+            _deleteBookCommandValidator.ShouldHaveValidationErrorFor(x => x.BookIds, ids2);
         }
 
         [Fact]
-        public void DeleteOneBookCommand_ShouldNotHave_ValidationErrors()
+        public void DeleteBookCommand_ShouldNotHave_ValidationErrors()
         {
-            _deleteOneBookCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
-            _deleteOneBookCommandValidator.ShouldNotHaveValidationErrorFor(x => x.BookId, Guid.NewGuid());
+            _deleteBookCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _deleteBookCommandValidator.ShouldNotHaveValidationErrorFor(x => x.BookIds, new[] { Guid.NewGuid() });
         }
 
         [Fact]

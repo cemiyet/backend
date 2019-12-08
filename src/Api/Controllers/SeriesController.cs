@@ -4,9 +4,9 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using Cemiyet.Application.Series.Commands.Add;
 using Cemiyet.Application.Series.Commands.AddBook;
+using Cemiyet.Application.Series.Commands.DeleteBook;
 using Cemiyet.Application.Series.Commands.DeleteMany;
 using Cemiyet.Application.Series.Commands.DeleteOne;
-using Cemiyet.Application.Series.Commands.DeleteOneBook;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using Cemiyet.Core.Exceptions;
@@ -53,17 +53,21 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(SerieNotFoundException), 400)]
         public async Task<ActionResult<Unit>> DeleteOne([FromRoute] DeleteOneCommand command) => await Mediator.Send(command);
 
-        [HttpDelete("{id}/books/{bookId}")]
-        [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(Unit), 200)]
-        [ProducesResponseType(typeof(SerieNotFoundException), 400)]
-        [ProducesResponseType(typeof(BookNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteOneBook([FromRoute] DeleteOneBookCommand data) => await Mediator.Send(data);
-
         [HttpDelete]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(SerieNotFoundException), 400)]
         public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data) => await Mediator.Send(data);
+
+        [HttpDelete("{id}/books")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(SerieNotFoundException), 400)]
+        [ProducesResponseType(typeof(BookNotFoundException), 400)]
+        public async Task<ActionResult<Unit>> DeleteBook([FromRoute] Guid id, [FromBody] DeleteBookCommand data)
+        {
+            data.Id = id;
+            return await Mediator.Send(data);
+        }
     }
 }

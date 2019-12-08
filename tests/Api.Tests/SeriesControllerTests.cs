@@ -129,20 +129,25 @@ namespace Cemiyet.Api.Tests
         }
 
         [Fact]
-        public async Task DeleteOneBook_WithoutCorrectIds_ShouldReturn_BadRequest()
+        public async Task DeleteBook_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            var response = await _httpClient.DeleteAsync($"series/{Guid.NewGuid()}/books/{Guid.NewGuid()}");
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, $"series/{series.First().Id}/books", new
+            {
+                BookIds = new [] { Guid.Empty }
+            }, HttpStatusCode.BadRequest);
         }
 
         [Fact]
-        public async Task DeleteOneBook_WithCorrectIds_ShouldReturn_OK()
+        public async Task DeleteBook_WithCorrectIds_ShouldReturn_OK()
         {
             var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
             var serie = series.First();
-            var bookId = serie.Books.Select(sb => sb.Book).First().Id;
-            var response = await _httpClient.DeleteAsync($"series/{serie.Id}/books/{bookId}");
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            var bookIds = serie.Books.Select(sb => sb.Book.Id).Take(2);
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, $"series/{serie.Id}/books", new
+            {
+                BookIds = bookIds
+            }, HttpStatusCode.OK);
         }
 
         [Fact]

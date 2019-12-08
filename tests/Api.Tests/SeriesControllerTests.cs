@@ -30,10 +30,10 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task Add_WithoutCorrectData_ShouldReturn_BadRequest()
         {
-            var response = await _httpClient.PostAsJsonAsync("series/", default(Serie));
+            var response = await _httpClient.PostAsJsonAsync("series", default(Serie));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            response = await _httpClient.PostAsJsonAsync("series/", new Serie
+            response = await _httpClient.PostAsJsonAsync("series", new Serie
             {
                 Title = ""
             });
@@ -43,7 +43,7 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task Add_WithCorrectData_ShouldReturn_OK()
         {
-            var response = await _httpClient.PostAsJsonAsync("series/", new Serie
+            var response = await _httpClient.PostAsJsonAsync("series", new Serie
             {
                 Title = "Yayıncılık Serisi",
                 Description = ""
@@ -143,6 +143,25 @@ namespace Cemiyet.Api.Tests
             var bookId = serie.Books.Select(sb => sb.Book).First().Id;
             var response = await _httpClient.DeleteAsync($"series/{serie.Id}/books/{bookId}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
+        {
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "series", new []
+            {
+                Guid.NewGuid().ToString(), Guid.NewGuid().ToString()
+            }, HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
+        {
+            var series = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("series");
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "series", new
+            {
+                Ids = series.TakeLast(2).Select(g => g.Id).ToArray()
+            }, HttpStatusCode.OK);
         }
     }
 }

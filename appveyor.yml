@@ -13,14 +13,6 @@ build:
   verbosity: minimal
 test_script:
 - cmd: >-
-    dotnet test ./tests/Api.Tests
-    dotnet test ./tests/Core.Tests
-    dotnet test ./tests/Persistence.Tests
-    dotnet test ./tests/Infrastructure.Tests
-    dotnet test ./tests/Application.Tests
+    dotnet test
 - sh: >-
-    dotnet test ./tests/Api.Tests
-    dotnet test ./tests/Core.Tests
-    dotnet test ./tests/Persistence.Tests
-    dotnet test ./tests/Infrastructure.Tests
-    dotnet test ./tests/Application.Tests
+    dotnet test

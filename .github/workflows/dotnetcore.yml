@@ -18,9 +18,5 @@ jobs:
       run: dotnet build --configuration Release
     - name: Test with dotnet
       run: |
-        dotnet test ./tests/Api.Tests
-        dotnet test ./tests/Core.Tests
-        dotnet test ./tests/Persistence.Tests
-        dotnet test ./tests/Infrastructure.Tests
-        dotnet test ./tests/Application.Tests
+        dotnet test
 

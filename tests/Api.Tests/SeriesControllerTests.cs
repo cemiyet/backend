@@ -114,6 +114,41 @@ namespace Cemiyet.Api.Tests
         }
 
         [Fact]
+        public async Task Update_WithoutCorrectId_ShouldReturn_BadRequest()
+        {
+            var response = await _httpClient.PutAsJsonAsync($"series/{Guid.NewGuid()}", default(Serie));
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Update_WithoutCorrectData_ShouldReturn_BadRequest()
+        {
+            var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
+
+            var response = await _httpClient.PutAsJsonAsync($"series/{series.First().Id}", default(Serie));
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+            response = await _httpClient.PutAsJsonAsync($"series/{series.First().Id}", new
+            {
+                Title = "5",
+                Description = ""
+            });
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task Update_WithCorrectData_ShouldReturn_OK()
+        {
+            var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
+            var response = await _httpClient.PutAsJsonAsync($"series/{series.Last().Id}", new
+            {
+                Title = "title",
+                Description = "description"
+            });
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
         public async Task DeleteOne_WithoutCorrectId_ShouldReturn_BadRequest()
         {
             var response = await _httpClient.DeleteAsync($"series/{Guid.NewGuid()}");

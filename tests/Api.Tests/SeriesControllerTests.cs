@@ -162,7 +162,7 @@ namespace Cemiyet.Api.Tests
         [Fact]
         public async Task DeleteMany_WithCorrectIds_ShouldReturn_OK()
         {
-            var series = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("series");
+            var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
             await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "series", new
             {
                 Ids = series.TakeLast(2).Select(g => g.Id).ToArray()

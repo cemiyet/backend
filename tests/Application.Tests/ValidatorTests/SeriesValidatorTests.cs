@@ -5,6 +5,7 @@ using Cemiyet.Application.Series.Commands.AddBook;
 using Cemiyet.Application.Series.Commands.DeleteBook;
 using Cemiyet.Application.Series.Commands.DeleteMany;
 using Cemiyet.Application.Series.Commands.DeleteOne;
+using Cemiyet.Application.Series.Commands.Update;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using FluentValidation.TestHelper;
@@ -18,6 +19,8 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         private readonly DetailsQueryValidator _detailsQueryValidator;
 
         private readonly AddCommandValidator _addCommandValidator;
+        private readonly UpdateCommandValidator _updateCommandValidator;
+
         private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
         private readonly DeleteManyCommandValidator _deleteManyCommandValidator;
 
@@ -30,6 +33,8 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _detailsQueryValidator = new DetailsQueryValidator();
 
             _addCommandValidator = new AddCommandValidator();
+            _updateCommandValidator = new UpdateCommandValidator();
+
             _deleteOneCommandValidator = new DeleteOneCommandValidator();
             _deleteManyCommandValidator = new DeleteManyCommandValidator();
 
@@ -107,6 +112,39 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             {
                 {Guid.NewGuid(), 2}
             });
+        }
+
+        [Fact]
+        public void UpdateCommand_ShouldHave_ValidationErrors()
+        {
+            var ucWithNullData = new UpdateCommand();
+            var ucValidator = _updateCommandValidator.TestValidate(ucWithNullData);
+            ucValidator.ShouldHaveValidationErrorFor(x => x.Title);
+            ucValidator.ShouldHaveValidationErrorFor(x => x.Description);
+
+            var ucWithNullData2 = new UpdateCommand
+            {
+                Title = null,
+                Description = "Desc"
+            };
+            ucValidator = _updateCommandValidator.TestValidate(ucWithNullData2);
+            ucValidator.ShouldHaveValidationErrorFor(x => x.Title);
+        }
+
+        [Fact]
+        public void UpdateCommand_ShouldNotHave_ValidationErrors()
+        {
+            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+
+            var ucWithGoodData = new UpdateCommand
+            {
+                Title = "Title",
+                Description = "Desc"
+            };
+
+            var ucValidator = _updateCommandValidator.TestValidate(ucWithGoodData);
+            ucValidator.ShouldNotHaveValidationErrorFor(x => x.Title);
+            ucValidator.ShouldNotHaveValidationErrorFor(x => x.Description);
         }
 
         [Fact]

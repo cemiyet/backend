@@ -6,6 +6,7 @@ using Cemiyet.Application.Series.Commands.DeleteBook;
 using Cemiyet.Application.Series.Commands.DeleteMany;
 using Cemiyet.Application.Series.Commands.DeleteOne;
 using Cemiyet.Application.Series.Commands.Update;
+using Cemiyet.Application.Series.Commands.UpdatePartially;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using FluentValidation.TestHelper;
@@ -20,6 +21,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
 
         private readonly AddCommandValidator _addCommandValidator;
         private readonly UpdateCommandValidator _updateCommandValidator;
+        private readonly UpdatePartiallyCommandValidator _updatePartiallyCommandValidator;
 
         private readonly DeleteOneCommandValidator _deleteOneCommandValidator;
         private readonly DeleteManyCommandValidator _deleteManyCommandValidator;
@@ -34,6 +36,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
 
             _addCommandValidator = new AddCommandValidator();
             _updateCommandValidator = new UpdateCommandValidator();
+            _updatePartiallyCommandValidator = new UpdatePartiallyCommandValidator();
 
             _deleteOneCommandValidator = new DeleteOneCommandValidator();
             _deleteManyCommandValidator = new DeleteManyCommandValidator();
@@ -145,6 +148,52 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             var ucValidator = _updateCommandValidator.TestValidate(ucWithGoodData);
             ucValidator.ShouldNotHaveValidationErrorFor(x => x.Title);
             ucValidator.ShouldNotHaveValidationErrorFor(x => x.Description);
+        }
+
+        [Fact]
+        public void UpdatePartiallyCommand_ShouldHave_ValidationErrors()
+        {
+            var upcWithNullData = new UpdatePartiallyCommand();
+            var upcValidator = _updatePartiallyCommandValidator.TestValidate(upcWithNullData);
+            upcValidator.ShouldHaveValidationErrorFor(x => x.Title);
+            upcValidator.ShouldHaveValidationErrorFor(x => x.Description);
+
+            var upcWithBadData = new UpdatePartiallyCommand
+            {
+                Title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac augue vel diam iaculis commodo. Curabitur finibus enim eget sagittis vestibulum. Suspendisse vulputate ultrices posuere.",
+                Description =
+                    @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac augue vel diam iaculis commodo.
+                        Curabitur finibus enim eget sagittis vestibulum. Suspendisse vulputate ultrices posuere.
+                        Praesent at elit lacus. Etiam eget lectus elementum, interdum leo et, congue arcu. Vivamus bibendum convallis
+                        libero sit amet fringilla. Proin at nulla lorem. Donec euismod quis ex non faucibus.
+                        Nulla velit ligula, egestas vel enim eu, auctor dignissim quam.
+                        Curabitur vel mattis nisi.Aliquam a pharetra nisl.Proin non justo tortor.Praesent in urna eu neque
+                        elementum blandit.Nam pellentesque purus at eleifend vulputate.Maecenas pharetra rutrum auctor.Maecenas
+                        ut auctor tortor, id egestas velit.In placerat augue vel libero placerat, vel posuere ex tincidunt.Fusce
+                        pellentesque iaculis ex, vestibulum sollicitudin enim lobortis pretium.
+                        Maecenas iaculis lectus sit amet vehicula pretium.In hac habitasse platea dictumst.Nullam
+                        molestie dictum dolor, dapibus commodo ligula.Integer nec diam dictum, cursus nunc
+                        quis, blandit leo.Quisque arcu tortor, aliquam quis urna id, efficitur hendrerit nunc.Maecenas
+                        quis justo et ex congue ultricies.Curabitur posuere, nibh consequat lobortis
+                        faucibus, massa mauris faucibus lacus, vitae pellentesque sem sapien et purus.
+                        Quisque nec tincidunt nunc, non pharetra magna.Donec vulputate ligula in augue feugiat congue.Mauris
+                        gravida feugiat ornare.Maecenas rutrum, lectus in ultrices accumsan, dui nulla pretium
+                        quam, vel tincidunt sem urna quis risus.Nunc libero neque, porta et blandit
+                        vel, finibus a purus.Suspendisse ornare, tortor sodales tempus luctus, enim neque eleifend
+                        neque, non efficitur mauris sem ac elit."
+            };
+            upcValidator = _updatePartiallyCommandValidator.TestValidate(upcWithBadData);
+            upcValidator.ShouldHaveValidationErrorFor(x => x.Title);
+            upcValidator.ShouldHaveValidationErrorFor(x => x.Description);
+        }
+
+        [Fact]
+        public void UpdatePartiallyCommand_ShouldNotHave_ValidationErrors()
+        {
+            var upcWithEmptyData = new UpdatePartiallyCommand { Title = "Başlık", Description = string.Empty};
+            var upcValidator = _updatePartiallyCommandValidator.TestValidate(upcWithEmptyData);
+            upcValidator.ShouldNotHaveValidationErrorFor(x => x.Title);
+            upcValidator.ShouldNotHaveValidationErrorFor(x => x.Description);
         }
 
         [Fact]

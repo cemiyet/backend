@@ -32,7 +32,7 @@ namespace Cemiyet.Application.Books.Commands.Add
 
             foreach (var genreId in request.GenreIds)
             {
-                var genre = _context.Genres.Find(genreId);
+                var genre = await _context.Genres.FindAsync(genreId);
 
                 if (genre == null)
                     throw new GenreNotFoundException(genreId);
@@ -42,7 +42,7 @@ namespace Cemiyet.Application.Books.Commands.Add
 
             foreach (var authorId in request.AuthorIds)
             {
-                var author = _context.Authors.Find(authorId);
+                var author = await _context.Authors.FindAsync(authorId);
 
                 if (author == null)
                     throw new AuthorNotFoundException(authorId);

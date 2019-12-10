@@ -6,7 +6,7 @@ namespace Cemiyet.Application.Genres.Queries.ListBooks
     {
         public ListBooksQueryValidator()
         {
-            RuleFor(lb => lb.Id).NotNull();
+            RuleFor(lb => lb.Id).NotEmpty();
             RuleFor(pm => pm.Page).GreaterThan(0);
             RuleFor(pm => pm.PageSize).GreaterThan(0);
         }

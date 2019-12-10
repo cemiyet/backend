@@ -13,11 +13,13 @@ namespace Cemiyet.Persistence.Application.ViewModels
         public ICollection<GenreViewModel> Genres { get; set; }
         public ICollection<AuthorViewModel> Authors { get; set; }
         public ICollection<BookEditionViewModel> Editions { get; set; }
+        public ICollection<SerieViewModel> Series { get; set; }
 
         public static BookViewModel CreateFromBook(Book book,
                                                    bool includeGenres = false,
                                                    bool includeAuthors = false,
-                                                   bool includeEditions = false)
+                                                   bool includeEditions = false,
+                                                   bool includeSeries = false)
         {
             var dto = new BookViewModel
             {
@@ -37,15 +39,19 @@ namespace Cemiyet.Persistence.Application.ViewModels
             if (includeEditions)
                 dto.Editions = BookEditionViewModel.CreateFromBookEditions(book.Editions, false, true, true);
 
+            if (includeSeries)
+                dto.Series = SerieViewModel.CreateFromSeries(book.Series.Select(sb => sb.Serie).ToList(), true);
+
             return dto;
         }
 
-        public static ICollection<BookViewModel> CreateFromBooks(ICollection<Book> books,
+        public static ICollection<BookViewModel> CreateFromBooks(IEnumerable<Book> books,
                                                                  bool includeGenres = false,
                                                                  bool includeAuthors = false,
-                                                                 bool includeEditions = false)
+                                                                 bool includeEditions = false,
+                                                                 bool includeSeries = false)
         {
-            return books.Select(b => CreateFromBook(b, includeGenres, includeAuthors, includeEditions)).ToList();
+            return books.Select(b => CreateFromBook(b, includeGenres, includeAuthors, includeEditions, includeSeries)).ToList();
         }
     }
 }

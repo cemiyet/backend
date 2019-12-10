@@ -8,5 +8,8 @@
 [bB]in/
 [oO]bj/
 
+# coverage output
+coverage.json
+
 # Sublime Workspace files are user-specific
 *.sublime-workspace

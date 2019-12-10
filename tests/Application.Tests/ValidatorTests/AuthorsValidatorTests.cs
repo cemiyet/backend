@@ -6,6 +6,7 @@ using Cemiyet.Application.Authors.Commands.DeleteOne;
 using Cemiyet.Application.Authors.Commands.DeleteMany;
 using Cemiyet.Application.Authors.Queries.List;
 using Cemiyet.Application.Authors.Queries.ListBooks;
+using Cemiyet.Application.Authors.Queries.ListSeries;
 using Cemiyet.Application.Authors.Queries.Details;
 using FluentValidation.TestHelper;
 using Xunit;
@@ -16,6 +17,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
     {
         private readonly ListQueryValidator _listQueryValidator;
         private readonly ListBooksQueryValidator _listBooksQueryValidator;
+        private readonly ListSeriesQueryValidator _listSeriesQueryValidator;
         private readonly DetailsQueryValidator _detailsQueryValidator;
 
         private readonly AddCommandValidator _addCommandValidator;
@@ -28,6 +30,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         {
             _listQueryValidator = new ListQueryValidator();
             _listBooksQueryValidator = new ListBooksQueryValidator();
+            _listSeriesQueryValidator = new ListSeriesQueryValidator();
             _detailsQueryValidator = new DetailsQueryValidator();
 
             _addCommandValidator = new AddCommandValidator();
@@ -37,39 +40,62 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _deleteManyCommandValidator = new DeleteManyCommandValidator();
         }
 
-        [Fact]
-        public void ListQuery_ShouldHave_ValidationErrors()
+        [Theory]
+        [InlineData(0, -1)]
+        [InlineData(-1, 0)]
+        public void ListQuery_ShouldHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, 0);
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, -1);
-
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, 0);
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, -1);
+            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageValue);
+            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
-        [Fact]
-        public void ListQuery_ShouldNotHave_ValidationErrors()
+        [Theory]
+        [InlineData(5, 50)]
+        [InlineData(50, 5)]
+        public void ListQuery_ShouldNotHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, 5);
-            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, 50);
+            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, pageValue);
+            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
-        [Fact]
-        public void ListBooksQuery_ShouldHave_ValidationErrors()
+        [Theory]
+        [InlineData(0, -1)]
+        [InlineData(-1, 0)]
+        public void ListBooksQuery_ShouldHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, 0);
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, -1);
-
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, 0);
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, -1);
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageValue);
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
-        [Fact]
-        public void ListBooksQuery_ShouldNotHave_ValidationErrors()
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(5, 50)]
+        public void ListBooksQuery_ShouldNotHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, default(Guid));
-            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, 5);
-            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, 50);
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, pageValue);
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
+        }
+
+        [Theory]
+        [InlineData(0, -1)]
+        [InlineData(-1, 0)]
+        public void ListSeriesQuery_ShouldHave_ValidationErrors(int pageValue, int pageSizeValue)
+        {
+            _listSeriesQueryValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
+            _listSeriesQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageValue);
+            _listSeriesQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
+        }
+
+        [Theory]
+        [InlineData(1, 1)]
+        [InlineData(5, 50)]
+        public void ListSeriesQuery_ShouldNotHave_ValidationErrors(int pageValue, int pageSizeValue)
+        {
+            _listSeriesQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _listSeriesQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, pageValue);
+            _listSeriesQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
         [Fact]

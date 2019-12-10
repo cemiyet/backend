@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Cemiyet.Core.Entities;
@@ -24,6 +25,7 @@ namespace Cemiyet.Persistence.Application.Contexts
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<BookEdition> BookEditions { get; set; }
+        public DbSet<Serie> Series { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +38,8 @@ namespace Cemiyet.Persistence.Application.Contexts
             modelBuilder.ApplyConfiguration(new BookEditionConfiguration());
             modelBuilder.ApplyConfiguration(new BooksGenresConfiguration());
             modelBuilder.ApplyConfiguration(new AuthorsBooksConfiguration());
+            modelBuilder.ApplyConfiguration(new SerieConfiguration());
+            modelBuilder.ApplyConfiguration(new SeriesBooksConfiguration());
 
             // use snake case naming convention
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
@@ -82,7 +86,7 @@ namespace Cemiyet.Persistence.Application.Contexts
             foreach (var entity in entities)
             {
                 // todo: currently can't log values without Id property. (like book editions)
-                if (!entity.IsKeySet || entity.GetType().GetProperty("Id") == null) continue;
+                if (!entity.IsKeySet || entity.Properties.All(x => x.Metadata.Name != "Id")) continue;
 
                 var entityId = entity.OriginalValues["Id"].ToString();
                 var properties = entity.OriginalValues.Properties.Where(p => p.Name != "ModificationDate").ToList();

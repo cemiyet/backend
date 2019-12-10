@@ -6,7 +6,7 @@
     <AssemblyName>Cemiyet.Persistence.Tests</AssemblyName>
     <RootNamespace>Cemiyet.Persistence.Tests</RootNamespace>
     <PackageId>Cemiyet.Persistence.Tests</PackageId>
-    <PackageVersion>0.3.0</PackageVersion>
+    <PackageVersion>0.4.0</PackageVersion>
     <Authors>Nuri Uzunoğlu</Authors>
     <RepositoryUrl>https://github.com/nuriu/cemiyet-backend</RepositoryUrl>
     <Company>Cemiyet</Company>
@@ -14,6 +14,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.msbuild" Version="2.7.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />

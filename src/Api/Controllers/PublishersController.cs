@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Cemiyet.Api.Filters;
 using Cemiyet.Application.Publishers.Commands.Add;
 using Cemiyet.Application.Publishers.Commands.UpdatePartially;
 using Cemiyet.Application.Publishers.Commands.Update;
@@ -18,7 +17,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cemiyet.Api.Controllers
 {
-    [PublishersExceptionFilter]
     public class PublishersController : CemiyetBaseController
     {
         public PublishersController(IMediator mediator) : base(mediator)
@@ -39,16 +37,12 @@ namespace Cemiyet.Api.Controllers
         [HttpGet("{id}/books")]
         [ProducesResponseType(typeof(List<BookEditionViewModel>), 200)]
         [ProducesResponseType(typeof(PublisherNotFoundException), 400)]
-        public async Task<ActionResult<List<BookEditionViewModel>>> ListBooks(Guid id, [FromQuery] ListBooksQuery query)
-        {
-            query.Id = id;
-            return await Mediator.Send(query);
-        }
+        public async Task<ActionResult<List<BookEditionViewModel>>> ListBooks([FromQuery] ListBooksQuery query) => await Mediator.Send(query);
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PublisherViewModel), 200)]
         [ProducesResponseType(typeof(PublisherNotFoundException), 400)]
-        public async Task<ActionResult<PublisherViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
+        public async Task<ActionResult<PublisherViewModel>> Details([FromRoute] DetailsQuery query) => await Mediator.Send(query);
 
         [HttpPatch("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -74,7 +68,7 @@ namespace Cemiyet.Api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(PublisherNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteOne(Guid id) => await Mediator.Send(new DeleteOneCommand { Id = id });
+        public async Task<ActionResult<Unit>> DeleteOne([FromRoute] DeleteOneCommand command) => await Mediator.Send(command);
 
         [HttpDelete]
         [Consumes(MediaTypeNames.Application.Json)]

@@ -27,7 +27,7 @@ namespace Cemiyet.Application.Genres.Queries.ListBooks
                 throw new GenreNotFoundException(request.Id);
 
             return BookViewModel.CreateFromBooks(genre.Books.Select(gb => gb.Book).PagedToList(request.Page, request.PageSize),
-                                                 true, true, true).ToList();
+                                                 true, true, true, true).ToList();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Cemiyet.Persistence.Application.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.0.0")
+                .HasAnnotation("ProductVersion", "3.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("Cemiyet.Core.Entities.Author", b =>
@@ -306,6 +306,61 @@ namespace Cemiyet.Persistence.Application.Migrations
                     b.ToTable("publishers");
                 });
 
+            modelBuilder.Entity("Cemiyet.Core.Entities.Serie", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnName("creation_date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnName("creator_id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasColumnName("description")
+                        .HasColumnType("character varying(2000)")
+                        .HasMaxLength(2000);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnName("title")
+                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id")
+                        .HasName("pk_series");
+
+                    b.ToTable("series");
+                });
+
+            modelBuilder.Entity("Cemiyet.Core.Entities.SeriesBooks", b =>
+                {
+                    b.Property<Guid>("SeriesId")
+                        .HasColumnName("series_id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BooksId")
+                        .HasColumnName("books_id")
+                        .HasColumnType("uuid");
+
+                    b.Property<short>("Order")
+                        .HasColumnName("order")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("SeriesId", "BooksId")
+                        .HasName("pk_series_books");
+
+                    b.HasIndex("BooksId")
+                        .HasName("ix_series_books_books_id");
+
+                    b.ToTable("series_books");
+                });
+
             modelBuilder.Entity("Cemiyet.Core.Entities.AuthorsBooks", b =>
                 {
                     b.HasOne("Cemiyet.Core.Entities.Author", "Author")
@@ -353,6 +408,21 @@ namespace Cemiyet.Persistence.Application.Migrations
                     b.HasOne("Cemiyet.Core.Entities.Genre", "Genre")
                         .WithMany("Books")
                         .HasForeignKey("GenresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Cemiyet.Core.Entities.SeriesBooks", b =>
+                {
+                    b.HasOne("Cemiyet.Core.Entities.Book", "Book")
+                        .WithMany("Series")
+                        .HasForeignKey("BooksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Cemiyet.Core.Entities.Serie", "Serie")
+                        .WithMany("Books")
+                        .HasForeignKey("SeriesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

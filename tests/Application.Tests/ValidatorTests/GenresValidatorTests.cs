@@ -34,39 +34,42 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _deleteManyCommandValidator = new DeleteManyCommandValidator();
         }
 
-        [Fact]
-        public void ListQuery_ShouldHave_ValidationErrors()
+        [Theory]
+        [InlineData(0, -1)]
+        [InlineData(-1, 0)]
+        public void ListQuery_ShouldHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, 0);
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, -1);
-
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, 0);
-            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, -1);
+            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageValue);
+            _listQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
-        [Fact]
-        public void ListQuery_ShouldNotHave_ValidationErrors()
+        [Theory]
+        [InlineData(5, 50)]
+        [InlineData(50, 5)]
+        public void ListQuery_ShouldNotHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, 5);
-            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, 50);
+            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, pageValue);
+            _listQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
-        [Fact]
-        public void ListBooksQuery_ShouldHave_ValidationErrors()
+        [Theory]
+        [InlineData(0, -1)]
+        [InlineData(-1, 0)]
+        public void ListBooksQuery_ShouldHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, 0);
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, -1);
-
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, 0);
-            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, -1);
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Id, default(Guid));
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.Page, pageValue);
+            _listBooksQueryValidator.ShouldHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
-        [Fact]
-        public void ListBooksQuery_ShouldNotHave_ValidationErrors()
+        [Theory]
+        [InlineData(5, 50)]
+        [InlineData(50, 5)]
+        public void ListBooksQuery_ShouldNotHave_ValidationErrors(int pageValue, int pageSizeValue)
         {
-            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, default(Guid));
-            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, 5);
-            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, 50);
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Page, pageValue);
+            _listBooksQueryValidator.ShouldNotHaveValidationErrorFor(x => x.PageSize, pageSizeValue);
         }
 
         [Fact]
@@ -81,24 +84,24 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _detailsQueryValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
         }
 
-        [Fact]
-        public void UpdateCommand_ShouldHave_ValidationErrors()
+        [Theory]
+        [InlineData("")]
+        [InlineData("AN1")]
+        [InlineData("Lorem ipsum dolor sit amet, consectetur massa nunc.")]
+        public void UpdateCommand_ShouldHave_ValidationErrors(string nameValue)
         {
-            _updateCommandValidator.ShouldHaveValidationErrorFor(x => x.Name, "");
-            _updateCommandValidator.ShouldHaveValidationErrorFor(x => x.Name, "AN1");
-            _updateCommandValidator.ShouldHaveValidationErrorFor(x => x.Name,
-                                                                 "Lorem ipsum dolor sit amet, consectetur massa nunc.");
+            _updateCommandValidator.ShouldHaveValidationErrorFor(x => x.Name, nameValue);
         }
 
-        [Fact]
-        public void UpdateCommand_ShouldNotHave_ValidationErrors()
+        [Theory]
+        [InlineData("Anı")]
+        [InlineData("Bilim Kurgu")]
+        [InlineData("Antoloji / Derleme")]
+        [InlineData("Lorem ipsum dolor sit amet, consectetur massa nunc")]
+        public void UpdateCommand_ShouldNotHave_ValidationErrors(string nameValue)
         {
             _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
-            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Name, "Anı");
-            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Name, "Bilim Kurgu");
-            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Name, "Antoloji / Derleme");
-            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Name,
-                                                                    "Lorem ipsum dolor sit amet, consectetur massa nunc");
+            _updateCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Name, nameValue);
         }
 
         [Fact]
@@ -133,23 +136,23 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             _deleteManyCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Ids, ids);
         }
 
-        [Fact]
-        public void AddCommand_ShouldHave_ValidationErrors()
+        [Theory]
+        [InlineData("")]
+        [InlineData("AN1")]
+        [InlineData("Lorem ipsum dolor sit amet, consectetur massa nunc.")]
+        public void AddCommand_ShouldHave_ValidationErrors(string nameValue)
         {
-            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Name, "");
-            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Name, "AN1");
-            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Name,
-                                                              "Lorem ipsum dolor sit amet, consectetur massa nunc.");
+            _addCommandValidator.ShouldHaveValidationErrorFor(x => x.Name, nameValue);
         }
 
-        [Fact]
-        public void AddCommand_ShouldNotHave_ValidationErrors()
+        [Theory]
+        [InlineData("Anı")]
+        [InlineData("Bilim Kurgu")]
+        [InlineData("Antoloji / Derleme")]
+        [InlineData("Lorem ipsum dolor sit amet, consectetur massa nunc")]
+        public void AddCommand_ShouldNotHave_ValidationErrors(string nameValue)
         {
-            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Name, "Anı");
-            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Name, "Bilim Kurgu");
-            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Name, "Antoloji / Derleme");
-            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Name,
-                                                                 "Lorem ipsum dolor sit amet, consectetur massa nunc");
+            _addCommandValidator.ShouldNotHaveValidationErrorFor(x => x.Name, nameValue);
         }
     }
 }

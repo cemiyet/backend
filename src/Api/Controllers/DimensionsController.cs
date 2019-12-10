@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
-using Cemiyet.Api.Filters;
 using Cemiyet.Application.Dimensions.Commands.Add;
 using Cemiyet.Application.Dimensions.Commands.DeleteMany;
 using Cemiyet.Application.Dimensions.Commands.DeleteOne;
@@ -17,7 +16,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Cemiyet.Api.Controllers
 {
-    [DimensionsExceptionFilter]
     public class DimensionsController : CemiyetBaseController
     {
         public DimensionsController(IMediator mediator) : base(mediator)

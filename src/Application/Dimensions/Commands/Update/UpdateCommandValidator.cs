@@ -7,8 +7,16 @@ namespace Cemiyet.Application.Dimensions.Commands.Update
         public UpdateCommandValidator()
         {
             RuleFor(uc => uc.Id).NotNull();
-            RuleFor(uc => uc.Width).NotEmpty();
-            RuleFor(uc => uc.Height).NotEmpty();
+
+            RuleFor(uc => uc.Width)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .NotEmpty()
+                .GreaterThan(1);
+
+            RuleFor(uc => uc.Height)
+                .Cascade(CascadeMode.StopOnFirstFailure)
+                .NotEmpty()
+                .GreaterThan(1);
         }
     }
 }

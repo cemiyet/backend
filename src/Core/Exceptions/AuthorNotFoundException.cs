@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
-    public class AuthorNotFoundException : Exception
+    public class AuthorNotFoundException : NotFoundException
     {
         public AuthorNotFoundException(Guid authorId) : base($"Could not found any author with specified id: {authorId}")
         {

@@ -14,13 +14,13 @@ namespace Cemiyet.Api
 {
     public class Startup
     {
-        private IConfiguration Configuration { get; }
-        private IConfigurationSection P { get; }
+        private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _environment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
-            Configuration = configuration;
-            P = Configuration.GetSection("Project");
+            _configuration = configuration;
+            _environment = environment;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -36,47 +36,49 @@ namespace Cemiyet.Api
 
             services.AddDbContext<AppDataContext>(options =>
             {
-                options.UseLazyLoadingProxies()
-                       .UseNpgsql(Configuration.GetConnectionString("MainDataContext"));
+                if (_environment.IsEnvironment("Test"))
+                {
+                    options.UseLazyLoadingProxies().UseInMemoryDatabase("TestDatabase");
+                }
+                else
+                {
+                    options.UseLazyLoadingProxies().UseNpgsql(_configuration.GetConnectionString("MainDataContext"));
+                }
             });
 
             services.AddMediatR(typeof(ListQuery).Assembly);
 
             services.AddOpenApiDocument(options =>
             {
-                options.Title = P["Name"];
-                options.Version = P["Version"];
+                options.Title = _configuration.GetSection("Project")["Name"];
+                options.Version = _configuration.GetSection("Project")["Version"];
                 options.DocumentName = options.Version;
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<AppDataContext>();
-                context.Database.Migrate();
 
-                if (env.IsDevelopment())
+                if (_environment.IsEnvironment("Test"))
                 {
-                    context.Database.ExecuteSqlRaw(@"truncate table
-                                                    authors_books,
-                                                    authors,
-                                                    book_editions,
-                                                    books_genres,
-                                                    books,
-                                                    dimensions,
-                                                    entity_changes,
-                                                    genres,
-                                                    publishers;");
+                    context.Database.EnsureDeleted();
                 }
-                
+                else
+                {
+                    context.Database.Migrate();
+                }
+
                 AppDataContextSeed.Seed(context);
             }
 
-            if (env.IsDevelopment())
+            if (_environment.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
-            else
+            }
+            else if (_environment.IsProduction())
             {
                 app.UseHsts();
                 app.UseHttpsRedirection();

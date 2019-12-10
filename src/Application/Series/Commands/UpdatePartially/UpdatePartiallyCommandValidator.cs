@@ -8,15 +8,11 @@ namespace Cemiyet.Application.Series.Commands.UpdatePartially
         {
             RuleFor(upc => upc.Id).NotNull();
 
-            RuleFor(upc => upc.Title)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .MaximumLength(100)
-                .NotEmpty().When(upc => string.IsNullOrEmpty(upc.Description));
+            RuleFor(upc => upc.Title).NotEmpty().When(upc => string.IsNullOrEmpty(upc.Description));
+            RuleFor(upc => upc.Title).MaximumLength(100);
 
-            RuleFor(upc => upc.Description)
-                .Cascade(CascadeMode.StopOnFirstFailure)
-                .MaximumLength(2000)
-                .NotEmpty().When(upc => string.IsNullOrEmpty(upc.Title));
+            RuleFor(upc => upc.Description).NotEmpty().When(upc => string.IsNullOrEmpty(upc.Title));
+            RuleFor(upc => upc.Description).MaximumLength(2000);
         }
     }
 }

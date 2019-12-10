@@ -149,6 +149,24 @@ namespace Cemiyet.Api.Tests
         }
 
         [Fact]
+        public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
+        {
+            var series = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("series");
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"series/{series.First().Id}",
+                                                              new { }, HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
+        public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
+        {
+            var series = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("series");
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"series/{series.First().Id}", new
+            {
+                Title = "Seri"
+            }, HttpStatusCode.OK);
+        }
+
+        [Fact]
         public async Task DeleteOne_WithoutCorrectId_ShouldReturn_BadRequest()
         {
             var response = await _httpClient.DeleteAsync($"series/{Guid.NewGuid()}");

@@ -8,6 +8,7 @@ using Cemiyet.Application.Series.Commands.DeleteBook;
 using Cemiyet.Application.Series.Commands.DeleteMany;
 using Cemiyet.Application.Series.Commands.DeleteOne;
 using Cemiyet.Application.Series.Commands.Update;
+using Cemiyet.Application.Series.Commands.UpdatePartially;
 using Cemiyet.Application.Series.Queries.List;
 using Cemiyet.Application.Series.Queries.Details;
 using Cemiyet.Core.Exceptions;
@@ -54,6 +55,17 @@ namespace Cemiyet.Api.Controllers
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(SerieNotFoundException), 400)]
         public async Task<ActionResult<Unit>> Update([FromRoute] Guid id, [FromBody] UpdateCommand data)
+        {
+            data.Id = id;
+            return await Mediator.Send(data);
+        }
+
+        [HttpPatch("{id}")]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(typeof(Unit), 200)]
+        [ProducesResponseType(typeof(SerieNotFoundException), 400)]
+        public async Task<ActionResult<Unit>> UpdatePartially([FromRoute] Guid id,
+                                                              [FromBody] UpdatePartiallyCommand data)
         {
             data.Id = id;
             return await Mediator.Send(data);

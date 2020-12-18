@@ -7,7 +7,7 @@ namespace Cemiyet.Application.Series.Commands.Add
         public AddCommandValidator()
         {
             RuleFor(ac => ac.Title)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .MaximumLength(100);
 

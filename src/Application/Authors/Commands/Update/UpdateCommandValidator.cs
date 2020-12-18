@@ -10,21 +10,21 @@ namespace Cemiyet.Application.Authors.Commands.Update
             RuleFor(uc => uc.Id).NotNull();
 
             RuleFor(uc => uc.Name)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .Must(ShouldNotContainDigits)
                 .WithMessage("Name alanı sayısal karakter içermemeli.")
                 .MaximumLength(25);
 
             RuleFor(uc => uc.Surname)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .Must(ShouldNotContainDigits)
                 .WithMessage("Surname alanı sayısal karakter içermemeli.")
                 .MaximumLength(25);
 
             RuleFor(uc => uc.Bio)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .MaximumLength(2000);
         }

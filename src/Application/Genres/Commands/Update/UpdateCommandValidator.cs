@@ -9,7 +9,7 @@ namespace Cemiyet.Application.Genres.Commands.Update
         {
             RuleFor(uc => uc.Id).NotNull();
             RuleFor(uc => uc.Name)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .Must(ShouldNotContainDigits)
                 .WithMessage("'Name' should not contain any digits.")

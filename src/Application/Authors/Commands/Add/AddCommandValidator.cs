@@ -8,14 +8,14 @@ namespace Cemiyet.Application.Authors.Commands.Add
         public AddCommandValidator()
         {
             RuleFor(ac => ac.Name)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .Must(ShouldNotContainDigits)
                 .WithMessage("Name alanı sayısal karakter içermemeli.")
                 .MaximumLength(25);
 
             RuleFor(ac => ac.Surname)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .Must(ShouldNotContainDigits)
                 .WithMessage("Surname alanı sayısal karakter içermemeli.")

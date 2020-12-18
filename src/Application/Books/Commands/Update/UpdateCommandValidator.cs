@@ -9,12 +9,12 @@ namespace Cemiyet.Application.Books.Commands.Update
             RuleFor(uc => uc.Id).NotNull();
 
             RuleFor(uc => uc.Title)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .MaximumLength(100);
 
             RuleFor(uc => uc.Description)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .MaximumLength(2500);
         }

@@ -8,12 +8,12 @@ namespace Cemiyet.Application.Books.Commands.AddEdition
         public AddEditionCommandValidator()
         {
             RuleFor(aec => aec.Isbn)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .Length(13);
 
             RuleFor(aec => aec.PageCount)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .GreaterThanOrEqualTo(Constants.BookEditionMinPageSize);
 

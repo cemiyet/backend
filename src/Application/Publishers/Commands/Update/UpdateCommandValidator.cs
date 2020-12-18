@@ -8,14 +8,14 @@ namespace Cemiyet.Application.Publishers.Commands.Update
         public UpdateCommandValidator()
         {
             RuleFor(uc => uc.Name)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .Must(ShouldNotContainDigits)
                 .WithMessage("Name alanı sayısal karakter içermemeli.")
                 .MaximumLength(100);
 
             RuleFor(uc => uc.Description)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .MaximumLength(2000);
         }

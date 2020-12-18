@@ -9,12 +9,12 @@ namespace Cemiyet.Application.Dimensions.Commands.UpdatePartially
             RuleFor(upc => upc.Id).NotNull();
 
             RuleFor(upc => upc.Width)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty().When(upc => upc.Height.Equals(default))
                 .GreaterThan(1).When(upc => upc.Height.Equals(default));
 
             RuleFor(upc => upc.Height)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty().When(upc => upc.Width.Equals(default))
                 .GreaterThan(1).When(upc => upc.Width.Equals(default));
         }

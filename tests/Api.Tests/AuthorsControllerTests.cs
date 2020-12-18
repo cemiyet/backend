@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.TestHost;
 using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
-
 namespace Cemiyet.Api.Tests
 {
     public class AuthorsControllerTests : IClassFixture<WebApplicationFactory<Startup>>

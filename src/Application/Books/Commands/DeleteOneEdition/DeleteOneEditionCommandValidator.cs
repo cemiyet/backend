@@ -7,7 +7,7 @@ namespace Cemiyet.Application.Books.Commands.DeleteOneEdition
         public DeleteOneEditionCommandValidator()
         {
             RuleFor(doec => doec.Isbn)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .Length(13);
         }

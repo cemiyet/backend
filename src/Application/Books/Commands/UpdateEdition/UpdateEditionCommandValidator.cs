@@ -11,7 +11,7 @@ namespace Cemiyet.Application.Books.Commands.UpdateEdition
             RuleFor(uec => uec.NewIsbn).Length(13).When(uec => !string.IsNullOrEmpty(uec.NewIsbn));
 
             RuleFor(uec => uec.PageCount)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .GreaterThanOrEqualTo(Constants.BookEditionMinPageSize);
 

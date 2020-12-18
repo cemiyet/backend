@@ -9,6 +9,7 @@ using Cemiyet.Core.Extensions;
 using Cemiyet.Persistence.Application.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Cemiyet.Persistence.Application.Contexts
 {
@@ -47,13 +48,16 @@ namespace Cemiyet.Persistence.Application.Contexts
                 entity.SetTableName(entity.GetTableName().ToSnakeCase());
 
                 foreach (var property in entity.GetProperties())
-                    property.SetColumnName(property.GetColumnName().ToSnakeCase());
+                {
+                    var storeObjectIdentifier = StoreObjectIdentifier.Create(property.DeclaringEntityType, StoreObjectType.Table);
+                    property.SetColumnName(property.GetColumnName(storeObjectIdentifier.GetValueOrDefault()).ToSnakeCase());
+                }
 
                 foreach (var key in entity.GetKeys())
                     key.SetName(key.GetName().ToSnakeCase());
 
                 foreach (var index in entity.GetIndexes())
-                    index.SetName(index.GetName().ToSnakeCase());
+                    index.SetDatabaseName(index.GetDatabaseName().ToSnakeCase());
             }
         }
 

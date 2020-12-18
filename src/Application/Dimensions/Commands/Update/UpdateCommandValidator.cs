@@ -9,12 +9,12 @@ namespace Cemiyet.Application.Dimensions.Commands.Update
             RuleFor(uc => uc.Id).NotNull();
 
             RuleFor(uc => uc.Width)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .GreaterThan(1);
 
             RuleFor(uc => uc.Height)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .GreaterThan(1);
         }

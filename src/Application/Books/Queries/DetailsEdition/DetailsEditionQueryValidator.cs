@@ -8,7 +8,7 @@ namespace Cemiyet.Application.Books.Queries.DetailsEdition
         {
             RuleFor(deq => deq.Id).NotEmpty();
             RuleFor(deq => deq.Isbn)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .MaximumLength(13);
         }

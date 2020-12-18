@@ -7,12 +7,12 @@ namespace Cemiyet.Application.Books.Commands.Add
         public AddCommandValidator()
         {
             RuleFor(ac => ac.Title)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .MaximumLength(100);
 
             RuleFor(ac => ac.Description)
-                .Cascade(CascadeMode.StopOnFirstFailure)
+                .Cascade(CascadeMode.Stop)
                 .NotEmpty()
                 .MaximumLength(2500);
 

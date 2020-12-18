@@ -67,14 +67,14 @@ namespace Cemiyet.Api.Tests
         public async Task ListBooks_WithoutCorrectPaging_ShouldReturn_BadRequest()
         {
             var publishers = await _httpClient.AssertedGetEntityListFromUri<PublisherViewModel>("publishers");
-            await _httpClient.AssertedGetAsync($"publishers/{publishers.First().Id}/books?page=-1&pageSize=-5", HttpStatusCode.BadRequest);
+            await _httpClient.AssertedGetAsync($"publishers/{publishers[0].Id}/books?page=-1&pageSize=-5", HttpStatusCode.BadRequest);
         }
 
         [Fact]
         public async Task ListBooks_WithoutPaging_ShouldReturn_DefaultPagedResult()
         {
             var publishers = await _httpClient.AssertedGetEntityListFromUri<PublisherViewModel>("publishers");
-            await _httpClient.AssertedGetAsync($"publishers/{publishers.First().Id}/books", HttpStatusCode.OK);
+            await _httpClient.AssertedGetAsync($"publishers/{publishers[0].Id}/books", HttpStatusCode.OK);
         }
 
         [Fact]
@@ -87,7 +87,7 @@ namespace Cemiyet.Api.Tests
         public async Task Details_WithCorrectId_ShouldReturn_PublisherObject()
         {
             var publishers = await _httpClient.AssertedGetEntityListFromUri<PublisherViewModel>("publishers");
-            var response = await _httpClient.AssertedGetAsync($"publishers/{publishers.First().Id}", HttpStatusCode.OK);
+            var response = await _httpClient.AssertedGetAsync($"publishers/{publishers[0].Id}", HttpStatusCode.OK);
             var responseData = await response.Content.ReadAsAsync<PublisherViewModel>();
             Assert.NotNull(responseData);
         }
@@ -96,7 +96,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var publishers = await _httpClient.AssertedGetEntityListFromUri<PublisherViewModel>("publishers");
-            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"publishers/{publishers.First().Id}",
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"publishers/{publishers[0].Id}",
                                                               new { }, HttpStatusCode.BadRequest);
         }
 
@@ -104,7 +104,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
             var publishers = await _httpClient.AssertedGetEntityListFromUri<PublisherViewModel>("publishers");
-            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"publishers/{publishers.First().Id}", new
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"publishers/{publishers[0].Id}", new
             {
                 Name = "YAYINEVİ BİR"
             }, HttpStatusCode.OK);
@@ -121,10 +121,10 @@ namespace Cemiyet.Api.Tests
         public async Task Update_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var publishers = await _httpClient.AssertedGetEntityListFromUri<PublisherViewModel>("publishers");
-            var response = await _httpClient.PutAsJsonAsync($"publishers/{publishers.First().Id}", default(Publisher));
+            var response = await _httpClient.PutAsJsonAsync($"publishers/{publishers[0].Id}", default(Publisher));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            response = await _httpClient.PutAsJsonAsync($"publishers/{publishers.First().Id}", new Publisher
+            response = await _httpClient.PutAsJsonAsync($"publishers/{publishers[0].Id}", new Publisher
             {
                 Name = "5",
                 Description = null

@@ -26,7 +26,7 @@ namespace Cemiyet.Application.Books.Commands.DeleteManyEdition
 
             _context.RemoveRange(bookEditions);
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

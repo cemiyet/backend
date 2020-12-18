@@ -86,7 +86,7 @@ namespace Cemiyet.Api
 
             app.UseRouting();
             app.UseAuthorization();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
 
             app.UseOpenApi(options => options.Path = "/docs/{documentName}/openapi.json");
 

@@ -67,10 +67,10 @@ namespace Cemiyet.Api.Tests
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
 
             var response =
-                await _httpClient.PostAsJsonAsync($"books/{books.First().Id}/editions", default(BookEdition));
+                await _httpClient.PostAsJsonAsync($"books/{books[0].Id}/editions", default(BookEdition));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            var response2 = await _httpClient.PostAsJsonAsync($"books/{books.First().Id}/editions",
+            var response2 = await _httpClient.PostAsJsonAsync($"books/{books[0].Id}/editions",
                                                               new AddEditionCommand
                                                               {
                                                                   Isbn = "",
@@ -86,15 +86,15 @@ namespace Cemiyet.Api.Tests
             var dimensions = await _httpClient.AssertedGetEntityListFromUri<DimensionViewModel>("dimensions");
             var publishers = await _httpClient.AssertedGetEntityListFromUri<PublisherViewModel>("publishers");
 
-            var response = await _httpClient.PostAsJsonAsync($"books/{books.First().Id}/editions", new AddEditionCommand
+            var response = await _httpClient.PostAsJsonAsync($"books/{books[0].Id}/editions", new AddEditionCommand
             {
                 Isbn = "0123456789111",
                 PrintDate = DateTime.Now,
                 PageCount = short.MaxValue,
-                Id = books.First().Id,
-                DimensionsId = dimensions.First().Id,
-                BooksId = books.First().Id,
-                PublishersId = publishers.First().Id
+                Id = books[0].Id,
+                DimensionsId = dimensions[0].Id,
+                BooksId = books[0].Id,
+                PublishersId = publishers[0].Id
             });
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
@@ -111,10 +111,10 @@ namespace Cemiyet.Api.Tests
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
 
-            var response = await _httpClient.PutAsJsonAsync($"books/{books.First().Id}", default(Book));
+            var response = await _httpClient.PutAsJsonAsync($"books/{books[0].Id}", default(Book));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            response = await _httpClient.PutAsJsonAsync($"books/{books.First().Id}", new Book
+            response = await _httpClient.PutAsJsonAsync($"books/{books[0].Id}", new Book
             {
                 Title = "",
                 Description = null
@@ -139,7 +139,7 @@ namespace Cemiyet.Api.Tests
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
             var response =
-                await _httpClient.PutAsJsonAsync($"books/{books.First().Id}/editions/1234567890111",
+                await _httpClient.PutAsJsonAsync($"books/{books[0].Id}/editions/1234567890111",
                                                  default(BookEdition));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
@@ -148,7 +148,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdateEdition_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var book = books.First();
+            var book = books[0];
             var edition = book.Editions.First();
             var response =
                 await _httpClient.PutAsJsonAsync($"books/{book.Id}/editions/{edition.Isbn}", default(BookEdition));
@@ -159,7 +159,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdateEdition_WithCorrectData_ShouldReturn_OK()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var book = books.First();
+            var book = books[0];
             var edition = book.Editions.First();
 
             var response = await _httpClient.PutAsJsonAsync($"books/{book.Id}/editions/{edition.Isbn}", new
@@ -179,7 +179,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"books/{books.First().Id}",
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"books/{books[0].Id}",
                                                               new { }, HttpStatusCode.BadRequest);
         }
 
@@ -187,7 +187,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"books/{books.First().Id}", new
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"books/{books[0].Id}", new
             {
                 Title = "BAŞLIK"
             }, HttpStatusCode.OK);
@@ -197,7 +197,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartiallyEdition_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var book = books.First();
+            var book = books[0];
             var edition = book.Editions.First();
             await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch,
                                                               $"books/{book.Id}/editions/{edition.Isbn}", new
@@ -212,7 +212,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartiallyEdition_WithCorrectData_ShouldReturn_OK()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var book = books.First();
+            var book = books[0];
             var edition = book.Editions.First();
             await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch,
                                                               $"books/{book.Id}/editions/{edition.Isbn}", new
@@ -238,7 +238,7 @@ namespace Cemiyet.Api.Tests
         public async Task ListEdition_WithoutCorrectPaging_ShouldReturn_BadRequest()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            await _httpClient.AssertedGetAsync($"books/{books.First().Id}/editions?page=-1&pageSize=-5",
+            await _httpClient.AssertedGetAsync($"books/{books[0].Id}/editions?page=-1&pageSize=-5",
                                                HttpStatusCode.BadRequest);
         }
 
@@ -246,7 +246,7 @@ namespace Cemiyet.Api.Tests
         public async Task ListEdition_WithoutPaging_ShouldReturn_DefaultPagedResult()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var response = await _httpClient.AssertedGetAsync($"books/{books.First().Id}/editions", HttpStatusCode.OK);
+            var response = await _httpClient.AssertedGetAsync($"books/{books[0].Id}/editions", HttpStatusCode.OK);
             var responseData = await response.Content.ReadAsAsync<List<BookEditionViewModel>>();
             Assert.NotEmpty(responseData);
         }
@@ -261,7 +261,7 @@ namespace Cemiyet.Api.Tests
         public async Task Details_WithCorrectId_ShouldReturn_BookObject()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var response = await _httpClient.AssertedGetAsync($"books/{books.First().Id}", HttpStatusCode.OK);
+            var response = await _httpClient.AssertedGetAsync($"books/{books[0].Id}", HttpStatusCode.OK);
             var responseData = await response.Content.ReadAsAsync<BookViewModel>();
             Assert.NotNull(responseData);
         }
@@ -277,7 +277,7 @@ namespace Cemiyet.Api.Tests
         public async Task DetailsEdition_WithCorrectIsbn_ShouldReturn_BookEditionObject()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var book = books.First();
+            var book = books[0];
             var edition = book.Editions.First();
             var response =
                 await _httpClient.AssertedGetAsync($"books/{book.Id}/editions/{edition.Isbn}", HttpStatusCode.OK);
@@ -304,7 +304,7 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteOneEdition_WithoutCorrectId_ShouldReturn_BadRequest()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var response = await _httpClient.DeleteAsync($"books/{books.First().Id}/editions/1");
+            var response = await _httpClient.DeleteAsync($"books/{books[0].Id}/editions/1");
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
@@ -312,7 +312,7 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteOneEdition_WithCorrectId_ShouldReturn_OK()
         {
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
-            var book = books.First();
+            var book = books[0];
             var edition = book.Editions.First();
             var response = await _httpClient.DeleteAsync($"books/{book.Id}/editions/{edition.Isbn}");
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -353,7 +353,7 @@ namespace Cemiyet.Api.Tests
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
             await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "books", new DeleteManyEditionCommand
             {
-                Isbns = books.First().Editions.Select(e => e.Isbn).ToArray()
+                Isbns = books[0].Editions.Select(e => e.Isbn).ToArray()
             }, HttpStatusCode.OK);
         }
     }

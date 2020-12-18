@@ -315,7 +315,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         [Fact]
         public void DeleteManyCommand_ShouldHave_ValidationErrors()
         {
-            Guid[] ids = { };
+            Guid[] ids = Array.Empty<Guid>();
             Guid[] ids2 = { Guid.NewGuid() };
             Guid[] ids3 = { Guid.Empty, Guid.Empty, Guid.Empty };
 

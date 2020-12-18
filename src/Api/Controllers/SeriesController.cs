@@ -28,7 +28,10 @@ namespace Cemiyet.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data)
+        {
+            return await Mediator.Send(data);
+        }
 
         [HttpPost("{id}/books")]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -43,12 +46,18 @@ namespace Cemiyet.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(List<SerieViewModel>), 200)]
         [ProducesResponseType(typeof(SerieNotFoundException), 400)]
-        public async Task<ActionResult<List<SerieViewModel>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
+        public async Task<ActionResult<List<SerieViewModel>>> List([FromQuery] ListQuery query)
+        {
+            return await Mediator.Send(query);
+        }
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(SerieViewModel), 200)]
         [ProducesResponseType(typeof(SerieNotFoundException), 400)]
-        public async Task<ActionResult<SerieViewModel>> Details([FromRoute] DetailsQuery query) => await Mediator.Send(query);
+        public async Task<ActionResult<SerieViewModel>> Details([FromRoute] DetailsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
 
         [HttpPut("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -74,13 +83,19 @@ namespace Cemiyet.Api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(SerieNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteOne([FromRoute] DeleteOneCommand command) => await Mediator.Send(command);
+        public async Task<ActionResult<Unit>> DeleteOne([FromRoute] DeleteOneCommand command)
+        {
+            return await Mediator.Send(command);
+        }
 
         [HttpDelete]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(SerieNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data)
+        {
+            return await Mediator.Send(data);
+        }
 
         [HttpDelete("{id}/books")]
         [Consumes(MediaTypeNames.Application.Json)]

@@ -26,17 +26,26 @@ namespace Cemiyet.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data)
+        {
+            return await Mediator.Send(data);
+        }
 
         [HttpGet]
         [ProducesResponseType(typeof(List<DimensionViewModel>), 200)]
         [ProducesResponseType(typeof(DimensionNotFoundException), 400)]
-        public async Task<ActionResult<List<DimensionViewModel>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
+        public async Task<ActionResult<List<DimensionViewModel>>> List([FromQuery] ListQuery query)
+        {
+            return await Mediator.Send(query);
+        }
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(DimensionViewModel), 200)]
         [ProducesResponseType(typeof(DimensionNotFoundException), 400)]
-        public async Task<ActionResult<DimensionViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
+        public async Task<ActionResult<DimensionViewModel>> Details(Guid id)
+        {
+            return await Mediator.Send(new DetailsQuery { Id = id });
+        }
 
         [HttpPatch("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -62,12 +71,18 @@ namespace Cemiyet.Api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(DimensionNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteOne(Guid id) => await Mediator.Send(new DeleteOneCommand { Id = id });
+        public async Task<ActionResult<Unit>> DeleteOne(Guid id)
+        {
+            return await Mediator.Send(new DeleteOneCommand { Id = id });
+        }
 
         [HttpDelete]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(DimensionNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data)
+        {
+            return await Mediator.Send(data);
+        }
     }
 }

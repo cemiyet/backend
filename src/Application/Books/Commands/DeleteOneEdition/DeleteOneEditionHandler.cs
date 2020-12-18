@@ -25,7 +25,7 @@ namespace Cemiyet.Application.Books.Commands.DeleteOneEdition
 
             _context.Remove(bookEdition);
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

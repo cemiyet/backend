@@ -29,7 +29,7 @@ namespace Cemiyet.Application.Dimensions.Commands.Add
 
             _context.Dimensions.Add(dimension);
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

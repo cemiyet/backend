@@ -26,7 +26,7 @@ namespace Cemiyet.Application.Publishers.Commands.Add
 
             _context.Publishers.Add(publisher);
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

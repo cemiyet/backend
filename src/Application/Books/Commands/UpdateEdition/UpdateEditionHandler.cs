@@ -24,30 +24,18 @@ namespace Cemiyet.Application.Books.Commands.UpdateEdition
                 throw new BookEditionNotFoundException(request.Isbn);
 
             var book = await _context.Books.FindAsync(request.BooksId);
-
-            if (book == null)
-                throw new BookNotFoundException(request.BooksId);
-
             var dimension = await _context.Dimensions.FindAsync(request.DimensionsId);
-
-            if (dimension == null)
-                throw new DimensionNotFoundException(request.DimensionsId);
-
             var publisher = await _context.Publishers.FindAsync(request.PublishersId);
-
-            if (publisher == null)
-                throw new PublisherNotFoundException(request.PublishersId);
-
             if (!string.IsNullOrEmpty(request.NewIsbn) && !request.NewIsbn.Equals(request.Isbn))
                 bookEdition.Isbn = request.NewIsbn;
 
             bookEdition.PageCount = request.PageCount;
             bookEdition.PrintDate = request.PrintDate;
-            bookEdition.Book = book;
-            bookEdition.Dimensions = dimension;
-            bookEdition.Publisher = publisher;
+            bookEdition.Book = book ?? throw new BookNotFoundException(request.BooksId);
+            bookEdition.Dimensions = dimension ?? throw new DimensionNotFoundException(request.DimensionsId);
+            bookEdition.Publisher = publisher ?? throw new PublisherNotFoundException(request.PublishersId);
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

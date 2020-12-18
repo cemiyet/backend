@@ -27,7 +27,7 @@ namespace Cemiyet.Application.Authors.Commands.Update
             author.Surname = request.Surname;
             author.Bio = request.Bio;
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

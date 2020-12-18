@@ -44,21 +44,19 @@ namespace Cemiyet.Application.Books.Commands.UpdatePartiallyEdition
             if (request.DimensionsId != default && request.DimensionsId != bookEdition.DimensionsId)
             {
                 var dimension = await _context.Dimensions.FindAsync(request.DimensionsId);
-                if (dimension == null) throw new DimensionNotFoundException(request.DimensionsId);
-                bookEdition.Dimensions = dimension;
+                bookEdition.Dimensions = dimension ?? throw new DimensionNotFoundException(request.DimensionsId);
             }
 
             if (request.PublishersId != default && request.PublishersId != bookEdition.PublishersId)
             {
                 var publisher = await _context.Publishers.FindAsync(request.PublishersId);
-                if (publisher == null) throw new PublisherNotFoundException(request.PublishersId);
-                bookEdition.Publisher = publisher;
+                bookEdition.Publisher = publisher ?? throw new PublisherNotFoundException(request.PublishersId);
             }
 
             if (_context.Entry(bookEdition).State != EntityState.Modified)
                 throw new Exception("Nothing updated.");
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

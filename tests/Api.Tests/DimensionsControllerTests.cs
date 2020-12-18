@@ -67,7 +67,7 @@ namespace Cemiyet.Api.Tests
         public async Task Details_WithCorrectId_ShouldReturn_DimensionObject()
         {
             var dimensions = await _httpClient.AssertedGetEntityListFromUri<DimensionViewModel>("dimensions");
-            var response = await _httpClient.AssertedGetAsync($"dimensions/{dimensions.First().Id}", HttpStatusCode.OK);
+            var response = await _httpClient.AssertedGetAsync($"dimensions/{dimensions[0].Id}", HttpStatusCode.OK);
             var responseData = await response.Content.ReadAsAsync<DimensionViewModel>();
             Assert.NotNull(responseData);
         }
@@ -83,10 +83,10 @@ namespace Cemiyet.Api.Tests
         public async Task Update_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var dimensions = await _httpClient.AssertedGetEntityListFromUri<DimensionViewModel>("dimensions");
-            var response = await _httpClient.PutAsJsonAsync($"dimensions/{dimensions.First().Id}", default(Dimension));
+            var response = await _httpClient.PutAsJsonAsync($"dimensions/{dimensions[0].Id}", default(Dimension));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            response = await _httpClient.PutAsJsonAsync($"dimensions/{dimensions.First().Id}", new
+            response = await _httpClient.PutAsJsonAsync($"dimensions/{dimensions[0].Id}", new
             {
                 Width = 5.0
             });
@@ -109,7 +109,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var dimensions = await _httpClient.AssertedGetEntityListFromUri<DimensionViewModel>("dimensions");
-            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"dimensions/{dimensions.First().Id}",
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"dimensions/{dimensions[0].Id}",
                                                               new { }, HttpStatusCode.BadRequest);
         }
 
@@ -117,7 +117,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
             var dimensions = await _httpClient.AssertedGetEntityListFromUri<DimensionViewModel>("dimensions");
-            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"dimensions/{dimensions.First().Id}",
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"dimensions/{dimensions[0].Id}",
                                                               new { Width = 5.0 }, HttpStatusCode.OK);
         }
 

@@ -26,7 +26,7 @@ namespace Cemiyet.Application.Dimensions.Commands.Update
             dimension.Width = request.Width;
             dimension.Height = request.Height;
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

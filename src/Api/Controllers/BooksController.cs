@@ -33,7 +33,10 @@ namespace Cemiyet.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data)
+        {
+            return await Mediator.Send(data);
+        }
 
         [HttpPost("{id}/editions")]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -95,7 +98,10 @@ namespace Cemiyet.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(List<BookViewModel>), 200)]
         [ProducesResponseType(typeof(BookNotFoundException), 400)]
-        public async Task<ActionResult<List<BookViewModel>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
+        public async Task<ActionResult<List<BookViewModel>>> List([FromQuery] ListQuery query)
+        {
+            return await Mediator.Send(query);
+        }
 
         [HttpGet("{id}/editions")]
         [ProducesResponseType(typeof(List<BookEditionViewModel>), 200)]
@@ -110,33 +116,51 @@ namespace Cemiyet.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(BookViewModel), 200)]
         [ProducesResponseType(typeof(BookNotFoundException), 400)]
-        public async Task<ActionResult<BookViewModel>> Details(Guid id) => await Mediator.Send(new DetailsQuery { Id = id });
+        public async Task<ActionResult<BookViewModel>> Details(Guid id)
+        {
+            return await Mediator.Send(new DetailsQuery { Id = id });
+        }
 
         [HttpGet("{id}/editions/{isbn}")]
         [ProducesResponseType(typeof(BookEditionViewModel), 200)]
         [ProducesResponseType(typeof(BookEditionNotFoundException), 400)]
-        public async Task<ActionResult<BookEditionViewModel>> DetailsEdition([FromRoute] DetailsEditionQuery query) => await Mediator.Send(query);
+        public async Task<ActionResult<BookEditionViewModel>> DetailsEdition([FromRoute] DetailsEditionQuery query)
+        {
+            return await Mediator.Send(query);
+        }
 
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(BookNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteOne(Guid id) => await Mediator.Send(new DeleteOneCommand { Id = id });
+        public async Task<ActionResult<Unit>> DeleteOne(Guid id)
+        {
+            return await Mediator.Send(new DeleteOneCommand { Id = id });
+        }
 
         [HttpDelete("{id}/editions/{isbn}")]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(BookEditionNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteOneEdition([FromRoute] DeleteOneEditionCommand command) => await Mediator.Send(command);
+        public async Task<ActionResult<Unit>> DeleteOneEdition([FromRoute] DeleteOneEditionCommand command)
+        {
+            return await Mediator.Send(command);
+        }
 
         [HttpDelete]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(BookNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data)
+        {
+            return await Mediator.Send(data);
+        }
 
         [HttpDelete("{id}/editions")]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(BookEditionNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteManyEdition([FromBody] DeleteManyEditionCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> DeleteManyEdition([FromBody] DeleteManyEditionCommand data)
+        {
+            return await Mediator.Send(data);
+        }
     }
 }

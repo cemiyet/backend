@@ -60,14 +60,14 @@ namespace Cemiyet.Api.Tests
         public async Task ListBooks_WithoutCorrectPaging_ShouldReturn_BadRequest()
         {
             var genres = await _httpClient.AssertedGetEntityListFromUri<GenreViewModel>("genres");
-            await _httpClient.AssertedGetAsync($"genres/{genres.First().Id}/books?page=-1&pageSize=-5", HttpStatusCode.BadRequest);
+            await _httpClient.AssertedGetAsync($"genres/{genres[0].Id}/books?page=-1&pageSize=-5", HttpStatusCode.BadRequest);
         }
 
         [Fact]
         public async Task ListBooks_WithoutPaging_ShouldReturn_DefaultPagedResult()
         {
             var genres = await _httpClient.AssertedGetEntityListFromUri<GenreViewModel>("genres");
-            await _httpClient.AssertedGetAsync($"genres/{genres.First().Id}/books", HttpStatusCode.OK);
+            await _httpClient.AssertedGetAsync($"genres/{genres[0].Id}/books", HttpStatusCode.OK);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace Cemiyet.Api.Tests
         public async Task Details_WithCorrectId_ShouldReturn_GenreObject()
         {
             var genres = await _httpClient.AssertedGetEntityListFromUri<GenreViewModel>("genres");
-            var response = await _httpClient.AssertedGetAsync($"genres/{genres.First().Id}", HttpStatusCode.OK);
+            var response = await _httpClient.AssertedGetAsync($"genres/{genres[0].Id}", HttpStatusCode.OK);
             var responseData = await response.Content.ReadAsAsync<Genre>();
             Assert.NotNull(responseData);
         }
@@ -96,7 +96,7 @@ namespace Cemiyet.Api.Tests
         public async Task Update_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var genres = await _httpClient.AssertedGetEntityListFromUri<GenreViewModel>("genres");
-            var response = await _httpClient.PutAsJsonAsync($"genres/{genres.First().Id}", default(Genre));
+            var response = await _httpClient.PutAsJsonAsync($"genres/{genres[0].Id}", default(Genre));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         }
 

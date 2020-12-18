@@ -55,10 +55,10 @@ namespace Cemiyet.Api.Tests
         public async Task AddBook_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
-            var response = await _httpClient.PostAsJsonAsync($"series/{series.First().Id}/books", new { });
+            var response = await _httpClient.PostAsJsonAsync($"series/{series[0].Id}/books", new { });
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            response = await _httpClient.PostAsJsonAsync($"series/{series.First().Id}/books", new
+            response = await _httpClient.PostAsJsonAsync($"series/{series[0].Id}/books", new
             {
                 Books = new Dictionary<Guid, short>
                 {
@@ -75,12 +75,12 @@ namespace Cemiyet.Api.Tests
             var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
             var books = await _httpClient.AssertedGetEntityListFromUri<BookViewModel>("books");
 
-            var response = await _httpClient.PostAsJsonAsync($"series/{series.First().Id}/books", new
+            var response = await _httpClient.PostAsJsonAsync($"series/{series[0].Id}/books", new
             {
                 Books = new Dictionary<Guid, short>
                 {
                     {books.Last().Id, 500},
-                    {books.Skip(Math.Max(0, books.Count() - 2)).First().Id, short.MaxValue}
+                    {books.Skip(Math.Max(0, books.Count - 2)).First().Id, short.MaxValue}
                 }
             });
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -108,7 +108,7 @@ namespace Cemiyet.Api.Tests
         public async Task Details_WithCorrectId_ShouldReturn_SerieObject()
         {
             var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
-            var response = await _httpClient.AssertedGetAsync($"series/{series.First().Id}", HttpStatusCode.OK);
+            var response = await _httpClient.AssertedGetAsync($"series/{series[0].Id}", HttpStatusCode.OK);
             var responseData = await response.Content.ReadAsAsync<SerieViewModel>();
             Assert.NotNull(responseData);
         }
@@ -125,10 +125,10 @@ namespace Cemiyet.Api.Tests
         {
             var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
 
-            var response = await _httpClient.PutAsJsonAsync($"series/{series.First().Id}", default(Serie));
+            var response = await _httpClient.PutAsJsonAsync($"series/{series[0].Id}", default(Serie));
             Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
 
-            response = await _httpClient.PutAsJsonAsync($"series/{series.First().Id}", new
+            response = await _httpClient.PutAsJsonAsync($"series/{series[0].Id}", new
             {
                 Title = "5",
                 Description = ""
@@ -152,7 +152,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithoutCorrectData_ShouldReturn_BadRequest()
         {
             var series = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("series");
-            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"series/{series.First().Id}",
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"series/{series[0].Id}",
                                                               new { }, HttpStatusCode.BadRequest);
         }
 
@@ -160,7 +160,7 @@ namespace Cemiyet.Api.Tests
         public async Task UpdatePartially_WithCorrectData_ShouldReturn_OK()
         {
             var series = await _httpClient.AssertedGetEntityListFromUri<AuthorViewModel>("series");
-            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"series/{series.First().Id}", new
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Patch, $"series/{series[0].Id}", new
             {
                 Title = "Seri"
             }, HttpStatusCode.OK);
@@ -185,7 +185,7 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteBook_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
             var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
-            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, $"series/{series.First().Id}/books", new
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, $"series/{series[0].Id}/books", new
             {
                 BookIds = new [] { Guid.Empty }
             }, HttpStatusCode.BadRequest);
@@ -195,7 +195,7 @@ namespace Cemiyet.Api.Tests
         public async Task DeleteBook_WithCorrectIds_ShouldReturn_OK()
         {
             var series = await _httpClient.AssertedGetEntityListFromUri<SerieViewModel>("series");
-            var serie = series.First();
+            var serie = series[0];
             var bookIds = serie.Books.Select(sb => sb.Book.Id).Take(2);
             await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, $"series/{serie.Id}/books", new
             {

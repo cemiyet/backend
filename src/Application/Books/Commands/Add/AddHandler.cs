@@ -52,7 +52,7 @@ namespace Cemiyet.Application.Books.Commands.Add
 
             _context.Books.Add(book);
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

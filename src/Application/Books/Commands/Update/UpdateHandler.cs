@@ -26,7 +26,7 @@ namespace Cemiyet.Application.Books.Commands.Update
             book.Title = request.Title;
             book.Description = request.Description;
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

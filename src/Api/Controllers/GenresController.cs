@@ -26,22 +26,34 @@ namespace Cemiyet.Api.Controllers
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(ValidationProblemDetails), 400)]
-        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> Add([FromBody] AddCommand data)
+        {
+            return await Mediator.Send(data);
+        }
 
         [HttpGet]
         [ProducesResponseType(typeof(List<GenreViewModel>), 200)]
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public async Task<ActionResult<List<GenreViewModel>>> List([FromQuery] ListQuery query) => await Mediator.Send(query);
+        public async Task<ActionResult<List<GenreViewModel>>> List([FromQuery] ListQuery query)
+        {
+            return await Mediator.Send(query);
+        }
 
         [HttpGet("{id}/books")]
         [ProducesResponseType(typeof(List<BookViewModel>), 200)]
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public async Task<ActionResult<List<BookViewModel>>> ListBooks([FromQuery] ListBooksQuery query) => await Mediator.Send(query);
+        public async Task<ActionResult<List<BookViewModel>>> ListBooks([FromQuery] ListBooksQuery query)
+        {
+            return await Mediator.Send(query);
+        }
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(GenreViewModel), 200)]
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public async Task<ActionResult<GenreViewModel>> Details([FromRoute] DetailsQuery query) => await Mediator.Send(query);
+        public async Task<ActionResult<GenreViewModel>> Details([FromRoute] DetailsQuery query)
+        {
+            return await Mediator.Send(query);
+        }
 
         [HttpPut("{id}")]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -56,12 +68,18 @@ namespace Cemiyet.Api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteOne([FromRoute] DeleteOneCommand command) => await Mediator.Send(command);
+        public async Task<ActionResult<Unit>> DeleteOne([FromRoute] DeleteOneCommand command)
+        {
+            return await Mediator.Send(command);
+        }
 
         [HttpDelete]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(typeof(Unit), 200)]
         [ProducesResponseType(typeof(GenreNotFoundException), 400)]
-        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data) => await Mediator.Send(data);
+        public async Task<ActionResult<Unit>> DeleteMany([FromBody] DeleteManyCommand data)
+        {
+            return await Mediator.Send(data).ConfigureAwait(false);
+        }
     }
 }

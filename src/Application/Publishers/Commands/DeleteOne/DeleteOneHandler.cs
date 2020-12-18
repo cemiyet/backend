@@ -25,7 +25,7 @@ namespace Cemiyet.Application.Publishers.Commands.DeleteOne
 
             _context.Remove(publisher);
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

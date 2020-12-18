@@ -224,7 +224,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         [Fact]
         public void DeleteManyCommand_ShouldHave_ValidationErrors()
         {
-            Guid[] ids = { };
+            Guid[] ids = Array.Empty<Guid>();
             Guid[] ids2 = { Guid.NewGuid() };
             Guid[] ids3 = { Guid.Empty, Guid.Empty, Guid.Empty };
 
@@ -244,7 +244,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
         [Fact]
         public void DeleteManyEditionCommand_ShouldHave_ValidationErrors()
         {
-            string[] isbns = { };
+            string[] isbns = Array.Empty<string>();
             string[] isbns2 = { Guid.NewGuid().ToString() };
             string[] isbns3 = { Guid.NewGuid().ToString(), "Guid.Empty", "" };
 
@@ -281,7 +281,7 @@ namespace Cemiyet.Application.Tests.ValidatorTests
             var ucWithBadData = new UpdateCommand
             {
                 Title = "ucValidator.ShouldHaveValidationErrorFor(x => x.Title);ucValidator.ShouldHaveValidationErrorFor(x => x.Description);",
-                Description = default(string)
+                Description = default
             };
             ucValidator = _updateCommandValidator.TestValidate(ucWithBadData);
             ucValidator.ShouldHaveValidationErrorFor(x => x.Title);

@@ -587,7 +587,6 @@ namespace Cemiyet.Persistence.Application.Contexts
 
         private static void SeedSeries(AppDataContext context)
         {
-
             if (context.Series.Any()) return;
 
             var series = new List<Serie>

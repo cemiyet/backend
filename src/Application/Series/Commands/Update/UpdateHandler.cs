@@ -24,7 +24,7 @@ namespace Cemiyet.Application.Series.Commands.Update
             serie.Title = request.Title;
             serie.Description = request.Description;
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
             if (success) return Unit.Value;
 
             throw new Exception("Problem saving changes.");

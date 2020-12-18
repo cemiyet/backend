@@ -28,7 +28,7 @@ namespace Cemiyet.Application.Series.Commands.DeleteBook
             foreach (var book in serieBooks.ToList())
                 serie.Books.Remove(book);
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
             if (success) return Unit.Value;
 
             throw new Exception("Problem saving changes.");

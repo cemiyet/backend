@@ -28,16 +28,18 @@ namespace Cemiyet.Application.Series.Commands.AddBook
             var newBooks = request.Books.Where(bd => !existingBooksIds.Contains(bd.Key)).ToList();
             var books = _context.Books.Where(b => newBooks.Select(bd => bd.Key).Contains(b.Id)).ToList();
 
-            if (!books.Any()) throw new BookNotFoundException(request.Books.Keys);
+            if (books.Count == 0) throw new BookNotFoundException(request.Books.Keys);
 
             foreach (var book in books)
+            {
                 serie.Books.Add(new SeriesBooks
                 {
                     Order = newBooks.First(bd => bd.Key == book.Id).Value,
                     Book = book
                 });
+            }
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

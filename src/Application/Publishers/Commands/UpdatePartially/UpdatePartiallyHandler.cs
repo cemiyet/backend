@@ -33,7 +33,7 @@ namespace Cemiyet.Application.Publishers.Commands.UpdatePartially
             if (_context.Entry(publisher).State != EntityState.Modified)
                 throw new Exception("Nothing updated.");
 
-            var success = await _context.SaveChangesAsync() > 0;
+            var success = await _context.SaveChangesAsync(cancellationToken) > 0;
 
             if (success) return Unit.Value;
 

@@ -1,4 +1,4 @@
-using Cemiyet.Application.Genres.Queries.List;
+using Cemiyet.Application.Queries.Genres;
 using Cemiyet.Persistence.Application.Contexts;
 using FluentValidation.AspNetCore;
 using MediatR;

@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Cemiyet.Tests.Api.Extensions;
-using Cemiyet.Application.Publishers.Commands.DeleteMany;
+using Cemiyet.Application.Commands.Publishers;
 using Cemiyet.Core.Entities;
 using Cemiyet.Persistence.Application.ViewModels;
 using Microsoft.AspNetCore.Hosting;

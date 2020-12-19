@@ -1,11 +1,6 @@
 using System;
-using Cemiyet.Application.Genres.Commands.Add;
-using Cemiyet.Application.Genres.Commands.DeleteMany;
-using Cemiyet.Application.Genres.Commands.DeleteOne;
-using Cemiyet.Application.Genres.Commands.Update;
-using Cemiyet.Application.Genres.Queries.List;
-using Cemiyet.Application.Genres.Queries.ListBooks;
-using Cemiyet.Application.Genres.Queries.Details;
+using Cemiyet.Application.Commands.Genres;
+using Cemiyet.Application.Queries.Genres;
 using FluentValidation.TestHelper;
 using Xunit;
 

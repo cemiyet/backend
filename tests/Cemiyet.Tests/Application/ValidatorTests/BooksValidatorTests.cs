@@ -1,19 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Cemiyet.Application.Books.Commands.Add;
-using Cemiyet.Application.Books.Commands.AddEdition;
-using Cemiyet.Application.Books.Commands.UpdatePartially;
-using Cemiyet.Application.Books.Commands.Update;
-using Cemiyet.Application.Books.Commands.UpdateEdition;
-using Cemiyet.Application.Books.Commands.DeleteOne;
-using Cemiyet.Application.Books.Commands.DeleteOneEdition;
-using Cemiyet.Application.Books.Commands.DeleteMany;
-using Cemiyet.Application.Books.Commands.DeleteManyEdition;
-using Cemiyet.Application.Books.Commands.UpdatePartiallyEdition;
-using Cemiyet.Application.Books.Queries.List;
-using Cemiyet.Application.Books.Queries.ListEdition;
-using Cemiyet.Application.Books.Queries.Details;
-using Cemiyet.Application.Books.Queries.DetailsEdition;
+using Cemiyet.Application.Commands.Books;
+using Cemiyet.Application.Queries.Books;
 using FluentValidation.TestHelper;
 using Xunit;
 

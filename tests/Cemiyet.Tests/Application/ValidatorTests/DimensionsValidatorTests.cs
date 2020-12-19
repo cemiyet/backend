@@ -1,11 +1,6 @@
 using System;
-using Cemiyet.Application.Dimensions.Commands.Add;
-using Cemiyet.Application.Dimensions.Commands.DeleteMany;
-using Cemiyet.Application.Dimensions.Commands.DeleteOne;
-using Cemiyet.Application.Dimensions.Commands.Update;
-using Cemiyet.Application.Dimensions.Commands.UpdatePartially;
-using Cemiyet.Application.Dimensions.Queries.List;
-using Cemiyet.Application.Dimensions.Queries.Details;
+using Cemiyet.Application.Commands.Dimensions;
+using Cemiyet.Application.Queries.Dimensions;
 using FluentValidation.TestHelper;
 using Xunit;
 

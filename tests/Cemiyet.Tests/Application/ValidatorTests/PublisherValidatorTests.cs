@@ -1,12 +1,6 @@
 using System;
-using Cemiyet.Application.Publishers.Commands.Add;
-using Cemiyet.Application.Publishers.Commands.UpdatePartially;
-using Cemiyet.Application.Publishers.Commands.Update;
-using Cemiyet.Application.Publishers.Commands.DeleteOne;
-using Cemiyet.Application.Publishers.Commands.DeleteMany;
-using Cemiyet.Application.Publishers.Queries.List;
-using Cemiyet.Application.Publishers.Queries.ListBooks;
-using Cemiyet.Application.Publishers.Queries.Details;
+using Cemiyet.Application.Commands.Publishers;
+using Cemiyet.Application.Queries.Publishers;
 using FluentValidation.TestHelper;
 using Xunit;
 

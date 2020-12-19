@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cemiyet.Core.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Cemiyet.Persistence.Application.Contexts
 {

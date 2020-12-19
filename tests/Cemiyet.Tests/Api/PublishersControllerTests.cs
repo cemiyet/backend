@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Xunit;
+using Cemiyet.Api;
 
 namespace Cemiyet.Tests.Api
 {
@@ -162,7 +163,7 @@ namespace Cemiyet.Tests.Api
         [Fact]
         public async Task DeleteMany_WithoutCorrectIds_ShouldReturn_BadRequest()
         {
-            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "publishers", new []
+            await _httpClient.AssertedSendRequestMessageAsync(HttpMethod.Delete, "publishers", new[]
             {
                 Guid.NewGuid().ToString(), Guid.NewGuid().ToString()
             }, HttpStatusCode.BadRequest);

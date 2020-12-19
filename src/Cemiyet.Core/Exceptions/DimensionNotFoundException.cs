@@ -6,6 +6,10 @@ namespace Cemiyet.Core.Exceptions
 {
     public class DimensionNotFoundException : NotFoundException
     {
+        protected DimensionNotFoundException() : base()
+        {
+        }
+
         public DimensionNotFoundException(Guid dimensionId) : base($"Could not found any dimension with specified id: {dimensionId}")
         {
         }

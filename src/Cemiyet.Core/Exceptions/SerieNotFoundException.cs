@@ -6,6 +6,10 @@ namespace Cemiyet.Core.Exceptions
 {
     public class SerieNotFoundException : NotFoundException
     {
+        protected SerieNotFoundException() : base()
+        {
+        }
+
         public SerieNotFoundException(Guid serieId) : base($"Could not found any serie with specified id: {serieId}")
         {
         }

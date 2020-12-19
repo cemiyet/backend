@@ -6,6 +6,10 @@ namespace Cemiyet.Core.Exceptions
 {
     public class BookEditionNotFoundException : NotFoundException
     {
+        protected BookEditionNotFoundException() : base()
+        {
+        }
+
         public BookEditionNotFoundException(string bookEditionId) : base($"Could not found any edition of book with specified id: {bookEditionId}")
         {
         }

@@ -6,6 +6,10 @@ namespace Cemiyet.Core.Exceptions
 {
     public class GenreNotFoundException : NotFoundException
     {
+        protected GenreNotFoundException() : base()
+        {
+        }
+
         public GenreNotFoundException(Guid genreId) : base($"Could not found any genre with specified id: {genreId}")
         {
         }

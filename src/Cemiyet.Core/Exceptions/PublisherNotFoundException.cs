@@ -6,6 +6,10 @@ namespace Cemiyet.Core.Exceptions
 {
     public class PublisherNotFoundException : NotFoundException
     {
+        protected PublisherNotFoundException() : base()
+        {
+        }
+
         public PublisherNotFoundException(Guid publisherId) : base($"Could not found any publisher with specified id: {publisherId}")
         {
         }

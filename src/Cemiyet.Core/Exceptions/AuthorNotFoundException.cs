@@ -6,6 +6,10 @@ namespace Cemiyet.Core.Exceptions
 {
     public class AuthorNotFoundException : NotFoundException
     {
+        protected AuthorNotFoundException() : base()
+        {
+        }
+
         public AuthorNotFoundException(Guid authorId) : base($"Could not found any author with specified id: {authorId}")
         {
         }

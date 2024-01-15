@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
@@ -15,10 +14,6 @@ namespace Cemiyet.Core.Exceptions
         }
 
         public DimensionNotFoundException(IEnumerable<Guid> dimensionIds) : base("Could not found any dimension with specified ids.")
-        {
-        }
-
-        protected DimensionNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 

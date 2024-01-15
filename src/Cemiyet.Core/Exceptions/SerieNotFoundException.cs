@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
@@ -15,10 +14,6 @@ namespace Cemiyet.Core.Exceptions
         }
 
         public SerieNotFoundException(IEnumerable<Guid> serieIds) : base("Could not found any series with specified ids.")
-        {
-        }
-
-        protected SerieNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 

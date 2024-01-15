@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
@@ -15,10 +14,6 @@ namespace Cemiyet.Core.Exceptions
         }
 
         public AuthorNotFoundException(IEnumerable<Guid> authorIds) : base("Could not found any author with specified ids.")
-        {
-        }
-
-        protected AuthorNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 

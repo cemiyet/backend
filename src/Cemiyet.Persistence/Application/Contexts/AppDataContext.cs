@@ -48,7 +48,7 @@ namespace Cemiyet.Persistence.Application.Contexts
 
                 foreach (var property in entity.GetProperties())
                 {
-                    var storeObjectIdentifier = StoreObjectIdentifier.Create(property.DeclaringEntityType, StoreObjectType.Table);
+                    var storeObjectIdentifier = StoreObjectIdentifier.Create((IMutableEntityType)property.DeclaringType, StoreObjectType.Table);
                     property.SetColumnName(property.GetColumnName(storeObjectIdentifier.GetValueOrDefault()).ToSnakeCase());
                 }
 

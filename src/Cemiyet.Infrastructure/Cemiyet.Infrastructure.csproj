@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Company>Cemiyet</Company>
     <Product>Cemiyet.Infrastructure</Product>
     <PackageId>Cemiyet.Infrastructure</PackageId>
@@ -11,9 +10,7 @@
     <Authors>Nuri Uzunoğlu</Authors>
     <RepositoryUrl>https://github.com/cemiyet/backend</RepositoryUrl>
   </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Cemiyet.Persistence\Cemiyet.Persistence.csproj" />
   </ItemGroup>
-
 </Project>

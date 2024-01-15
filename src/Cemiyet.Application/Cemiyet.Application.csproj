@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Company>Cemiyet</Company>
     <Product>Cemiyet.Application</Product>
     <PackageId>Cemiyet.Application</PackageId>
@@ -11,14 +10,11 @@
     <Authors>Nuri Uzunoğlu</Authors>
     <RepositoryUrl>https://github.com/cemiyet/backend</RepositoryUrl>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.3.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Cemiyet.Infrastructure\Cemiyet.Infrastructure.csproj" />
   </ItemGroup>
-
 </Project>

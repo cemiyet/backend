@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
@@ -15,10 +14,6 @@ namespace Cemiyet.Core.Exceptions
         }
 
         public PublisherNotFoundException(IEnumerable<Guid> publisherIds) : base("Could not found any publisher with specified ids.")
-        {
-        }
-
-        protected PublisherNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 

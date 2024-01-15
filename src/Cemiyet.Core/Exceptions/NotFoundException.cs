@@ -1,15 +1,10 @@
-﻿using System;
-using System.Runtime.Serialization;
+using System;
 
 namespace Cemiyet.Core.Exceptions
 {
     public abstract class NotFoundException : Exception
     {
         protected NotFoundException() : base()
-        {
-        }
-
-        protected NotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 

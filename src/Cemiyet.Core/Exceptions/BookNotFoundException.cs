@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
@@ -15,10 +14,6 @@ namespace Cemiyet.Core.Exceptions
         }
 
         public BookNotFoundException(IEnumerable<Guid> bookIds) : base("Could not found any book with specified ids.")
-        {
-        }
-
-        protected BookNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 namespace Cemiyet.Core.Exceptions
 {
@@ -15,10 +14,6 @@ namespace Cemiyet.Core.Exceptions
         }
 
         public GenreNotFoundException(IEnumerable<Guid> genreIds) : base("Could not found any genre with specified ids.")
-        {
-        }
-
-        protected GenreNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 

@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Company>Cemiyet</Company>
     <Product>Cemiyet.Core</Product>
     <PackageId>Cemiyet.Core</PackageId>
@@ -11,5 +10,4 @@
     <Authors>Nuri Uzunoğlu</Authors>
     <RepositoryUrl>https://github.com/cemiyet/backend</RepositoryUrl>
   </PropertyGroup>
-
 </Project>

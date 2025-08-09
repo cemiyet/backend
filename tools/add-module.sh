@@ -9,10 +9,10 @@ fi
 
 MODULE=$1
 BASE_DIR="src/Modules/$MODULE"
-NAMESPACE_PREFIX="X.Modules.$MODULE"
+NAMESPACE_PREFIX="Cemiyet.Modules.$MODULE"
 LAYERS=(Domain Application Infrastructure)
 # Uncomment if you want API layer
-LAYERS+=(API)
+# LAYERS+=(API)
 
 echo "Creating module: $MODULE"
 
@@ -55,4 +55,17 @@ for layer in "${LAYERS[@]}"; do
   dotnet sln add "$CSPROJ_PATH"
 done
 
+# Paths
+DOMAIN_PROJ="$BASE_DIR/Domain/$NAMESPACE_PREFIX.Domain.csproj"
+APPLICATION_PROJ="$BASE_DIR/Application/$NAMESPACE_PREFIX.Application.csproj"
+INFRASTRUCTURE_PROJ="$BASE_DIR/Infrastructure/$NAMESPACE_PREFIX.Infrastructure.csproj"
+# API_PROJ="$BASE_DIR/API/$NAMESPACE_PREFIX.API.csproj"
+
+echo "Adding project references..."
+
+dotnet add "$APPLICATION_PROJ" reference "$DOMAIN_PROJ"
+dotnet add "$INFRASTRUCTURE_PROJ" reference "$DOMAIN_PROJ" "$APPLICATION_PROJ"
+# dotnet add "$API_PROJ" reference "$APPLICATION_PROJ" "$INFRASTRUCTURE_PROJ"
+
 echo "Module $MODULE created successfully!"
+

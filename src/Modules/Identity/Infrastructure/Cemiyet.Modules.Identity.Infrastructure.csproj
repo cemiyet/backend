@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Cemiyet.Modules.Identity.Domain.csproj" />
+    <ProjectReference Include="..\Application\Cemiyet.Modules.Identity.Application.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Cemiyet.Modules.Identity.Infrastructure</RootNamespace>
+  </PropertyGroup>
+</Project>

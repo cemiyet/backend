@@ -56,6 +56,7 @@ for layer in "${LAYERS[@]}"; do
 done
 
 # Paths
+GATEWAY_PROJ="src/Gateway/Cemiyet.Gateway.csproj"
 DOMAIN_PROJ="$BASE_DIR/Domain/$NAMESPACE_PREFIX.Domain.csproj"
 APPLICATION_PROJ="$BASE_DIR/Application/$NAMESPACE_PREFIX.Application.csproj"
 INFRASTRUCTURE_PROJ="$BASE_DIR/Infrastructure/$NAMESPACE_PREFIX.Infrastructure.csproj"
@@ -66,6 +67,7 @@ echo "Adding project references..."
 dotnet add "$APPLICATION_PROJ" reference "$DOMAIN_PROJ"
 dotnet add "$INFRASTRUCTURE_PROJ" reference "$DOMAIN_PROJ" "$APPLICATION_PROJ"
 # dotnet add "$API_PROJ" reference "$APPLICATION_PROJ" "$INFRASTRUCTURE_PROJ"
+dotnet add "$GATEWAY_PROJ" reference "$APPLICATION_PROJ"
 
 echo "Module $MODULE created successfully!"
 

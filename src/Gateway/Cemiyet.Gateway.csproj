@@ -11,4 +11,9 @@
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SharedKernel\Application\Cemiyet.SharedKernel.Application.csproj" />
+    <ProjectReference Include="..\Modules\Identity\Application\Cemiyet.Modules.Identity.Application.csproj" />
+  </ItemGroup>
+
 </Project>

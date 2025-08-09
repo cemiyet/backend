@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Cemiyet.SharedKernel.Infrastructure</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Cemiyet.SharedKernel.Application.csproj" />
+    <ProjectReference Include="..\Domain\Cemiyet.SharedKernel.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

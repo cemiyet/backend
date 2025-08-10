@@ -4,11 +4,11 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>Cemiyet.Modules.Identity.Infrastructure</RootNamespace>
+    <RootNamespace>Cemiyet.Modules.ModuleName.Infrastructure</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\SharedKernel\Infrastructure\Cemiyet.SharedKernel.Infrastructure.csproj" />
-    <ProjectReference Include="..\Domain\Cemiyet.Modules.Identity.Domain.csproj" />
-    <ProjectReference Include="..\Application\Cemiyet.Modules.Identity.Application.csproj" />
+    <ProjectReference Include="..\Domain\Cemiyet.Modules.ModuleName.Domain.csproj" />
+    <ProjectReference Include="..\Application\Cemiyet.Modules.ModuleName.Application.csproj" />
   </ItemGroup>
 </Project>

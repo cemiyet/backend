@@ -6,4 +6,12 @@
   <br>
 </h1>
 
-> Cemiyet Backend Repository
+# Cemiyet Backend Repository
+
+Install project templates with:
+
+> dotnet new install ./templates
+
+Create new module with:
+
+> dotnet new cemiyet-module -n ModuleName -s ../Cemiyet.sln --output ./src/Modules -v diag

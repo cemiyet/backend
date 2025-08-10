@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Nuri Uzunoğlu",
+  "classifications": ["Cemiyet", "Modular Monolith", "Module"],
+  "identity": "Cemiyet.ModuleTemplate",
+  "name": "Cemiyet Module",
+  "shortName": "cemiyet-module",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "ModuleName",
+  "preferNameDirectory": true,
+  "symbols": {
+    "ModuleName": {
+      "type": "parameter",
+      "description": "The name of the module (e.g., Catalog)",
+      "datatype": "text",
+      "replaces": "ModuleName"
+    },
+    "sln": {
+      "type": "parameter",
+      "description": "Optional path to .sln file to auto-add projects",
+      "datatype": "text",
+      "defaultValue": ""
+    }
+  },
+  "sources": [
+    {
+      "modifiers": [{ "exclude": ["setup.sh", ".template_config/**"] }]
+    }
+  ],
+  "primaryOutputs": [
+    {
+      "path": "ModuleName/Domain/Cemiyet.Modules.ModuleName.Domain.csproj"
+    },
+    {
+      "path": "ModuleName/Application/Cemiyet.Modules.ModuleName.Application.csproj"
+    },
+    {
+      "path": "ModuleName/Infrastructure/Cemiyet.Modules.ModuleName.Infrastructure.csproj"
+    }
+  ],
+  "postActions": [
+    {
+      "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
+      "description": "Add Domain project to solution",
+      "manualInstructions": [],
+      "args": {
+        "primaryOutputIndexes": "0"
+      },
+      "continueOnError": true
+    },
+    {
+      "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
+      "description": "Add Application project to solution",
+      "manualInstructions": [],
+      "args": {
+        "primaryOutputIndexes": "1"
+      },
+      "continueOnError": true
+    },
+    {
+      "actionId": "D396686C-DE0E-4DE6-906D-291CD29FC5DE",
+      "description": "Add Infrastructure project to solution",
+      "manualInstructions": [],
+      "args": {
+        "primaryOutputIndexes": "2"
+      },
+      "continueOnError": true
+    }
+  ]
+}

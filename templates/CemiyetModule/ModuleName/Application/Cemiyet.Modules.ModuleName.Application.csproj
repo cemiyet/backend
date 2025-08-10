@@ -4,9 +4,10 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>Cemiyet.Modules.Identity.Domain</RootNamespace>
+    <RootNamespace>Cemiyet.Modules.ModuleName.Application</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharedKernel\Domain\Cemiyet.SharedKernel.Domain.csproj" />
+    <ProjectReference Include="..\..\..\SharedKernel\Application\Cemiyet.SharedKernel.Application.csproj" />
+    <ProjectReference Include="..\Domain\Cemiyet.Modules.ModuleName.Domain.csproj" />
   </ItemGroup>
 </Project>

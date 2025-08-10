@@ -1,12 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\Domain\Cemiyet.Modules.Identity.Domain.csproj" />
-  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>Cemiyet.Modules.Identity.Application</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\SharedKernel\Application\Cemiyet.SharedKernel.Application.csproj" />
+    <ProjectReference Include="..\Domain\Cemiyet.Modules.Identity.Domain.csproj" />
+  </ItemGroup>
 </Project>

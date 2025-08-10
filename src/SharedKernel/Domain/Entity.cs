@@ -8,6 +8,12 @@ public abstract class Entity<TId> where TId : notnull
 {
     public TId Id { get; protected set; } = default!;
 
+    private readonly List<DomainEvent> _domainEvents = [];
+    public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+
+    protected void AddDomainEvent(DomainEvent eventItem) => _domainEvents.Add(eventItem);
+    public void ClearDomainEvents() => _domainEvents.Clear();
+
     public override bool Equals(object? obj)
     {
         if (obj is not Entity<TId> other) return false;

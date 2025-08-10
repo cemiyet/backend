@@ -1,3 +1,5 @@
+using Cemiyet.Modules.Identity.Domain.Events;
+using Cemiyet.Modules.Identity.Domain.Services;
 using Cemiyet.Modules.Identity.Domain.ValueObjects;
 using Cemiyet.SharedKernel.Domain;
 
@@ -13,23 +15,48 @@ public sealed class User : AggregateRoot<Guid>
 
     private User() { } // for EF Core
 
-    public static User Register(Email email, string passwordHash, string? displayName = null)
+    public static User Register(Email email, string password, IPasswordHasher hasher, string? displayName = null)
     {
-        // TODO: check if email is already registered
         // TODO: displayName validation (e.g., length, allowed characters)
-        // TODO: validate password strength
 
-        return new User
+        // TODO: handle domain errors better (e.g., throw specific exceptions or use result objects)
+        ArgumentNullException.ThrowIfNull(email);
+        ArgumentNullException.ThrowIfNull(hasher);
+
+        var user = new User
         {
             Id = Guid.NewGuid(),
             Email = email,
-            PasswordHash = passwordHash,
+            PasswordHash = hasher.Hash(password),
             DisplayName = displayName,
             EmailConfirmed = false,
             CreatedAt = DateTime.UtcNow
         };
+
+        user.AddDomainEvent(new UserRegistered(user.Id, user.Email));
+
+        return user;
     }
 
-    public void ConfirmEmail() => EmailConfirmed = true;
+    public void ChangePassword(IPasswordHasher hasher, string newPassword)
+    {
+        // TODO: handle domain errors better (e.g., throw specific exceptions or use result objects)
+        if (string.IsNullOrWhiteSpace(newPassword)) throw new ArgumentException("New password is required", nameof(newPassword));
+
+        PasswordHash = hasher.Hash(newPassword);
+
+        AddDomainEvent(new UserPasswordChanged(Id, DateTime.UtcNow));
+    }
+
+    public void ConfirmEmail()
+    {
+        if (EmailConfirmed)
+            return;
+
+        EmailConfirmed = true;
+
+        AddDomainEvent(new UserEmailConfirmed(Id));
+    }
+
     public void UpdateDisplayName(string name) => DisplayName = name;
 }

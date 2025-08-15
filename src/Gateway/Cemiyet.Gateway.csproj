@@ -9,10 +9,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SharedKernel\Application\Cemiyet.SharedKernel.Application.csproj" />
+    <ProjectReference Include="..\Modules\Identity\Infrastructure\Cemiyet.Modules.Identity.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Identity\Application\Cemiyet.Modules.Identity.Application.csproj" />
   </ItemGroup>
 

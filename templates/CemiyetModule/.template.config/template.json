@@ -27,7 +27,7 @@
   },
   "sources": [
     {
-      "modifiers": [{ "exclude": ["setup.sh", ".template_config/**"] }]
+      "modifiers": [{ "exclude": [".template_config/**"] }]
     }
   ],
   "primaryOutputs": [

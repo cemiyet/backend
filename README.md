@@ -12,6 +12,18 @@ Install project templates with:
 
 > dotnet new install ./templates
 
+Make scripts executable:
+
+> chmod +x scripts/\*.sh
+
 Create new module with:
 
 > dotnet new cemiyet-module -n ModuleName -s ../Cemiyet.sln --output ./src/Modules -v diag
+
+Create a migration with:
+
+> scripts/add-module.sh -n MigrationName -m ModuleName
+
+Apply migrations with:
+
+> scripts/apply-migrations.sh -m ModuleName

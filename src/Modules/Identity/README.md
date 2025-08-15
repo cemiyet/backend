@@ -30,6 +30,7 @@ Identity proves **who the user is** and manages credentials and authentication l
 
 ## DB
 
+```sql
 -- Create schema for Identity module
 CREATE SCHEMA IF NOT EXISTS identity;
 
@@ -71,8 +72,8 @@ These events are published as domain or integration events to enable loose coupl
 
 ## Configuration
 
-- appsettings keys
-- required secrets
+- Connection Strings
+  - ConnectionStrings:Identity — PostgreSQL connection string for Identity database
 
 ## Tests
 

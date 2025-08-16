@@ -1,3 +1,4 @@
+using Cemiyet.Modules.Identity.Domain;
 using Cemiyet.Modules.Identity.Domain.Repositories;
 using Cemiyet.Modules.Identity.Domain.Services;
 using Cemiyet.Modules.Identity.Infrastructure.Data;
@@ -9,15 +10,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Cemiyet.Modules.Identity.Infrastructure.Extensions;
 
-public static class DependencyInjection
+public static class DependencyInjectionExtensions
 {
     public static IServiceCollection AddIdentityModule(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<IdentityDbContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("IdentityDatabase"), b =>
+            options.UseNpgsql(configuration.GetConnectionString(ModuleConstants.ConnectionStringName), b =>
             {
-                b.MigrationsHistoryTable("__EFMigrationsHistory", "identity");
+                b.MigrationsHistoryTable(ModuleConstants.MigrationsHistoryTable, ModuleConstants.SchemaName);
             });
         });
 

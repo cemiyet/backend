@@ -1,3 +1,4 @@
+using Cemiyet.Modules.Identity.Domain;
 using Cemiyet.Modules.Identity.Domain.Entities;
 using Cemiyet.Modules.Identity.Domain.ValueObjects;
 using Cemiyet.SharedKernel.Domain;
@@ -6,22 +7,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Cemiyet.Modules.Identity.Infrastructure.Data;
 
-public class IdentityDbContext : DbContext
+public class IdentityDbContext(DbContextOptions<IdentityDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users => Set<User>();
 
-    public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
-        : base(options) { }
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
-
         base.OnModelCreating(builder);
 
         builder.Ignore<DomainEvent>();
 
-        // TODO: manage schemas without magic strings, maybe with enums or constants
-        builder.HasDefaultSchema("identity");
+        builder.HasDefaultSchema(ModuleConstants.SchemaName);
 
         builder.Entity<User>(entity =>
         {

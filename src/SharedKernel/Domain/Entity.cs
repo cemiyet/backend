@@ -7,6 +7,8 @@ namespace Cemiyet.SharedKernel.Domain;
 public abstract class Entity<TId> where TId : notnull
 {
     public TId Id { get; protected set; } = default!;
+    public DateTime CreatedAt { get; protected set; }
+    public DateTime UpdatedAt { get; protected set; }
 
     private readonly List<DomainEvent> _domainEvents = [];
     public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();

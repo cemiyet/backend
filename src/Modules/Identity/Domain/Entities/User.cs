@@ -11,7 +11,6 @@ public sealed class User : AggregateRoot<Guid>
     public string PasswordHash { get; private set; } = null!;
     public string? DisplayName { get; private set; }
     public bool EmailConfirmed { get; private set; }
-    public DateTime CreatedAt { get; private set; }
 
     private User() { } // for EF Core
 
@@ -30,7 +29,8 @@ public sealed class User : AggregateRoot<Guid>
             PasswordHash = hasher.Hash(password),
             DisplayName = displayName,
             EmailConfirmed = false,
-            CreatedAt = DateTime.UtcNow
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
 
         user.AddDomainEvent(new UserRegistered(user.Id, user.Email));

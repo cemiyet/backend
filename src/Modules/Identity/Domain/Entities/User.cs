@@ -11,6 +11,7 @@ public sealed class User : AggregateRoot<Guid>
     public string PasswordHash { get; private set; } = null!;
     public string? DisplayName { get; private set; }
     public bool EmailConfirmed { get; private set; }
+    public string? RefreshToken { get; private set; }
 
     private User() { } // for EF Core
 
@@ -35,6 +36,18 @@ public sealed class User : AggregateRoot<Guid>
         user.AddDomainEvent(new UserRegistered(user.Id, user.Email));
 
         return user;
+    }
+
+    public void SetRefreshToken(string token)
+    {
+        RefreshToken = token;
+        UpdatedAt = DateTime.UtcNow;
+    }
+
+    public void RemoveRefreshToken()
+    {
+        RefreshToken = null;
+        UpdatedAt = DateTime.UtcNow;
     }
 
     public void ChangePassword(IPasswordHasher hasher, string newPassword)

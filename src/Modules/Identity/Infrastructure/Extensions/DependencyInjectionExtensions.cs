@@ -1,7 +1,9 @@
+using Cemiyet.Modules.Identity.Application.Services;
 using Cemiyet.Modules.Identity.Application.Users.Commands.RegisterUser;
 using Cemiyet.Modules.Identity.Domain;
 using Cemiyet.Modules.Identity.Domain.Repositories;
 using Cemiyet.Modules.Identity.Domain.Services;
+using Cemiyet.Modules.Identity.Infrastructure.Authentication;
 using Cemiyet.Modules.Identity.Infrastructure.Data;
 using Cemiyet.Modules.Identity.Infrastructure.Repositories;
 using Cemiyet.Modules.Identity.Infrastructure.Services;
@@ -27,10 +29,11 @@ public static class DependencyInjectionExtensions
         // Repositories
         services.AddScoped<IUserRepository, UserRepository>();
 
-        // Domain services
+        // Services
         services.AddScoped<IPasswordHasher, PasswordHasher>();
+        services.AddScoped<ITokenService, TokenService>();
 
-        // Application handlers
+        // Handlers
         services.AddScoped<ICommandHandler<RegisterUserCommand, Guid>, RegisterUserCommandHandler>();
         // services.AddScoped<IQueryHandler<GetUserByEmailQuery, UserDto>, GetUserByEmailQueryHandler>();
 

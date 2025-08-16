@@ -21,13 +21,13 @@ public class IdentityDbContext(DbContextOptions<IdentityDbContext> options) : Db
 
         builder.Entity<User>(entity =>
         {
-            entity.ToTable("users");
             entity.HasKey(u => u.Id);
 
             entity.Property(u => u.Id)
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql("gen_random_uuid()"); // For PostgreSQL
 
+            // Email mapping
             entity.Property(u => u.Email)
                 .HasConversion(
                     v => v.Address,          // store as string
@@ -36,6 +36,10 @@ public class IdentityDbContext(DbContextOptions<IdentityDbContext> options) : Db
 
             entity.HasIndex(u => u.Email)
                 .IsUnique();
+
+            entity.Property(u => u.RefreshToken)
+                  .HasMaxLength(500)
+                  .IsRequired(false);
 
             entity.Property(u => u.DisplayName).HasMaxLength(100);
             entity.Property(u => u.EmailConfirmed).IsRequired();

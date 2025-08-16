@@ -11,4 +11,7 @@
     <ProjectReference Include="..\Domain\Cemiyet.Modules.Identity.Domain.csproj" />
     <ProjectReference Include="..\Application\Cemiyet.Modules.Identity.Application.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+  </ItemGroup>
 </Project>

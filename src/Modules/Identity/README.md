@@ -30,37 +30,7 @@ Identity proves **who the user is** and manages credentials and authentication l
 
 ## DB
 
-```sql
--- Create schema for Identity module
-CREATE SCHEMA IF NOT EXISTS identity;
-
--- Users table: core identity info
-CREATE TABLE identity.Users (
-    Id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    Email VARCHAR(255) NOT NULL UNIQUE,
-    PasswordHash VARCHAR(512) NOT NULL,
-    DisplayName VARCHAR(255),
-    EmailConfirmed BOOLEAN NOT NULL DEFAULT FALSE,
-    CreatedAt TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    UpdatedAt TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE UNIQUE INDEX IX_Users_Email ON identity.Users (Email);
-
--- Trigger to update UpdatedAt column on Users table when row changes
-CREATE OR REPLACE FUNCTION identity.update_users_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN
-   NEW.UpdatedAt = NOW();
-   RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER trg_users_updated_at
-BEFORE UPDATE ON identity.Users
-FOR EACH ROW
-EXECUTE FUNCTION identity.update_users_updated_at();
-```
+To be Updated.
 
 ## Events
 
@@ -74,10 +44,18 @@ These events are published as domain or integration events to enable loose coupl
 
 - Connection Strings
   - ConnectionStrings:Identity — PostgreSQL connection string for Identity database
+- Secrets
+  - JWT signing key (Jwt:SigningKey) and token settings
+  - Email token secret keys (if applicable)
+- AppSettings
+  - Identity:PasswordPolicy (optional password complexity settings)
+  - Identity:Jwt section with token expiration and issuer settings
 
 ## Tests
 
-- Unit tests in `tests/Cemiyet.Modules.Identity.Tests`
+- Unit and integration tests are located in: `tests/Cemiyet.Modules.Identity.Tests`
+
+Tests cover domain invariants, application service workflows, and repository persistence.
 
 ## Notes
 

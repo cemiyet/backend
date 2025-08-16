@@ -40,4 +40,11 @@ public sealed class UserRepository : IUserRepository
         _context.Users.Update(user);
         await _context.SaveChangesAsync(ct);
     }
+
+    public async Task<User?> FindByRefreshTokenAsync(string refreshToken, CancellationToken cancellationToken)
+    {
+        return await _context.Users
+            .AsNoTracking()
+            .SingleOrDefaultAsync(u => u.RefreshToken == refreshToken, cancellationToken);
+    }
 }

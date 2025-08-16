@@ -1,5 +1,6 @@
 using Cemiyet.Modules.Identity.Domain.Entities;
 using Cemiyet.Modules.Identity.Domain.Repositories;
+using Cemiyet.Modules.Identity.Domain.ValueObjects;
 using Cemiyet.Modules.Identity.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,11 +22,11 @@ public sealed class UserRepository : IUserRepository
             .SingleOrDefaultAsync(u => u.Id == id, ct);
     }
 
-    public async Task<User?> FindByEmailAsync(string email, CancellationToken ct = default)
+    public async Task<User?> FindByEmailAsync(Email email, CancellationToken ct = default)
     {
         return await _context.Users
             .AsNoTracking()
-            .SingleOrDefaultAsync(u => u.Email.Address == email, ct);
+            .SingleOrDefaultAsync(u => u.Email == email, ct);
     }
 
     public async Task AddAsync(User user, CancellationToken ct = default)

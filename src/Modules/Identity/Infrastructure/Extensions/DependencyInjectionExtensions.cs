@@ -1,9 +1,11 @@
+using Cemiyet.Modules.Identity.Application.Users.Commands.RegisterUser;
 using Cemiyet.Modules.Identity.Domain;
 using Cemiyet.Modules.Identity.Domain.Repositories;
 using Cemiyet.Modules.Identity.Domain.Services;
 using Cemiyet.Modules.Identity.Infrastructure.Data;
 using Cemiyet.Modules.Identity.Infrastructure.Repositories;
 using Cemiyet.Modules.Identity.Infrastructure.Services;
+using Cemiyet.SharedKernel.Application.Commands;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +31,7 @@ public static class DependencyInjectionExtensions
         services.AddScoped<IPasswordHasher, PasswordHasher>();
 
         // Application handlers
-        // services.AddScoped<ICommandHandler<RegisterUserCommand, Guid>, RegisterUserCommandHandler>();
+        services.AddScoped<ICommandHandler<RegisterUserCommand, Guid>, RegisterUserCommandHandler>();
         // services.AddScoped<IQueryHandler<GetUserByEmailQuery, UserDto>, GetUserByEmailQueryHandler>();
 
         return services;

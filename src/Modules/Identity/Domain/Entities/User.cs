@@ -14,19 +14,18 @@ public sealed class User : AggregateRoot<Guid>
 
     private User() { } // for EF Core
 
-    public static User Register(Email email, string password, IPasswordHasher hasher, string? displayName = null)
+    public static User Register(Email email, string passwordHash, string? displayName = null)
     {
         // TODO: displayName validation (e.g., length, allowed characters)
 
         // TODO: handle domain errors better (e.g., throw specific exceptions or use result objects)
         ArgumentNullException.ThrowIfNull(email);
-        ArgumentNullException.ThrowIfNull(hasher);
 
         var user = new User
         {
             Id = Guid.NewGuid(),
             Email = email,
-            PasswordHash = hasher.Hash(password),
+            PasswordHash = passwordHash,
             DisplayName = displayName,
             EmailConfirmed = false,
             CreatedAt = DateTime.UtcNow,

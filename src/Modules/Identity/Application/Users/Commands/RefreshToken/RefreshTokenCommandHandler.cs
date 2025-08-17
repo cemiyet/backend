@@ -8,12 +8,12 @@ using Cemiyet.SharedKernel.Application.Commands;
 
 namespace Cemiyet.Modules.Identity.Application.Users.Commands.RefreshToken;
 
-public sealed class RefreshTokenHandler : ICommandHandler<RefreshTokenCommand, LoginResultDto>
+public sealed class RefreshTokenCommandHandler : ICommandHandler<RefreshTokenCommand, LoginResultDto>
 {
     private readonly IUserRepository _userRepository;
     private readonly ITokenService _tokenService;
 
-    public RefreshTokenHandler(IUserRepository userRepository, ITokenService tokenService)
+    public RefreshTokenCommandHandler(IUserRepository userRepository, ITokenService tokenService)
     {
         _userRepository = userRepository;
         _tokenService = tokenService;

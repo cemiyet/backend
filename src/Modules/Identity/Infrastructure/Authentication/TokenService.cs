@@ -62,7 +62,9 @@ internal sealed class TokenService : ITokenService
         {
             ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(token, new TokenValidationParameters
             {
+                ValidIssuer = _settings.Issuer,
                 ValidateIssuer = true,
+                ValidAudience = _settings.Audience,
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 IssuerSigningKey = _signingKey,
@@ -75,7 +77,7 @@ internal sealed class TokenService : ITokenService
 
             return principal;
         }
-        catch
+        catch (Exception ex)
         {
             return null;
         }

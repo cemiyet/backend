@@ -1,5 +1,8 @@
 using Cemiyet.Modules.Identity.Application.Services;
+using Cemiyet.Modules.Identity.Application.Users.Commands.LoginUser;
+using Cemiyet.Modules.Identity.Application.Users.Commands.RefreshToken;
 using Cemiyet.Modules.Identity.Application.Users.Commands.RegisterUser;
+using Cemiyet.Modules.Identity.Application.Users.Queries.GetCurrentUser;
 using Cemiyet.Modules.Identity.Domain;
 using Cemiyet.Modules.Identity.Domain.Repositories;
 using Cemiyet.Modules.Identity.Domain.Services;
@@ -8,6 +11,7 @@ using Cemiyet.Modules.Identity.Infrastructure.Data;
 using Cemiyet.Modules.Identity.Infrastructure.Repositories;
 using Cemiyet.Modules.Identity.Infrastructure.Services;
 using Cemiyet.SharedKernel.Application.Commands;
+using Cemiyet.SharedKernel.Application.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +39,10 @@ public static class DependencyInjectionExtensions
 
         // Handlers
         services.AddScoped<ICommandHandler<RegisterUserCommand, Guid>, RegisterUserCommandHandler>();
-        // services.AddScoped<IQueryHandler<GetUserByEmailQuery, UserDto>, GetUserByEmailQueryHandler>();
+        services.AddScoped<ICommandHandler<LoginUserCommand, LoginResultDto>, LoginUserCommandHandler>();
+        services.AddScoped<ICommandHandler<RefreshTokenCommand, LoginResultDto>, RefreshTokenCommandHandler>();
+
+        services.AddScoped<IQueryHandler<GetUserQuery, UserDto>, GetUserQueryHandler>();
 
         return services;
     }

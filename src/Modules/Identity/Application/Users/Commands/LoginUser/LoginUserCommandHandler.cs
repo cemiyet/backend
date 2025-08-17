@@ -7,13 +7,13 @@ using Cemiyet.SharedKernel.Application.Commands;
 
 namespace Cemiyet.Modules.Identity.Application.Users.Commands.LoginUser;
 
-public sealed class LoginCommandHandler : ICommandHandler<LoginUserCommand, LoginResultDto>
+public sealed class LoginUserCommandHandler : ICommandHandler<LoginUserCommand, LoginResultDto>
 {
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenService _tokenService;
 
-    public LoginCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, ITokenService tokenService)
+    public LoginUserCommandHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, ITokenService tokenService)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;

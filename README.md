@@ -27,3 +27,7 @@ Create a migration with:
 Apply migrations with:
 
 > scripts/apply-migrations.sh -m ModuleName
+
+Run components (db etc.) with:
+
+> podman compose up -d

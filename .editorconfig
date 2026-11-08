@@ -1,16 +1,87 @@
-# Editor configuration, see https://editorconfig.org
 root = true
 
 [*]
 charset = utf-8
+end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 indent_style = space
-
-[*.cs]
-max_line_length = 120
 indent_size = 4
 
-[*.{md,json,csproj}]
+[*.cs]
+dotnet_sort_system_directives_first = true
+dotnet_style_object_initializer = true:warning
+dotnet_style_collection_initializer = true:warning
+dotnet_style_coalesce_expression = true:warning
+dotnet_style_null_propagation = true:warning
+dotnet_style_explicit_tuple_names = true:warning
+dotnet_style_namespace_match_folder = true:warning
+dotnet_style_readonly_field = true:warning
+dotnet_style_predefined_type_for_locals_parameters_members = true:error
+dotnet_style_predefined_type_for_member_access = true:error
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:error
+dotnet_style_allow_multiple_blank_lines_experimental = false:error
+dotnet_style_allow_statement_immediately_after_block_experimental = false:warning
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:warning
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:warning
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:warning
+dotnet_style_parentheses_in_other_operators = never_if_unnecessary:warning
+dotnet_style_qualification_for_field = false:warning
+dotnet_style_qualification_for_property = false:warning
+dotnet_style_qualification_for_method = false:warning
+dotnet_style_qualification_for_event = false:warning
+dotnet_style_prefer_collection_expression = when_types_exactly_match:warning
+dotnet_style_prefer_auto_properties = true:warning
+dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
+dotnet_style_prefer_conditional_expression_over_assignment = true:warning
+dotnet_style_prefer_conditional_expression_over_return = true:warning
+dotnet_style_prefer_compound_assignment = true:warning
+dotnet_style_prefer_simplified_interpolation = true:warning
+dotnet_style_prefer_simplified_boolean_expressions = true:warning
+csharp_using_directive_placement = outside_namespace:error
+csharp_style_namespace_declarations = file_scoped:warning
+csharp_style_expression_bodied_constructors = false:error
+csharp_style_expression_bodied_methods = when_on_single_line:warning
+csharp_style_expression_bodied_operators = when_on_single_line:warning
+csharp_style_expression_bodied_properties = when_on_single_line:warning
+csharp_style_expression_bodied_indexers = when_on_single_line:warning
+csharp_style_expression_bodied_accessors = when_on_single_line:warning
+csharp_style_expression_bodied_lambdas = when_on_single_line:warning
+csharp_style_expression_bodied_local_functions = when_on_single_line:warning
+csharp_style_unused_value_expression_statement_preference = discard_variable:error
+csharp_style_unused_value_assignment_preference = discard_variable:error
+csharp_style_inlined_variable_declaration = true:warning
+csharp_style_implicit_object_creation_when_type_is_apparent = true:warning
+csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false:warning
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = false:error
+csharp_style_allow_blank_line_after_token_in_conditional_expression_experimental = false:error
+csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimental = false:error
+csharp_style_conditional_delegate_call = true:warning
+csharp_style_pattern_matching_over_as_with_null_check = true:warning
+csharp_style_pattern_matching_over_is_with_cast_check = true:warning
+csharp_style_var_for_built_in_types = false:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_prefer_braces = when_multiline:warning
+csharp_prefer_simple_using_statement = true:warning
+csharp_prefer_system_threading_lock = true:warning
+csharp_prefer_simple_default_expression = true:warning
+csharp_style_prefer_primary_constructors = true:warning
+csharp_style_prefer_simple_property_accessors = true:warning
+csharp_style_prefer_local_over_anonymous_function = true:warning
+csharp_style_prefer_index_operator = true:warning
+csharp_style_prefer_range_operator = true:warning
+csharp_style_prefer_tuple_swap = true:warning
+csharp_style_prefer_utf8_string_literals = true:warning
+csharp_style_prefer_readonly_structs = true:warning
+csharp_style_prefer_readonly_struct_member = true:warning
+csharp_style_prefer_switch_expression = true:warning
+csharp_style_prefer_pattern_matching = true:warning
+csharp_style_prefer_not_pattern = true:warning
+csharp_style_prefer_extended_property_pattern = true:warning
+
+[*.{csproj,props,targets,slnx,csproj.template}]
+indent_size = 2
+
+[*.{md,json,yml,yaml}]
 trim_trailing_whitespace = false
 indent_size = 2

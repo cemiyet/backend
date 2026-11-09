@@ -1,6 +1,5 @@
 # dot folders
 .*/
-!.template.config/
 
 ## except github folder
 !.github/

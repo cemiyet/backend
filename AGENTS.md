@@ -10,4 +10,4 @@ Five default triage roles. Read `docs/agents/triage-labels.md` before triaging.
 
 ### Domain docs
 
-Single-context. Read `docs/agents/domain.md` before exploring.
+Single-context: root `GLOSSARY.md` and `docs/adr/`. Read `docs/agents/domain.md` before exploring.
